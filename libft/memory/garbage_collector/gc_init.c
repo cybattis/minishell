@@ -25,23 +25,3 @@ void	gc_init(t_gc *gc, int (*callback)(void *), void *param)
 	if (!gc->pointers)
 		gc->capacity = 0;
 }
-
-int	gc_grow(t_gc *gc)
-{
-	void	**new_ptr;
-
-	if (!gc)
-		return (0);
-	new_ptr = ft_calloc(gc->capacity * 2, sizeof (void *));
-	if (!new_ptr)
-	{
-		if (gc->callback)
-			gc->callback(gc->param);
-		return (0);
-	}
-	ft_memmove(new_ptr, gc->pointers, gc->capacity * sizeof(void *));
-	free(gc->pointers);
-	gc->pointers = new_ptr;
-	gc->capacity *= 2;
-	return (1);
-}

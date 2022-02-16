@@ -262,7 +262,6 @@ typedef struct s_gc
 	void	*param;
 }			t_gc;
 
-int			gc_grow(t_gc *gc);
 void		gc_clean(t_gc *gc);
 void		gc_free(t_gc *gc, void *ptr);
 void		gc_init(t_gc *gc, int (*callback)(), void *param);
