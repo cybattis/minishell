@@ -6,13 +6,16 @@
 /*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 21:48:09 by cybattis          #+#    #+#             */
-/*   Updated: 2022/02/16 21:48:50 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/02/17 00:44:54 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int main(int argc, char *argv[])
+int	main(int argc, char *argv[])
 {
+	(void)argc;
+	(void)argv;
+	readline("test");
 	return (0);
 }
