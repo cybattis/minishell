@@ -6,7 +6,7 @@
 /*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 12:55:27 by cybattis          #+#    #+#             */
-/*   Updated: 2022/02/17 13:58:29 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/02/17 15:20:03 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	sig_handler(int signum)
 	if (signum == SIGINT)
 	{
 		printf("\n");
-		printf("%s", get_prompt());
+		rl_on_new_line();
+		rl_redisplay();
 	}
 }
