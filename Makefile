@@ -8,18 +8,17 @@ OBJS_DIR		:=		$(MAKE_DIR)/obj
 
 LIB_DIR			:=		$(MAKE_DIR)/libft
 
-INC_PATH		:=		-I$(LIB_DIR) -I$(MAKE_DIR)/includes
+INC_PATH		:=		-I$(LIB_DIR) -I$(MAKE_DIR)/includes -I/usr/include/readline
 
 LIB_PATH		:=		-L$(LIB_DIR)
 
 LIBS			:=		-lftd
-
-READLINE		:=		-L/usr/local/lib -I/usr/local/include -lreadline
+READLINE		:=		-L/usr/lib/x86_64-linux-gnu/ -lreadline -lhistory
 
 BIN_CC			:=		gcc
 
 BIN_CFLAGS		:=
-BIN_CFLAGS		+=		$(INC_PATH) $(LIB_PATH) $(LIBS) $(READLINE)
+BIN_CFLAGS		+=		$(INC_PATH) $(LIB_PATH) $(LIBS)
 BIN_CFLAGS		+=		-MD
 BIN_CFLAGS		+=		-Wall -Werror -Wextra
 BIN_CFLAGS		+=		-fsanitize=address
@@ -40,6 +39,8 @@ export BIN_CC
 export BIN_CFLAGS
 export BIN_LDFLAGS
 export LIBFT_LIB
+export LIB_PATH
+export READLINE
 
 .PHONY: all
 all: header

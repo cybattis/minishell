@@ -1,7 +1,7 @@
 
 NAME		=	minishell
 
-SRCS		=	main.c
+SRCS		=	main.c prompt.c signal.c
 OBJS		=	$(addprefix $(OBJS_DIR)/, $(SRCS:.c=.o))
 
 HEADERS		=	$(MAKE_DIR)/includes/minishell.h
@@ -20,7 +20,7 @@ $(OBJS_DIR)/%.o:	$(SRCS_DIR)/%.c | $(OBJS_DIR)
 
 $(NAME):	$(OBJS) $(LIBFT_LIB) $(MASTER_MAKE)
 	@printf "$(_BLUE)\nCompiled source files\n"
-	@$(BIN_CC) $(BIN_CFLAGS) $(OBJS) -o $@
+	@$(BIN_CC) $(BIN_CFLAGS) $(OBJS) $(READLINE) -o ../$@
 	@printf "$(_GREEN)Finish compiling $(NAME)!$(_END)\n"
 
 .PHONY: bonus

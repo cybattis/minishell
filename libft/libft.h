@@ -6,7 +6,7 @@
 /*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 14:34:44 by njennes           #+#    #+#             */
-/*   Updated: 2022/02/16 23:57:19 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/02/17 14:10:49 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,8 +124,8 @@ char		*ft_substr(char const *s, unsigned int start, size_t len);
 char		*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 char		*ft_strnstr(const char *haystack, const char *needle, size_t len);
 char		**ft_split(char const *s, char c);
-int			ft_split_size(char **tab);
-void		ft_split_free(char **tab);
+int			ft_split_size(char **t);
+void		ft_split_free(char **t);
 void		ft_striteri(char *s, void (*f)(unsigned int, char*));
 size_t		ft_strlen(const char *s);
 size_t		ft_strlcpy(char *dst, const char *src, size_t dstsize);
