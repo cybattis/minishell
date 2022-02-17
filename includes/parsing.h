@@ -23,6 +23,9 @@
 # define TOKEN_PIPE 3
 # define TOKEN_REDIR_OUT 4
 # define TOKEN_REDIR_IN 5
+# define TOKEN_REDIR_OUT_APPEND 6
+# define TOKEN_REDIR_IN_APPEND 7
+# define TOKEN_FILE 8
 
 typedef struct s_command
 {
@@ -58,11 +61,17 @@ typedef struct s_lexer
 
 t_command_batch	parse_input(char *input);
 
-int				consume_single_quotes(t_parser *parser, t_lexer *lexer);
-int				consume_double_quotes(t_parser *parser, t_lexer *lexer);
-int				consume_word(t_parser *parser, t_lexer *lexer);
+void			consume_single_quotes(t_parser *parser, t_lexer *lexer);
+void			consume_double_quotes(t_parser *parser, t_lexer *lexer);
+void			consume_word(t_parser *parser, t_lexer *lexer);
 
 t_lexer			tokenize_input(char *input);
 int				get_last_token_type(t_lexer *lexer);
+void			lexer_add_token(t_token token, t_lexer *lexer);
+void			lexer_add_end(t_lexer *lexer);
+void			lexer_destroy(t_lexer *lexer);
+
+//Debug
+void			lexer_print(t_lexer *lexer);
 
 #endif

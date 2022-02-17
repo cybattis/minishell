@@ -1,0 +1,14 @@
+cat file1.txt file2.txt | grep hey > fileout.txt
+cat "file1.txt file2.txt" | grep "hey hey" >
+cat 'file1.txt file2.txt' | grep 'hey hey' >> fileout.txt
+pwd
+pwd wrongArg
+echo arg1
+gcc main.c lib.a -n -Iincludes/ -o2 -fsanitize=address
+./a.out lol hey
+make all
+find . | grep | cat
+echo -n heyyy
+echo $(MASTER_MAKE)
+echo "$(MASTER_MAKE)"
+echo '$(MASTER_MAKE)'

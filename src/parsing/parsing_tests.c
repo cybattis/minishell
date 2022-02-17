@@ -12,13 +12,35 @@
 
 #include "../../includes/parsing.h"
 #include "../../libft/libft.h"
+#include <fcntl.h>
 
-t_command_batch	parse_input(char *input)
+void	start_tests()
 {
-	t_command_batch	command_batch;
-	t_lexer			lexer;
+	int		fd;
+	char	*input;
+	t_lexer	lexer;
 
-	lexer = tokenize_input(input);
-	ft_memset(&command_batch, 0, sizeof (t_command_batch));
-	return (command_batch);
+	printf("Testing lexer:\n\n");
+	fd = open("tests.txt", O_RDONLY);
+	if (!fd)
+		printf("Couldn't test lexer: test file does not exist");
+	else
+	{
+		input = ft_get_next_line(fd);
+		while (input)
+		{
+			lexer = tokenize_input(input);
+			printf("Input: %s\n", input);
+			lexer_print(&lexer);
+			lexer_destroy(&lexer);
+			free(input);
+			input = ft_get_next_line(fd);
+		}
+		close(fd);
+	}
+}
+
+int main()
+{
+	start_tests();
 }
