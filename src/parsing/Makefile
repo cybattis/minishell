@@ -20,6 +20,6 @@ clean:
 tests:				$(OBJS) parsing_tests.c
 					$(BIN_CC) $(BIN_LDFLAGS) $(OBJS) parsing_tests.c -o tests
 					@./tests
-					@rm testsb
+					@rm tests
 
 -include $(DEPENDS)

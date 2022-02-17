@@ -118,7 +118,7 @@ void	lexer_print(t_lexer *lexer)
 	i = 0;
 	while (i < lexer->count)
 	{
-		printf("Token[%d]: %s: %s\n", (int)i, token_type_to_str(lexer->tokens[i].type), lexer->tokens[i].str);
+		printf("Token[%d]: %s: -%s-\n", (int)i, token_type_to_str(lexer->tokens[i].type), lexer->tokens[i].str);
 		i++;
 	}
 }

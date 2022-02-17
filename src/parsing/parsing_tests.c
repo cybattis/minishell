@@ -27,14 +27,16 @@ void	start_tests()
 	else
 	{
 		input = ft_get_next_line(fd);
+		input = ft_trimr(input);
 		while (input)
 		{
-			lexer = tokenize_input(input);
 			printf("Input: %s\n", input);
+			lexer = tokenize_input(input);
 			lexer_print(&lexer);
 			lexer_destroy(&lexer);
 			free(input);
 			input = ft_get_next_line(fd);
+			input = ft_trimr(input);
 		}
 		close(fd);
 	}
