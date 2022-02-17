@@ -126,6 +126,7 @@ size_t		ft_strlen(const char *s);
 size_t		ft_strlcpy(char *dst, const char *src, size_t dstsize);
 size_t		ft_strlcat(char *dst, const char *src, size_t dstsize);
 size_t		ft_str_count(char *str, char c, int mode);
+size_t		ft_word_size(char *str);
 
 //Stringview
 t_StringV	sv_create(const char *str);
