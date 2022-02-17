@@ -13,6 +13,7 @@ INC_PATH		:=		-I$(LIB_DIR) -I$(MAKE_DIR)/includes -I/usr/include/readline
 LIB_PATH		:=		-L$(LIB_DIR)
 
 LIBS			:=		-lftd
+
 READLINE		:=		-L/usr/lib/x86_64-linux-gnu/ -lreadline -lhistory
 
 BIN_CC			:=		gcc
@@ -44,6 +45,10 @@ export READLINE
 
 .PHONY: all
 all: header
+	@$(MAKE) -C $(LIB_DIR)
+	@$(MAKE) -C $(SRCS_DIR) -r -R --warn-undefined-variables
+
+debug: header
 	@$(MAKE) -C $(LIB_DIR) debug
 	@$(MAKE) -C $(SRCS_DIR) -r -R --warn-undefined-variables
 
@@ -61,7 +66,7 @@ fclean:
 	@$(MAKE) -C $(SRCS_DIR) fclean
 
 .PHONY: re
-re: fclean all
+re: fclean all debug clean bonus
 
 .PHONY: header
 header:

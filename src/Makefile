@@ -1,7 +1,7 @@
 
 NAME		=	minishell
 
-SRCS		=	main.c io.c signal.c
+SRCS		=	main.c io.c signal.c execute.c
 OBJS		=	$(addprefix $(OBJS_DIR)/, $(SRCS:.c=.o))
 
 HEADERS		=	$(MAKE_DIR)/includes/minishell.h
@@ -32,7 +32,7 @@ clean:
 
 .PHONY: fclean
 fclean: clean
-	rm -f $(NAME)
+	rm -f ../$(NAME)
 
 re: fclean all
 

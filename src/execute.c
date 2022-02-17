@@ -1,28 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/16 21:48:09 by cybattis          #+#    #+#             */
-/*   Updated: 2022/02/17 18:24:02 by cybattis         ###   ########.fr       */
+/*   Created: 2022/02/17 17:10:07 by cybattis          #+#    #+#             */
+/*   Updated: 2022/02/17 18:18:31 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(void)
+int	launch_program(char *cmd, char *const *args)
 {
-	char	*line_read;
+	pid_t	pid;
+	int		status;
 
-	init_signal();
-	while (FT_TRUE)
+	status = 0;
+	pid = fork();
+	if (!pid)
 	{
-		line_read = ft_get_line();
-		// PARSING
-		launch_program(line_read, NULL);
-		free(line_read);
+		if (execve(cmd, args, NULL) != 0)
+			exit(EXIT_FAILURE);
+		exit(EXIT_SUCCESS);
 	}
-	return (0);
+	else if (pid > 0)
+	{
+		pid = wait(&status);
+		if (!WIFEXITED(status))
+		{
+			printf("%s\n", strerror(errno));
+			return (0);
+		}
+	}
+	else
+	{
+		printf("fork() failed!\n");
+		return (0);
+	}
+	return (1);
 }
