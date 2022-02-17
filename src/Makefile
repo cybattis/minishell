@@ -1,7 +1,7 @@
 
 NAME		=	minishell
 
-SRCS		=	main.c prompt.c signal.c
+SRCS		=	main.c io.c signal.c
 OBJS		=	$(addprefix $(OBJS_DIR)/, $(SRCS:.c=.o))
 
 HEADERS		=	$(MAKE_DIR)/includes/minishell.h

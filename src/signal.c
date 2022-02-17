@@ -6,7 +6,7 @@
 /*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 12:55:27 by cybattis          #+#    #+#             */
-/*   Updated: 2022/02/17 15:20:03 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/02/17 15:42:13 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	init_signal(void)
 	sa.sa_handler = sig_handler;
 	sigaction(SIGINT, &sa, NULL);
 	signal(SIGTSTP, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 	return (0);
 }
 

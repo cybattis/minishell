@@ -6,7 +6,7 @@
 /*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 21:46:20 by cybattis          #+#    #+#             */
-/*   Updated: 2022/02/17 14:10:04 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/02/17 15:51:33 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # include <errno.h>
 # include "libft.h"
 
+char		*ft_get_line(void);
 char		*get_prompt(void);
 
 int			init_signal(void);
