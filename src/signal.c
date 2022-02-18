@@ -6,7 +6,7 @@
 /*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 12:55:27 by cybattis          #+#    #+#             */
-/*   Updated: 2022/02/17 15:42:13 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/02/18 16:06:29 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	init_signal(void)
 	struct sigaction	sa;
 
 	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = SIG_BLOCK;
+	sa.sa_flags = 0;
 	sa.sa_handler = sig_handler;
 	sigaction(SIGINT, &sa, NULL);
 	signal(SIGTSTP, SIG_IGN);

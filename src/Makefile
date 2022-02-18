@@ -18,7 +18,7 @@ $(OBJS_DIR)/%.o:	$(SRCS_DIR)/%.c | $(OBJS_DIR)
 	@$(BIN_CC) $(BIN_CFLAGS) -c $< -o $@
 	@printf "$(_GREEN)█$(_END)"
 
-$(NAME):	$(OBJS) $(LIBFT_LIB) $(MASTER_MAKE)
+$(NAME):	$(OBJS) $(MASTER_MAKE)
 	@printf "$(_BLUE)\nCompiled source files\n"
 	@$(BIN_CC) $(BIN_CFLAGS) $(OBJS) $(READLINE) -o ../$@
 	@printf "$(_GREEN)Finish compiling $(NAME)!$(_END)\n"

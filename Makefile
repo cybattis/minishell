@@ -8,21 +8,26 @@ OBJS_DIR		:=		$(MAKE_DIR)/obj
 
 LIB_DIR			:=		$(MAKE_DIR)/libft
 
-INC_PATH		:=		-I$(LIB_DIR) -I$(MAKE_DIR)/includes -I/usr/include/readline
+INC_PATH		:=		-I$(LIB_DIR) -I$(MAKE_DIR)/includes -I ~/.brew/Cellar/readline/8.1.2/include/readline
 
 LIB_PATH		:=		-L$(LIB_DIR)
 
 LIBS			:=		-lftd
 
-READLINE		:=		-L/usr/lib/x86_64-linux-gnu/ -lreadline -lhistory
+OS				=	$(shell uname -s)
+ifeq ($(OS), Linux)
+	READLINE		:=		-L/usr/lib/x86_64-linux-gnu/ -lreadline -lhistory
+else
+	READLINE		:=		-L ~/.brew/Cellar/readline/8.1.2/lib -lreadline
+endif
 
 BIN_CC			:=		gcc
 
 BIN_CFLAGS		:=
-BIN_CFLAGS		+=		$(INC_PATH) $(LIB_PATH) $(LIBS)
 BIN_CFLAGS		+=		-MD
-BIN_CFLAGS		+=		-Wall -Werror -Wextra
+BIN_CFLAGS		+=		-Wall -Wextra
 BIN_CFLAGS		+=		-fsanitize=address
+BIN_CFLAGS		+=		$(INC_PATH) $(LIB_PATH) $(LIBS)
 
 BIN_LDFLAGS		:=
 BIN_LDFLAGS		+=		-fsanitize=address

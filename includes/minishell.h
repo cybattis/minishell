@@ -6,19 +6,21 @@
 /*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 21:46:20 by cybattis          #+#    #+#             */
-/*   Updated: 2022/02/17 18:23:54 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/02/18 16:08:13 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include "libft.h"
 # include <stdio.h>
 # include <readline/readline.h>
-# include <readline/history.h>
+// # include <readline/history.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <signal.h>
+# include <string.h>
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <sys/ioctl.h>
@@ -26,7 +28,6 @@
 # include <term.h>
 # include <sys/stat.h>
 # include <errno.h>
-# include "libft.h"
 
 char		*ft_get_line(void);
 char		*get_prompt(void);
@@ -34,6 +35,6 @@ char		*get_prompt(void);
 int			init_signal(void);
 void		sig_handler(int signum);
 
-int			launch_program(char *cmd, char *const *args);
+int			launch_program(void);
 
 #endif

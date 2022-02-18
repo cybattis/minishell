@@ -6,13 +6,13 @@
 /*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 17:10:07 by cybattis          #+#    #+#             */
-/*   Updated: 2022/02/17 18:18:31 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/02/18 16:09:43 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	launch_program(char *cmd, char *const *args)
+int	launch_program(void)
 {
 	pid_t	pid;
 	int		status;
@@ -21,7 +21,7 @@ int	launch_program(char *cmd, char *const *args)
 	pid = fork();
 	if (!pid)
 	{
-		if (execve(cmd, args, NULL) != 0)
+		if (execve() != 0)
 			exit(EXIT_FAILURE);
 		exit(EXIT_SUCCESS);
 	}
@@ -30,7 +30,7 @@ int	launch_program(char *cmd, char *const *args)
 		pid = wait(&status);
 		if (!WIFEXITED(status))
 		{
-			printf("%s\n", strerror(errno));
+			perror(strerror(errno));
 			return (0);
 		}
 	}
