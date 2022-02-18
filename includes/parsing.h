@@ -70,6 +70,7 @@ int				get_last_token_type(t_lexer *lexer);
 void			lexer_add_token(t_token token, t_lexer *lexer);
 void			lexer_add_end(t_lexer *lexer);
 void			lexer_destroy(t_lexer *lexer);
+char			*expand_env_vars(char *str);
 
 //Debug
 void			lexer_print(t_lexer *lexer);

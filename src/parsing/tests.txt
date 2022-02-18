@@ -9,6 +9,15 @@ gcc main.c lib.a -n -Iincludes/ -o2 -fsanitize=address
 make all
 find . | grep | cat
 echo -n heyyy
-echo $(MASTER_MAKE)
-echo "$(MASTER_MAKE)"
-echo '$(MASTER_MAKE)'
+echo $MASTER_MAKE
+echo "$MASTER_MAKE"
+echo '$MASTER_MAKE'
+echo $BIN_CC
+echo "$MASTER_MAKE is the main makefile"
+echo '$MASTER_MAKE is the main makefile'
+echo "the main makefile is: $MASTER_MAKE"
+echo 'the main makefile is: $MASTER_MAKE'
+echo " $MASTER_MAKE is the main makefile "
+echo ' $MASTER_MAKE is the main makefile '
+echo " the main makefile is: $MASTER_MAKE "
+echo ' the main makefile is: $MASTER_MAKE '

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   ft_strappend.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: njennes <njennes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,17 +10,19 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/parsing.h"
-#include "../../libft/libft.h"
+#include "../../libft.h"
 
-t_command_batch	parse_input(char *input)
+char	*ft_strappend(char *str, char c)
 {
-	t_command_batch	command_batch;
-	t_lexer			lexer;
+	size_t	len;
+	char	*new_str;
 
-	input = expand_env_vars(input);
-	lexer = tokenize_input(input);
-	ft_memset(&command_batch, 0, sizeof (t_command_batch));
-	free(input);
-	return (command_batch);
+	len = ft_strlen(str);
+	new_str = ft_calloc(len + 2, sizeof(char));
+	if (!new_str)
+		return (NULL);
+	ft_memmove(new_str, str, len * sizeof (char));
+	new_str[len] = c;
+	free(str);
+	return (new_str);
 }

@@ -1,4 +1,4 @@
-SRCS		=		get_token.c lexer.c parsing.c
+SRCS		=		get_token.c lexer.c parsing.c var_expansion.c
 
 OBJS		=		$(addprefix $(OBJS_DIR), $(SRCS:.c=.o))
 
@@ -19,7 +19,7 @@ clean:
 
 tests:				$(OBJS) parsing_tests.c
 					$(BIN_CC) $(BIN_LDFLAGS) $(OBJS) parsing_tests.c -o tests
-					@./tests
+					@./tests | cat -ev
 					@rm tests
 
 -include $(DEPENDS)
