@@ -106,8 +106,6 @@ char	*token_type_to_str(int token_type)
 		return ("TOKEN_PIPE");
 	if (token_type == TOKEN_END)
 		return ("TOKEN_END");
-	if (token_type == TOKEN_FILE)
-		return ("TOKEN_FILE");
 	return ("NOT_A_TOKEN");
 }
 
