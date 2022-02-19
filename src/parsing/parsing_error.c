@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   parsing_error.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: njennes <njennes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -13,17 +13,30 @@
 #include "../../includes/parsing.h"
 #include "../../libft/libft.h"
 
-t_command_batch	parse_input(char *input)
+static int	check_token_order(int last, int current)
 {
-	t_command_batch	command_batch;
-	t_lexer			lexer;
+	if (last == TOKEN_PIPE && current == TOKEN_PIPE)
+		return (0);
+	return (1);
+}
 
-	input = expand_env_vars(input);
-	lexer = tokenize_input(input);
-	free(input);
-	ft_memset(&command_batch, 0, sizeof (t_command_batch));
-	if (!check_parsing_errors(lexer))
-		return (command_batch);
-	create_command_batch(lexer, &command_batch);
-	return (command_batch);
+int	check_parsing_errors(t_lexer lexer)
+{
+	int		last_token;
+	int		token;
+	size_t	i;
+
+	i = 0;
+	last_token = TOKEN_EMPTY;
+	while (i < lexer.count)
+	{
+		token = lexer.tokens[i].type;
+		if (i == 0 && token != TOKEN_COMMAND)
+			return (0);
+		if (!check_token_order(last_token, token))
+			return (0);
+		last_token = token;
+		i++;
+	}
+	return (1);
 }

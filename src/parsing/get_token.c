@@ -37,7 +37,7 @@ int	get_token_type(char *token, t_lexer *lexer)
 	if (last_token == TOKEN_COMMAND || last_token == TOKEN_ARG)
 		return (TOKEN_ARG);
 	if (last_token == TOKEN_REDIR_OUT || last_token == TOKEN_REDIR_OUT_APPEND)
-		return (TOKEN_FILE);
+		return (TOKEN_ARG);
 	return (TOKEN_UNKNOWN);
 }
 
