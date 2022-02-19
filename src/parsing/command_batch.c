@@ -105,7 +105,7 @@ static int	get_redirection_type(t_token *tokens)
 		i++;
 	if (is_redir_token(tokens[i].type))
 		return (tokens[i].type);
-	return (TOKEN_EMPTY);
+	return (TOKEN_END);
 }
 
 static char	*get_redirection_file(t_token *tokens)
