@@ -4,6 +4,9 @@ NAME		=	minishell
 SRCS		=	main.c io.c signal.c execute.c
 OBJS		=	$(addprefix $(OBJS_DIR)/, $(SRCS:.c=.o))
 
+SRC_PARSING	=	get_token.c lexer.c parsing.c var_expansion.c
+OBJ_PARSING	=	$(addprefix $(OBJS_DIR)/, $(SRC_PARSING:.c=.o))
+
 HEADERS		=	$(MAKE_DIR)/includes/minishell.h
 
 DEPENDS		=	$(addprefix $(OBJS_DIR)/, $(SRCS:.c=.d))
@@ -18,9 +21,9 @@ $(OBJS_DIR)/%.o:	$(SRCS_DIR)/%.c | $(OBJS_DIR)
 	@$(BIN_CC) $(BIN_CFLAGS) -c $< -o $@
 	@printf "$(_GREEN)█$(_END)"
 
-$(NAME):	$(OBJS) $(MASTER_MAKE)
+$(NAME):	$(OBJS) $(MASTER_MAKE) $(LIBFT_LIB)
 	@printf "$(_BLUE)\nCompiled source files\n"
-	@$(BIN_CC) $(BIN_CFLAGS) $(OBJS) $(READLINE) -o ../$@
+	@$(BIN_CC) $(BIN_CFLAGS) $(OBJS) $(OBJ_PARSING) $(LIBFT_LIB) $(READLINE) -o ../$@
 	@printf "$(_GREEN)Finish compiling $(NAME)!$(_END)\n"
 
 .PHONY: bonus
@@ -38,3 +41,5 @@ re: fclean all
 
 $(OBJS_DIR):
 	@mkdir -p $(OBJS_DIR)
+
+-include $(DEPENDS)

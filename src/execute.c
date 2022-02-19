@@ -6,7 +6,7 @@
 /*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 17:10:07 by cybattis          #+#    #+#             */
-/*   Updated: 2022/02/18 16:09:43 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/02/19 11:10:06 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ int	launch_program(void)
 	pid = fork();
 	if (!pid)
 	{
-		if (execve() != 0)
-			exit(EXIT_FAILURE);
+		// if (execve() != 0)
+		// 	exit(EXIT_FAILURE);
 		exit(EXIT_SUCCESS);
 	}
 	else if (pid > 0)

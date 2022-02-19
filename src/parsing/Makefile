@@ -1,15 +1,14 @@
 SRCS		=		get_token.c lexer.c parsing.c var_expansion.c
 
-OBJS		=		$(addprefix $(OBJS_DIR), $(SRCS:.c=.o))
+OBJS		=		$(addprefix $(OBJS_DIR)/, $(SRCS:.c=.o))
 
-DEPENDS		=		$(addprefix $(OBJS_DIR), $(SRCS:.c=.d))
+DEPENDS		=		$(addprefix $(OBJS_DIR)/, $(SRCS:.c=.d))
 
 .PHONY: all
 all:				$(OBJS)
 
-$(OBJS_DIR)%.o:		%.c
+$(OBJS_DIR)/%.o:		%.c | $(OBJS_DIR)
 					@echo "[Minishell] Compiling $<"
-					@mkdir -p $(OBJS_DIR)
 					@$(BIN_CC) -c $< $(BIN_CFLAGS) -o $@
 
 .PHONY: clean

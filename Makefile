@@ -2,14 +2,12 @@ MAKE_DIR		:=		$(PWD)
 
 MASTER_MAKE		:=		$(MAKE_DIR)/Makefile
 
-SRCS_DIR		:=		$(MAKE_DIR)/src/
-OBJS_DIR		:=		$(MAKE_DIR)/objs/
-
+SRCS_DIR		:=		$(MAKE_DIR)/src
 OBJS_DIR		:=		$(MAKE_DIR)/obj
 
 LIB_DIR			:=		$(MAKE_DIR)/libft
 
-INC_PATH		:=		-I$(LIB_DIR) -I$(MAKE_DIR)/includes -I ~/.brew/Cellar/readline/8.1.2/include/readline
+INC_PATH		:=		-I$(LIB_DIR) -I$(MAKE_DIR)/includes
 
 LIB_PATH		:=		-L$(LIB_DIR)
 
@@ -18,8 +16,10 @@ LIBS			:=		-lftd
 OS				=	$(shell uname -s)
 ifeq ($(OS), Linux)
 	READLINE		:=		-L/usr/lib/x86_64-linux-gnu/ -lreadline -lhistory
+	INC_PATH		+=
 else
 	READLINE		:=		-L ~/.brew/Cellar/readline/8.1.2/lib -lreadline
+	INC_PATH		+=		-I ~/.brew/Cellar/readline/8.1.2/include/readline
 endif
 
 BIN_CC			:=		gcc
@@ -54,10 +54,12 @@ export READLINE
 .PHONY: all
 all: header
 	@$(MAKE) -C $(LIB_DIR)
+	@$(MAKE) -C $(SRCS_DIR)/parsing -r -R --warn-undefined-variables
 	@$(MAKE) -C $(SRCS_DIR) -r -R --warn-undefined-variables
 
 debug: header
 	@$(MAKE) -C $(LIB_DIR) debug
+	@$(MAKE) -C $(SRCS_DIR)/parsing -r -R --warn-undefined-variables
 	@$(MAKE) -C $(SRCS_DIR) -r -R --warn-undefined-variables
 
 .PHONY: bonus
