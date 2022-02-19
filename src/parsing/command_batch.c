@@ -149,7 +149,7 @@ static void	populate_commands(t_lexer lexer, t_command *commands)
 			commands[j].is_redirecting = 1;
 			commands[j].redirection_file = get_redirection_file(&lexer.tokens[i]);
 		}
-		i += get_command_length(&lexer.tokens[i]);
+		i += get_command_length(&lexer.tokens[i + 1]);
 		j++;
 	}
 }
