@@ -1,20 +1,25 @@
-CLIENT_SRCS	=		get_token.c lexer.c parsing.c
+SRCS		=		get_token.c lexer.c parsing.c var_expansion.c
 
-OBJS		=		$(addprefix $(OBJDIR), $(CLIENT_SRCS:.c=.o))
+OBJS		=		$(addprefix $(OBJS_DIR), $(SRCS:.c=.o))
 
-DEPENDS		=		$(addprefix $(OBJDIR), $(CLIENT_SRCS:.c=.d))
+DEPENDS		=		$(addprefix $(OBJS_DIR), $(SRCS:.c=.d))
 
 .PHONY: all
 all:				$(OBJS)
 
-$(OBJDIR)%.o:		%.c
+$(OBJS_DIR)%.o:		%.c
 					@echo "[Minishell] Compiling $<"
-					@mkdir -p $(OBJDIR)
+					@mkdir -p $(OBJS_DIR)
 					@$(BIN_CC) -c $< $(BIN_CFLAGS) -o $@
 
 .PHONY: clean
 clean:
 					rm -f $(DEPENDS)
 					rm -f $(OBJS)
+
+tests:				$(OBJS) parsing_tests.c
+					$(BIN_CC) $(BIN_LDFLAGS) $(OBJS) parsing_tests.c -o tests
+					@./tests | cat -ev
+					@rm tests
 
 -include $(DEPENDS)

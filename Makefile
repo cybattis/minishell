@@ -2,7 +2,8 @@ MAKE_DIR		:=		$(PWD)
 
 MASTER_MAKE		:=		$(MAKE_DIR)/Makefile
 
-SRCS_DIR		:=		$(MAKE_DIR)/src
+SRCS_DIR		:=		$(MAKE_DIR)/src/
+OBJS_DIR		:=		$(MAKE_DIR)/objs/
 
 OBJS_DIR		:=		$(MAKE_DIR)/obj
 
@@ -30,11 +31,13 @@ BIN_CFLAGS		+=		-fsanitize=address
 BIN_CFLAGS		+=		$(INC_PATH) $(LIB_PATH) $(LIBS)
 
 BIN_LDFLAGS		:=
+BIN_LDFLAGS		+=		$(LIB_PATH) $(LIBS)
 BIN_LDFLAGS		+=		-fsanitize=address
 
 LIBFT_LIB		:=		$(LIB_DIR)/libftd.a
 
 export MAKE_DIR
+export OBJS_DIR
 export MASTER_MAKE
 export SRCS_DIR
 export OBJS_DIR
@@ -69,6 +72,11 @@ clean: header
 fclean:
 	@$(MAKE) -C $(LIB_DIR) fclean
 	@$(MAKE) -C $(SRCS_DIR) fclean
+
+.PHONY: tests
+tests:
+	@$(MAKE) -C $(LIB_DIR) debug
+	@$(MAKE) -C src/parsing/ tests
 
 .PHONY: re
 re: fclean all debug clean bonus

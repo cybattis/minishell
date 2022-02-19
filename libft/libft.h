@@ -106,6 +106,7 @@ int			ft_isspace(int c);
 int			ft_valid_args(size_t argc, char **argv, char *format);
 
 //C style Strings Manipulation
+int			ft_strcmp(const char *s1, const char *s2);
 int			ft_strncmp(const char *s1, const char *s2, size_t n);
 int			ft_toupper(int c);
 int			ft_tolower(int c);
@@ -116,9 +117,10 @@ int			ft_atoi(const char *str);
 long		ft_atol_base(char *str, char *base);
 long		ft_atol(const char *str);
 char		*ft_strdup(const char *s1);
+char		*ft_strappend(char *str, char c);
 char		*ft_strchr(const char *s, int c);
 char		*ft_strrchr(const char *s, int c);
-char		*ft_strjoin(char const *s1, char const *s2);
+char		*ft_strjoin(char *s1, char *s2, int to_free);
 char		*ft_strtrim(char const *s1, char const *set);
 char		*ft_substr(char const *s, unsigned int start, size_t len);
 char		*ft_strmapi(char const *s, char (*f)(unsigned int, char));

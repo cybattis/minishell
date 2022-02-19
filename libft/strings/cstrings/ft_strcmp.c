@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: njennes <njennes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,17 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/parsing.h"
-#include "../../libft/libft.h"
+#include "../../libft.h"
 
-t_command_batch	parse_input(char *input)
+int	ft_strcmp(const char *s1, const char *s2)
 {
-	t_command_batch	command_batch;
-	t_lexer			lexer;
-
-	input = expand_env_vars(input);
-	lexer = tokenize_input(input);
-	ft_memset(&command_batch, 0, sizeof (t_command_batch));
-	free(input);
-	return (command_batch);
+	if (!s1 || !s2)
+		return (0);
+	return (ft_strncmp(s1, s2, ft_strlen(s1)));
 }
