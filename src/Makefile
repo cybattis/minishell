@@ -1,7 +1,7 @@
 
 NAME		=	minishell
 
-SRCS		=	main.c io.c signal.c execute.c utils.c
+SRCS		=	main.c io.c signal.c execute.c utils.c builtins.c
 OBJS		=	$(addprefix $(OBJS_DIR)/, $(SRCS:.c=.o))
 
 SRC_PARSING	=	get_token.c lexer.c parsing.c var_expansion.c command_batch.c	\
