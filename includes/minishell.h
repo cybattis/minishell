@@ -6,7 +6,7 @@
 /*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 21:46:20 by cybattis          #+#    #+#             */
-/*   Updated: 2022/02/19 16:54:40 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/02/19 18:11:11 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,9 @@ void		sig_handler(int signum);
 int			execute_cmd(t_command_batch cmd_batch);
 
 void		ft_errno_exit(int errnum);
+size_t		ft_arglen(char const **args);
 
-int			bt_echo(char *str, char *args);
+int			bt_echo(t_command cmd);
 int			bt_exit(void);
 int			bt_pwd(void);
 int			bt_cd(char *path);
