@@ -1,4 +1,4 @@
-SRCS		=		get_token.c lexer.c parsing.c var_expansion.c
+SRCS		=		get_token.c lexer.c parsing.c var_expansion.c command_batch.c parsing_error.c
 
 OBJS		=		$(addprefix $(OBJS_DIR)/, $(SRCS:.c=.o))
 
