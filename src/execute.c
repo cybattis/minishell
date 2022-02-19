@@ -6,38 +6,37 @@
 /*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 17:10:07 by cybattis          #+#    #+#             */
-/*   Updated: 2022/02/19 11:10:06 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/02/19 15:29:54 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	launch_program(void)
+int	execute_cmd(t_command_batch cmd_batch)
 {
+	int		i;
 	pid_t	pid;
 	int		status;
 
+	i = 0;
 	status = 0;
 	pid = fork();
 	if (!pid)
 	{
-		// if (execve() != 0)
-		// 	exit(EXIT_FAILURE);
-		exit(EXIT_SUCCESS);
+		while (i < cmd_batch.count)
+		{
+			if (!execve(&cmd_batch.commands[i], &cmd_batch.commands[i].args, NULL))
+				ft_errno_exit(errno);
+			i++;
+		}
 	}
 	else if (pid > 0)
 	{
 		pid = wait(&status);
 		if (!WIFEXITED(status))
-		{
-			perror(strerror(errno));
-			return (0);
-		}
+			ft_errno_exit(errno);
 	}
 	else
-	{
-		printf("fork() failed!\n");
-		return (0);
-	}
-	return (1);
+		ft_errno_exit(errno);
+	return (0);
 }

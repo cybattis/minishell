@@ -20,5 +20,8 @@ tests:				$(OBJS) parsing_tests.c
 					$(BIN_CC) $(BIN_LDFLAGS) $(OBJS) parsing_tests.c -o tests
 					@./tests | cat -ev
 					@rm tests
+					
+$(OBJS_DIR):
+	@mkdir -p $(OBJS_DIR)
 
 -include $(DEPENDS)

@@ -6,7 +6,7 @@
 /*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 21:46:20 by cybattis          #+#    #+#             */
-/*   Updated: 2022/02/19 11:06:47 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/02/19 15:05:08 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,17 @@
 # endif
 
 # include "libft.h"
-# include <stdio.h>
+# include "parsing.h"
 # include <readline/readline.h>
-# include <stdlib.h>
-# include <unistd.h>
 # include <signal.h>
 # include <string.h>
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <sys/ioctl.h>
+# include <sys/stat.h>
 # include <curses.h>
 # include <term.h>
-# include <sys/stat.h>
 # include <errno.h>
-# include "parsing.h"
 
 char		*ft_get_line(void);
 char		*get_prompt(void);
@@ -39,6 +36,8 @@ char		*get_prompt(void);
 int			init_signal(void);
 void		sig_handler(int signum);
 
-int			launch_program(void);
+int			execute_cmd(t_command_batch cmd_batch);
+
+void		ft_errno_exit(int errnum);
 
 #endif
