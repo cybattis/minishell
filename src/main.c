@@ -6,7 +6,7 @@
 /*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 21:48:09 by cybattis          #+#    #+#             */
-/*   Updated: 2022/02/19 15:15:45 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/02/19 15:56:41 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@ int	main(void)
 	{
 		line_read = ft_get_line();
 		command_batch = parse_input(line_read);
-		printf("%s\n", command_batch.commands[0].name);
-		// execute_cmd();
+		execute_cmd(command_batch);
 	}
 	return (0);
 }

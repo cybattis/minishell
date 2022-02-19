@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_batch.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: njennes <njennes@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 21:46:20 by njennes           #+#    #+#             */
-/*   Updated: 2022/02/16 22:17:25 by njennes          ###   ########.fr       */
+/*   Updated: 2022/02/19 15:46:51 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,7 @@ static void	populate_commands(t_lexer lexer, t_command *commands)
 	while (lexer.tokens[i].type != TOKEN_END)
 	{
 		commands[j].name = ft_strdup(lexer.tokens[i].str); //TODO: Replace with gc_strdup
+		i++;
 		commands[j].is_builtin = is_builtin_command(commands[j].name);
 		commands[j].args = get_command_args(&lexer.tokens[i]);
 		commands[j].redirection_type = get_redirection_type(&lexer.tokens[i]);
@@ -149,7 +150,7 @@ static void	populate_commands(t_lexer lexer, t_command *commands)
 			commands[j].is_redirecting = 1;
 			commands[j].redirection_file = get_redirection_file(&lexer.tokens[i]);
 		}
-		i += get_command_length(&lexer.tokens[i + 1]);
+		i += get_command_length(&lexer.tokens[i]);
 		j++;
 	}
 }
