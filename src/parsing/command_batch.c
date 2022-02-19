@@ -44,9 +44,10 @@ static size_t	get_arg_count(t_token *tokens)
 
 	i = 0;
 	count = 0;
-	while (tokens[i].type == TOKEN_ARG || is_redir_token(tokens[i].type))
+	while (tokens[i].type == TOKEN_COMMAND || tokens[i].type == TOKEN_ARG ||
+			is_redir_token(tokens[i].type))
 	{
-		if (tokens[i].type == TOKEN_ARG)
+		if (tokens[i].type == TOKEN_COMMAND || tokens[i].type == TOKEN_ARG)
 			count++;
 		i++;
 	}
@@ -83,9 +84,10 @@ static char	**get_command_args(t_token *tokens)
 	args = ft_calloc(arg_count + 1, sizeof (char *)); //TODO: Replace with gc_calloc
 	i = 0;
 	j = 0;
-	while (tokens[i].type == TOKEN_ARG || is_redir_token(tokens[i].type))
+	while (tokens[i].type == TOKEN_COMMAND || tokens[i].type == TOKEN_ARG ||
+			is_redir_token(tokens[i].type))
 	{
-		if (tokens[i].type == TOKEN_ARG)
+		if (tokens[i].type == TOKEN_COMMAND || tokens[i].type == TOKEN_ARG)
 		{
 			args[j] = ft_strdup(tokens[i].str); //TODO: Replace with gc_strdup
 			j++;
@@ -141,10 +143,10 @@ static void	populate_commands(t_lexer lexer, t_command *commands)
 	while (lexer.tokens[i].type != TOKEN_END)
 	{
 		commands[j].name = ft_strdup(lexer.tokens[i].str); //TODO: Replace with gc_strdup
-		i++;
 		commands[j].is_builtin = is_builtin_command(commands[j].name);
 		commands[j].args = get_command_args(&lexer.tokens[i]);
-		commands[j].redirection_type = get_redirection_type(&lexer.tokens[i]);
+		i++;
+		commands[j].redirection_type = get_redirection_type(&lexer.tokens[i]); //TODO: Check for multiple redirs
 		if (commands[j].redirection_type)
 		{
 			commands[j].is_redirecting = 1;
