@@ -6,7 +6,7 @@
 /*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 17:10:07 by cybattis          #+#    #+#             */
-/*   Updated: 2022/02/19 16:56:45 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/02/19 17:09:29 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,12 @@ int	execute_cmd(t_command_batch cmd_batch)
 
 static int	execute_builtin(t_command_batch cmd_batch, size_t i)
 {
-	printf("Executing builtins: %s\n", cmd_batch.commands[i].name);
+	if (!ft_strcmp(cmd_batch.commands[i].name, "exit"))
+		bt_exit();
+	else if (!ft_strcmp(cmd_batch.commands[i].name, "cd"))
+		bt_cd(cmd_batch.commands[i].args[1]);
+	else if (!ft_strcmp(cmd_batch.commands[i].name, "pwd"))
+		bt_pwd();
 	return (0);
 }
 
