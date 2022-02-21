@@ -6,7 +6,7 @@
 /*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 13:48:19 by cybattis          #+#    #+#             */
-/*   Updated: 2022/02/21 18:18:27 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/02/21 20:23:24 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,12 @@ int	bt_export(char **args)
 		{
 			if (environ[j][0] == 0)
 			{
-				environ[j] = gc_strdup(&g_gc, args[i]);
+				environ[j] = gc_strdup(&g_minishell.gc, args[i]);
 				return (0);
 			}
 			j++;
 		}
-		environ = gc_strarray_append(&g_gc, environ, args[i]);
+		environ = gc_strarray_append(&g_minishell.gc, environ, args[i]);
 		i++;
 	}
 	return (0);

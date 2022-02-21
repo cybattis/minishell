@@ -6,11 +6,10 @@
 /*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 17:10:07 by cybattis          #+#    #+#             */
-/*   Updated: 2022/02/21 19:03:57 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/02/21 20:23:01 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include "minishell.h"
 #include <errno.h>
 #include <sys/wait.h>
@@ -20,7 +19,6 @@ extern char	**environ;
 static void	execute_bin(t_command *commands);
 static int	execute_builtin(t_command *commands);
 static int	execute_extern(t_command *commands);
-static char	**get_path(void);
 
 int	execute_command(t_command_batch cmd_batch)
 {
@@ -59,17 +57,20 @@ static int	execute_builtin(t_command *commands)
 
 static int	execute_extern(t_command *commands)
 {
+	int		child_ret;
 	pid_t	pid;
-	int		status;
+	int		wait_status;
 
-	status = 0;
+	wait_status = 0;
 	pid = fork();
 	if (!pid)
 		execute_bin(commands);
 	else if (pid > 0)
 	{
-		pid = wait(&status);
-		if (!WIFEXITED(status))
+		pid = wait(&wait_status);
+		child_ret = WIFEXITED(wait_status);
+		g_minishell.local_env[0] = gc_itoa(&g_minishell.gc, child_ret);
+		if (child_ret)
 			gc_callback(NULL);
 	}
 	else
@@ -88,20 +89,21 @@ static void	execute_bin(t_command *commands)
 	execve(commands->name, commands->args, environ);
 	while (path[j])
 	{
-		cmd_path = gc_strappend(&g_gc, path[j], '/');
-		cmd_path = gc_strjoin(&g_gc, cmd_path, commands->name, 1);
-		execve(cmd_path, commands->args, environ);
+		cmd_path = gc_strappend(&g_minishell.gc, path[j], '/');
+		cmd_path = gc_strjoin(&g_minishell.gc, cmd_path, commands->name, 1);
+		if (execve(cmd_path, commands->args, environ) == -1 && errno != ENOENT)
+			ft_errno_exit(errno);
 		j++;
 	}
 	ft_error_command(commands->args[0]);
 }
 
-static char	**get_path(void)
+char	**get_path(void)
 {
 	char	*path;
 
 	path = getenv("PATH");
 	if (!path)
 		return (NULL);
-	return (gc_split(&g_gc, path, ':'));
+	return (gc_split(&g_minishell.gc, path, ':'));
 }

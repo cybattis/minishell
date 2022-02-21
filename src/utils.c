@@ -6,7 +6,7 @@
 /*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 14:55:35 by cybattis          #+#    #+#             */
-/*   Updated: 2022/02/21 19:05:02 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/02/21 20:21:57 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ size_t	ft_arglen(char const **args)
 int	gc_callback(void *ptr)
 {
 	(void)ptr;
-	gc_clean(&g_gc);
+	gc_clean(&g_minishell.gc);
 	ft_errno_exit(errno);
 	return (0);
 }
