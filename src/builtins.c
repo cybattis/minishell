@@ -6,7 +6,7 @@
 /*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 15:04:11 by cybattis          #+#    #+#             */
-/*   Updated: 2022/02/21 20:23:10 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/02/21 20:35:10 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ int	bt_pwd(void)
 
 int	bt_cd(char *path)
 {
-	if (!path)
-		path = getenv("USER");
+	if (!path || path[0] == '~')
+		path = getenv("HOME");
 	if (path && chdir(path))
 		perror(strerror(errno));
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 17:10:07 by cybattis          #+#    #+#             */
-/*   Updated: 2022/02/21 20:23:01 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/02/21 20:28:05 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static int	execute_extern(t_command *commands)
 		pid = wait(&wait_status);
 		child_ret = WIFEXITED(wait_status);
 		g_minishell.local_env[0] = gc_itoa(&g_minishell.gc, child_ret);
-		if (child_ret)
+		if (!child_ret)
 			gc_callback(NULL);
 	}
 	else

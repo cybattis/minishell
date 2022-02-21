@@ -6,11 +6,11 @@
 /*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 12:36:16 by cybattis          #+#    #+#             */
-/*   Updated: 2022/02/21 20:25:18 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/02/21 20:27:14 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "readline.h"
 #include "minishell.h"
 
 char	*ft_get_line(void)

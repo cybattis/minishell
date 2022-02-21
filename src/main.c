@@ -6,12 +6,11 @@
 /*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 21:48:09 by cybattis          #+#    #+#             */
-/*   Updated: 2022/02/21 20:22:34 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/02/21 20:27:04 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "readline.h"
 
 t_app	g_minishell;
 
