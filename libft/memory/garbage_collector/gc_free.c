@@ -16,17 +16,15 @@ void	gc_free(t_gc *gc, void *ptr)
 {
 	size_t	i;
 
-	if (!gc)
+	if (!gc || gc->capacity == 0)
 		return ;
 	i = 0;
 	while (i < gc->capacity && gc->pointers[i] != ptr)
 		i++;
-	if (i < gc->capacity)
-		gc->pointers[i] = NULL;
+	if (i >= gc->capacity || gc->pointers[i] == NULL)
+		return ;
 	else
-		return ;
-	if (gc->pointers[i] == NULL)
-		return ;
+		gc->pointers[i] = NULL;
 	if (i < gc->first_free)
 		gc->first_free = i;
 	gc->ptrs_count--;
@@ -37,7 +35,7 @@ void	gc_clean(t_gc *gc)
 {
 	size_t	i;
 
-	if (!gc)
+	if (!gc || gc->capacity == 0)
 		return ;
 	i = 0;
 	while (i < gc->capacity)
@@ -47,4 +45,5 @@ void	gc_clean(t_gc *gc)
 		i++;
 	}
 	free(gc->pointers);
+	gc->capacity = 0;
 }

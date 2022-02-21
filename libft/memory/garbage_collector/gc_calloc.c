@@ -59,7 +59,7 @@ void	*gc_calloc(t_gc *gc, size_t count, size_t size)
 			gc->callback(gc->param);
 		return (NULL);
 	}
-	if (gc->ptrs_count == gc->capacity)
+	if (gc->ptrs_count >= gc->capacity)
 	{
 		if (!gc_grow(gc))
 		{

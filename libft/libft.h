@@ -280,5 +280,11 @@ char		*gc_strjoin(t_gc *gc, char *s1, char *s2, int to_free);
 char		*gc_substr(t_gc *gc, char const *s, unsigned int start, size_t len);
 char		**gc_split(t_gc *gc, char const *s, char c);
 void		gc_split_free(t_gc *gc, char **t);
+char		**gc_strarray_init(t_gc *gc);
+char		**gc_strarray_from(t_gc *gc, char **other, size_t size);
+void		gc_strarray_free(t_gc *gc, char **array);
+char		**gc_strarray_append(t_gc *gc, char **array, char *str);
+char		*gc_strarray_asstr(t_gc *gc, char **array);
+size_t		gc_strarray_size(char **array);
 
 #endif
