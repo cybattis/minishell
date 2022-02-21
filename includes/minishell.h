@@ -6,7 +6,7 @@
 /*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 21:46:20 by cybattis          #+#    #+#             */
-/*   Updated: 2022/02/19 18:11:11 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/02/21 12:24:48 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char		*get_prompt(void);
 int			init_signal(void);
 void		sig_handler(int signum);
 
-int			execute_cmd(t_command_batch cmd_batch);
+int			execute_cmd(t_command_batch cmd_batch, char **envp);
 
 void		ft_errno_exit(int errnum);
 size_t		ft_arglen(char const **args);
