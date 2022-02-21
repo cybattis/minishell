@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../libft.h"
+#include "libft.h"
 
 t_vec3	*vec3_clamp_max(t_vec3 *vec, int x, int y, int z)
 {

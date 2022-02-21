@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft.h"
+#include "libft.h"
 
 int	ft_format_valid_a(char *format, char *str);
 int	ft_format_valid_s(char *format, char *str);

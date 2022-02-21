@@ -1,9 +1,9 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_split_free.c                                    :+:      :+:    :+:   */
+/*   gc_split_free.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By:  <>                                        +#+  +:+       +#+        */
+/*   By:  <njennes>                                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 11:19:03 by                   #+#    #+#             */
 /*   Updated: 2022/01/08 11:19:50 by                  ###   ########.fr       */
@@ -12,16 +12,16 @@
 
 #include "libft.h"
 
-void	ft_split_free(char **tab)
+void	gc_split_free(t_gc *gc, char **tab)
 {
 	int	i;
 
 	i = 0;
 	while (tab[i])
 	{
-		free(tab[i]);
+		gc_free(gc, tab[i]);
 		i++;
 	}
-	free(tab[i]);
-	free(tab);
+	gc_free(gc, tab[i]);
+	gc_free(gc, tab);
 }

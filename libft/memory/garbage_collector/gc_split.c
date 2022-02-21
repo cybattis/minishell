@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_split.c                                         :+:      :+:    :+:   */
+/*   gc_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -41,18 +41,7 @@ static void	ft_chop(char *str, char c)
 	}
 }
 
-static void	ft_free_all(char *s, char **tab, int i)
-{
-	while (i--)
-	{
-		free(tab[i]);
-	}
-	free(tab[i]);
-	free(tab);
-	free(s);
-}
-
-static int	ft_get_words(char *str, int count, char **tab)
+static int	ft_get_words(t_gc *gc, char *str, int count, char **tab)
 {
 	int	i;
 
@@ -61,12 +50,7 @@ static int	ft_get_words(char *str, int count, char **tab)
 	{
 		while (!*str)
 			str++;
-		tab[i] = ft_strdup(str);
-		if (!tab[i])
-		{
-			ft_free_all(str, tab, i);
-			return (0);
-		}
+		tab[i] = gc_strdup(gc, str);
 		str += ft_strlen(str);
 		i++;
 	}
@@ -74,25 +58,18 @@ static int	ft_get_words(char *str, int count, char **tab)
 	return (1);
 }
 
-char	**ft_split(char const *s, char c)
+char	**gc_split(t_gc *gc, char const *s, char c)
 {
 	char	*sdup;
 	char	**tab;
 
 	if (!s)
 		return (NULL);
-	tab = malloc((ft_count_words(s, c) + 1) * sizeof(char *));
-	if (!tab)
-		return (NULL);
-	sdup = ft_strdup(s);
-	if (!sdup)
-	{
-		free(tab);
-		return (NULL);
-	}
+	tab = gc_calloc(gc, ft_count_words(s, c) + 1, sizeof(char *));
+	sdup = gc_strdup(gc, s);
 	ft_chop(sdup, c);
-	if (!ft_get_words(sdup, ft_count_words(s, c), tab))
+	if (!ft_get_words(gc, sdup, ft_count_words(s, c), tab))
 		return (NULL);
-	free(sdup);
+	gc_free(gc, sdup);
 	return (tab);
 }

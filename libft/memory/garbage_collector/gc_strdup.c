@@ -1,27 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_split_free.c                                    :+:      :+:    :+:   */
+/*   gc_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By:  <>                                        +#+  +:+       +#+        */
+/*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/08 11:19:03 by                   #+#    #+#             */
-/*   Updated: 2022/01/08 11:19:50 by                  ###   ########.fr       */
+/*   Created: 2021/11/04 14:25:27 by njennes           #+#    #+#             */
+/*   Updated: 2021/11/04 17:56:20 by njennes          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_split_free(char **tab)
+char	*gc_strdup(t_gc *gc, const char *s1)
 {
-	int	i;
+	char	*newstr;
 
-	i = 0;
-	while (tab[i])
-	{
-		free(tab[i]);
-		i++;
-	}
-	free(tab[i]);
-	free(tab);
+	if (!s1)
+		return (NULL);
+	newstr = gc_calloc(gc, ft_strlen(s1) + 1, sizeof(char));
+	ft_strlcpy(newstr, s1, ft_strlen(s1) + 1);
+	return (newstr);
 }

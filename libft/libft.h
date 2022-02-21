@@ -137,8 +137,8 @@ size_t		ft_word_size(char *str);
 
 //Stringview
 t_StringV	sv_create(const char *str);
-t_StringV	sv_copy(const t_StringV other);
-void		sv_delete(const t_StringV stringV);
+t_StringV	sv_copy(t_StringV other);
+void		sv_delete(t_StringV stringV);
 
 //Basic IO
 int			ft_putchar_fd(char c, int fd);
@@ -274,5 +274,11 @@ void		gc_clean(t_gc *gc);
 void		gc_free(t_gc *gc, void *ptr);
 void		gc_init(t_gc *gc, int (*callback)(), void *param);
 void		*gc_calloc(t_gc *gc, size_t count, size_t size);
+char		*gc_strdup(t_gc *gc, const char *s1);
+char		*gc_strappend(t_gc *gc, char *str, char c);
+char		*gc_strjoin(t_gc *gc, char *s1, char *s2, int to_free);
+char		*gc_substr(t_gc *gc, char const *s, unsigned int start, size_t len);
+char		**gc_split(t_gc *gc, char const *s, char c);
+void		gc_split_free(t_gc *gc, char **t);
 
 #endif

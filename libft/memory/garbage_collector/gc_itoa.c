@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_itoa.c                                          :+:      :+:    :+:   */
+/*   gc_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -36,7 +36,7 @@ static int	ft_numlen(long n, int negative)
 	return (result + negative);
 }
 
-char	*ft_itoa(int n)
+char	*gc_itoa(t_gc *gc, int n)
 {
 	int		negative;
 	int		i;
@@ -44,9 +44,7 @@ char	*ft_itoa(int n)
 	char	*new;
 
 	ft_init_itoa(&negative, n, &ncpy);
-	new = ft_calloc(ft_numlen(ncpy, negative) + 1, sizeof(char));
-	if (!new)
-		return (NULL);
+	new = gc_calloc(gc, ft_numlen(ncpy, negative) + 1, sizeof(char));
 	i = ft_numlen(ncpy, negative);
 	new[i--] = 0;
 	if (ncpy == 0)

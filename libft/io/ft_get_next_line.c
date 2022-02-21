@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft.h"
+#include "libft.h"
 
 static char	*find_line(int fd, char *buffer, char **line);
 static int	ft_get_line_length(char *line, int bytes_read);

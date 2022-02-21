@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../libft.h"
+#include "libft.h"
 
 t_mat4	mat4_translate(t_mat4 self, t_vec3 vec)
 {

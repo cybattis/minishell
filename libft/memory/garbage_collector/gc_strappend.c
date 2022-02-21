@@ -1,27 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_split_free.c                                    :+:      :+:    :+:   */
+/*   gc_strappend.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By:  <>                                        +#+  +:+       +#+        */
+/*   By: njennes <njennes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/08 11:19:03 by                   #+#    #+#             */
-/*   Updated: 2022/01/08 11:19:50 by                  ###   ########.fr       */
+/*   Created: 2022/02/16 21:46:20 by njennes           #+#    #+#             */
+/*   Updated: 2022/02/16 22:17:25 by njennes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_split_free(char **tab)
+char	*gc_strappend(t_gc *gc, char *str, char c)
 {
-	int	i;
+	size_t	len;
+	char	*new_str;
 
-	i = 0;
-	while (tab[i])
-	{
-		free(tab[i]);
-		i++;
-	}
-	free(tab[i]);
-	free(tab);
+	len = ft_strlen(str);
+	new_str = gc_calloc(gc, len + 2, sizeof(char));
+	ft_memmove(new_str, str, len * sizeof (char));
+	new_str[len] = c;
+	gc_free(gc, str);
+	return (new_str);
 }

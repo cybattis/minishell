@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../libft.h"
+#include "libft.h"
 
 void	gc_free(t_gc *gc, void *ptr)
 {
@@ -23,6 +23,10 @@ void	gc_free(t_gc *gc, void *ptr)
 		i++;
 	if (i < gc->capacity)
 		gc->pointers[i] = NULL;
+	else
+		return ;
+	if (gc->pointers[i] == NULL)
+		return ;
 	if (i < gc->first_free)
 		gc->first_free = i;
 	gc->ptrs_count--;
