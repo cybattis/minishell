@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../libft.h"
+#include "libft.h"
 
 t_vec3	*vec3_multi(t_vec3 *self, long value)
 {

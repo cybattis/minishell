@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../libft.h"
+#include "libft.h"
 
 t_vec3	vec3_lerpf(t_vec3 base, t_vec3 high, double value)
 {

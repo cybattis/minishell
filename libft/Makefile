@@ -1,7 +1,7 @@
 NAME				=		libft.a
 NAMED				=		libftd.a
 CC					=		gcc
-CFLAGS				=		-Wall -Werror -Wextra -o2
+CFLAGS				=		-Wall -Werror -Wextra -o2 -I.
 CFLAGSD				=		$(CFLAGS) $(FSANITIZE)
 FSANITIZE			=		-fsanitize=address
 DEPS				=		libft.h
@@ -66,7 +66,9 @@ STANDARD			=		ft_error_exit.c
 
 #Garbage collector
 GCDIR				=		memory/garbage_collector/
-GC					=		gc_init.c gc_calloc.c gc_free.c
+GC					=		gc_init.c gc_calloc.c gc_free.c gc_itoa.c gc_split.c gc_split_free.c gc_strdup.c			\
+							gc_strappend.c gc_substr.c gc_strjoin.c gc_strarray_init.c gc_strarray_append.c				\
+							gc_strarray_free.c gc_strarray_from.c gc_strarray_size.c gc_strarray_asstr.c				\
 
 
 SRCS				=		$(addprefix $(LINKLISTDIR), $(LINKLIST))													\

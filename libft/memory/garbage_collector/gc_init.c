@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../libft.h"
+#include "libft.h"
 
 void	gc_init(t_gc *gc, int (*callback)(void *), void *param)
 {

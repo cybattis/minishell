@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../libft.h"
+#include "libft.h"
 
 t_vec3	*vec3_add(t_vec3 *self, const t_vec3 other)
 {
