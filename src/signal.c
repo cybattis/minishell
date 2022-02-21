@@ -6,11 +6,12 @@
 /*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 12:55:27 by cybattis          #+#    #+#             */
-/*   Updated: 2022/02/19 17:19:25 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/02/21 14:09:22 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <signal.h>
 
 int	init_signal(void)
 {

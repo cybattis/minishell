@@ -6,16 +6,21 @@
 /*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 17:10:07 by cybattis          #+#    #+#             */
-/*   Updated: 2022/02/21 12:26:31 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/02/21 14:44:27 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include "minishell.h"
+#include <errno.h>
+#include <sys/wait.h>
+
+extern char	**environ;
 
 static int	execute_builtin(t_command_batch cmd_batch, size_t i);
-static int	execute_extern(t_command_batch cmd_batch, size_t i, char **envp);
+static int	execute_extern(t_command_batch cmd_batch, size_t i);
 
-int	execute_cmd(t_command_batch cmd_batch, char **envp)
+int	execute_cmd(t_command_batch cmd_batch)
 {
 	size_t	i;
 
@@ -25,7 +30,7 @@ int	execute_cmd(t_command_batch cmd_batch, char **envp)
 		if (cmd_batch.commands[i].is_builtin == 1)
 			execute_builtin(cmd_batch, i);
 		else
-			execute_extern(cmd_batch, i, envp);
+			execute_extern(cmd_batch, i);
 		i++;
 	}
 	return (0);
@@ -40,17 +45,17 @@ static int	execute_builtin(t_command_batch cmd_batch, size_t i)
 	else if (!ft_strcmp(cmd_batch.commands[i].name, "pwd"))
 		bt_pwd();
 	else if (!ft_strcmp(cmd_batch.commands[i].name, "unset"))
-		;
+		bt_unset(cmd_batch.commands[i].args[1]);
 	else if (!ft_strcmp(cmd_batch.commands[i].name, "env"))
-		;
+		bt_env();
 	else if (!ft_strcmp(cmd_batch.commands[i].name, "export"))
-		;
+		bt_export(cmd_batch.commands[i].args[1]);
 	else if (!ft_strcmp(cmd_batch.commands[i].name, "exit"))
 		bt_exit();
 	return (0);
 }
 
-static int	execute_extern(t_command_batch cmd_batch, size_t i, char **envp)
+static int	execute_extern(t_command_batch cmd_batch, size_t i)
 {
 	pid_t	pid;
 	int		status;
@@ -60,7 +65,7 @@ static int	execute_extern(t_command_batch cmd_batch, size_t i, char **envp)
 	pid = fork();
 	if (!pid)
 	{
-		if (execve(cmd_batch.commands[i].name, cmd_batch.commands[i].args, envp))
+		if (execve(cmd_batch.commands[i].name, cmd_batch.commands[i].args, environ))
 			ft_errno_exit(errno);
 		exit(EXIT_SUCCESS);
 	}

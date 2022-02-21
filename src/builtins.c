@@ -6,11 +6,15 @@
 /*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 15:04:11 by cybattis          #+#    #+#             */
-/*   Updated: 2022/02/21 12:03:14 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/02/21 13:51:20 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
+#include "parsing.h"
+#include <errno.h>
+#include <term.h>
+#include <sys/param.h>
 
 int	bt_echo(t_command cmd)
 {
@@ -52,9 +56,4 @@ int	bt_cd(char *path)
 	if (path && chdir(path))
 		perror(strerror(errno));
 	return (0);
-}
-
-int	bt_env(void)
-{
-	
 }
