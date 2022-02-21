@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var_expansion.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: njennes <njennes@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 21:46:20 by njennes           #+#    #+#             */
-/*   Updated: 2022/02/16 22:17:25 by njennes          ###   ########.fr       */
+/*   Updated: 2022/02/21 18:17:09 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	check_for_quote(char quote, char current)
 
 int	is_envchar(char c)
 {
-	if ((c >= 'A' && c <= 'Z') || c == '_' || ft_isdigit(c))
+	if (ft_isalnum(c) || c == '_')
 		return (1);
 	return (0);
 }

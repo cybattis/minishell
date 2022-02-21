@@ -6,31 +6,31 @@
 /*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 15:04:11 by cybattis          #+#    #+#             */
-/*   Updated: 2022/02/21 13:51:20 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/02/21 18:32:32 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include "parsing.h"
+#include "minishell.h"
+#include <string.h>
 #include <errno.h>
 #include <term.h>
 #include <sys/param.h>
 
-int	bt_echo(t_command cmd)
+int	bt_echo(t_command *cmd)
 {
 	size_t	size;
 	size_t	i;
 
 	i = 1;
-	size = ft_arglen((char const **)cmd.args);
-	while (cmd.args[i])
+	size = ft_arglen((char const **)cmd->args);
+	while (cmd->args[i])
 	{
-		printf("%s", cmd.args[i]);
+		printf("%s", cmd->args[i]);
 		if (i < size - 1)
 			printf(" ");
 		i++;
 	}
-	if (ft_strcmp(cmd.args[1], "-n"))
+	if (ft_strcmp(cmd->args[1], "-n"))
 		printf("\n");
 	return (0);
 }
@@ -38,6 +38,7 @@ int	bt_echo(t_command cmd)
 int	bt_exit(void)
 {
 	printf("exit\n");
+	gc_clean(&g_gc);
 	exit(EXIT_SUCCESS);
 	return (0);
 }

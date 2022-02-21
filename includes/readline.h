@@ -1,38 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signal.c                                           :+:      :+:    :+:   */
+/*   readline.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/17 12:55:27 by cybattis          #+#    #+#             */
-/*   Updated: 2022/02/21 17:03:47 by cybattis         ###   ########.fr       */
+/*   Created: 2022/02/21 16:40:18 by cybattis          #+#    #+#             */
+/*   Updated: 2022/02/21 16:41:51 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include "readline.h"
-#include <signal.h>
+#ifndef READLINE_H
+# define READLINE_H
 
-int	init_signal(void)
-{
-	struct sigaction	sa;
+# ifdef __linux__
+#  include <readline/history.h>
+# endif
+# include <readline/readline.h>
 
-	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = 0;
-	sa.sa_handler = sig_handler;
-	sigaction(SIGINT, &sa, NULL);
-	signal(SIGTSTP, SIG_IGN);
-	signal(SIGQUIT, SIG_IGN);
-	return (0);
-}
-
-void	sig_handler(int signum)
-{
-	if (signum == SIGINT)
-	{
-		printf("\n");
-		rl_on_new_line();
-		rl_redisplay();
-	}
-}
+#endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: njennes <njennes@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 21:46:20 by njennes           #+#    #+#             */
-/*   Updated: 2022/02/16 22:17:25 by njennes          ###   ########.fr       */
+/*   Updated: 2022/02/21 17:43:42 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ void			lexer_add_end(t_lexer *lexer);
 void			lexer_destroy(t_lexer *lexer);
 
 //var_expansion.c
+int				is_envchar(char c);
 char			*expand_env_vars(char *str);
 
 //parsing_error.c
