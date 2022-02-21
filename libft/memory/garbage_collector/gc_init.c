@@ -12,6 +12,7 @@
 
 #include "libft.h"
 
+//TODO: keep track of stats like current footprint, peek footprint, total lifespan foorptint
 void	gc_init(t_gc *gc, int (*callback)(void *), void *param)
 {
 	if (!gc)
