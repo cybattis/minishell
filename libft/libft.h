@@ -6,7 +6,7 @@
 /*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 14:34:44 by njennes           #+#    #+#             */
-/*   Updated: 2022/02/17 14:10:49 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/02/21 20:19:35 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -286,5 +286,6 @@ void		gc_strarray_free(t_gc *gc, char **array);
 char		**gc_strarray_append(t_gc *gc, char **array, char *str);
 char		*gc_strarray_asstr(t_gc *gc, char **array);
 size_t		gc_strarray_size(char **array);
+char		*gc_itoa(t_gc *gc, int n);
 
 #endif
