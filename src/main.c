@@ -14,15 +14,14 @@
 
 t_app	g_minishell;
 
-int	main(void)
+int	main(int argc, char **argv, char **envp)
 {
 	char			*line_read;
 	t_command_batch	command_batch;
 
-	init_signal();
-	gc_init(&g_minishell.gc, gc_callback, NULL);
-	g_minishell.local_env = gc_calloc(&g_minishell.gc, 2, sizeof(char *));
-	g_minishell.local_env[0] = 0;
+	(void)argc;
+	(void)argv;
+	init_minishell(envp);
 	while (FT_TRUE)
 	{
 		line_read = ft_get_line();

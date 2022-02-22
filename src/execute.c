@@ -17,8 +17,8 @@
 extern char	**environ;
 
 static void	execute_bin(t_command *commands);
-static int	execute_builtin(t_command *commands);
-static int	execute_extern(t_command *commands);
+static int	execute_builtin(t_command *command);
+static int	execute_extern(t_command *command);
 
 int	execute_command(t_command_batch cmd_batch)
 {
@@ -36,26 +36,26 @@ int	execute_command(t_command_batch cmd_batch)
 	return (0);
 }
 
-static int	execute_builtin(t_command *commands)
+static int	execute_builtin(t_command *command)
 {
-	if (!ft_strcmp(commands->name, "cd"))
-		bt_cd(commands->args[1]);
-	else if (!ft_strcmp(commands->name, "echo"))
-		bt_echo(commands);
-	else if (!ft_strcmp(commands->name, "pwd"))
+	if (!ft_strcmp(command->name, "cd"))
+		bt_cd(command->args[1]);
+	else if (!ft_strcmp(command->name, "echo"))
+		bt_echo(command);
+	else if (!ft_strcmp(command->name, "pwd"))
 		bt_pwd();
-	else if (!ft_strcmp(commands->name, "unset"))
-		bt_unset(commands->args[1]);
-	else if (!ft_strcmp(commands->name, "env"))
+	else if (!ft_strcmp(command->name, "unset"))
+		bt_unset(&command->args[1]);
+	else if (!ft_strcmp(command->name, "env"))
 		bt_env();
-	else if (!ft_strcmp(commands->name, "export"))
-		bt_export(commands->args);
-	else if (!ft_strcmp(commands->name, "exit"))
+	else if (!ft_strcmp(command->name, "export"))
+		bt_export(&command->args[1]);
+	else if (!ft_strcmp(command->name, "exit"))
 		bt_exit();
 	return (0);
 }
 
-static int	execute_extern(t_command *commands)
+static int	execute_extern(t_command *command)
 {
 	int		child_ret;
 	pid_t	pid;
@@ -64,7 +64,7 @@ static int	execute_extern(t_command *commands)
 	wait_status = 0;
 	pid = fork();
 	if (!pid)
-		execute_bin(commands);
+		execute_bin(command);
 	else if (pid > 0)
 	{
 		pid = wait(&wait_status);

@@ -48,46 +48,54 @@ static int	check_var(char *var)
 
 int	bt_export(char **args)
 {
-	int	i;
-	int	j;
+	size_t	value_offset;
+	size_t	i;
 
-	i = 1;
-	j = 0;
+	i = 0;
 	while (args[i])
 	{
 		if (!check_var(args[i]))
 		{
 			i++;
-			printf("%s\n", args[i]);
+			printf("minishell: export: `%s': not a valid identifier\n", args[i]);
 			continue ;
 		}
-		while (environ[j])
+		value_offset = 0;
+		while (args[i][value_offset] && args[i][value_offset] != '=')
+			value_offset++;
+		if (args[i][value_offset])
 		{
-			if (environ[j][0] == 0)
-			{
-				environ[j] = gc_strdup(&g_minishell.gc, args[i]);
-				return (0);
-			}
-			j++;
+			args[i][value_offset] = 0;
+			value_offset++;
 		}
-		environ = gc_strarray_append(&g_minishell.gc, environ, args[i]);
+		set_env_var(args[i], &args[i][value_offset]);
 		i++;
 	}
 	return (0);
 }
 
-int	bt_unset(char *var)
+int	bt_unset(char **args)
 {
-	int	i;
+	size_t	i;
+	size_t	j;
 
 	i = 0;
-	while (environ[i])
+	while (args[i])
 	{
-		if (!ft_strncmp(environ[i], var, ft_strlen(var)))
+		j = 0;
+		while (args[i][j])
 		{
-			environ[i][0] = 0;
-			return (0);
+			if (!is_envchar(args[i][j]))
+				break ;
+			j++;
 		}
+		if (args[i][j])
+		{
+			printf("minishell: unset: `%s': not a valid identifier\n", args[i]);
+			i++;
+			continue ;
+		}
+		unset_env_var(args[i]);
 		i++;
 	}
 	return (1);

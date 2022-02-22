@@ -11,7 +11,7 @@ INC_PATH		:=		-I$(LIB_DIR) -I$(MAKE_DIR)/includes
 
 LIB_PATH		:=		-L$(LIB_DIR)
 
-LIBS			:=		-lftd
+LIBS			:=		-lft
 
 OS				=	$(shell uname -s)
 ifeq ($(OS), Linux)
@@ -27,14 +27,14 @@ BIN_CC			:=		gcc
 BIN_CFLAGS		:=
 BIN_CFLAGS		+=		-MD
 BIN_CFLAGS		+=		-Wall -Werror -Wextra
-BIN_CFLAGS		+=		-g3 -fsanitize=address
+BIN_CFLAGS		+=		-g3 #-fsanitize=address
 BIN_CFLAGS		+=		$(INC_PATH)
 
 BIN_LDFLAGS		:=
 BIN_LDFLAGS		+=		$(LIB_PATH) $(LIBS)
-BIN_LDFLAGS		+=		-fsanitize=address
+BIN_LDFLAGS		+=		#-fsanitize=address
 
-LIBFT_LIB		:=		$(LIB_DIR)/libftd.a
+LIBFT_LIB		:=		$(LIB_DIR)/libft.a
 
 export MAKE_DIR
 export OBJS_DIR
@@ -81,7 +81,7 @@ tests:
 	@$(MAKE) -C src/parsing/ tests
 
 .PHONY: re
-re: fclean all debug clean bonus
+re: fclean all
 
 .PHONY: header
 header:

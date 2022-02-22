@@ -10,15 +10,16 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/parsing.h"
-#include "../../libft/libft.h"
+#include "parsing.h"
+#include "libft.h"
+#include "minishell.h"
 
 char	*get_var(char *name)
 {
 	char	*value;
 
 	value = getenv(name);
-	free(name);
+	gc_free(get_gc(), name);
 	return (value);
 }
 
@@ -67,7 +68,7 @@ char	*expand_env_vars(char *str)
 	char	*new_str;
 	char	quote;
 
-	new_str = ft_strdup(""); //TODO: replace with gc_strdup
+	new_str = gc_strdup(get_gc(), "");
 	quote = 0;
 	i = 0;
 	while (str[i])
@@ -76,13 +77,13 @@ char	*expand_env_vars(char *str)
 		if (quote != '\'' && str[i] == '$' && is_envchar(str[i + 1]))
 		{
 			i++;
-			env_var = get_var(ft_substr(str, i,get_env_var_len(&str[i])));
-			new_str = ft_strjoin(new_str, env_var, 1); //TODO: Replace with gc_strjoin
+			env_var = get_var(gc_substr(get_gc(), str, i,get_env_var_len(&str[i])));
+			new_str = gc_strjoin(get_gc(), new_str, env_var, 1);
 			while (str[i] && is_envchar(str[i + 1]))
 				i++;
 		}
 		else
-			new_str = ft_strappend(new_str, str[i]); //TODO: Replace with gc_strappend
+			new_str = gc_strappend(get_gc(), new_str, str[i]);
 		i++;
 	}
 	return (new_str);

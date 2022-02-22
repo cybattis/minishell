@@ -10,8 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/parsing.h"
-#include "../../libft/libft.h"
+#include "parsing.h"
+#include "libft.h"
+#include "minishell.h"
 
 int	get_token_type(char *token, t_lexer *lexer)
 {
@@ -52,7 +53,7 @@ void	consume_single_quotes(t_parser *parser, t_lexer *lexer)
 		size++;
 	size++;
 	token.is_one_word = FT_TRUE;
-	token.str = ft_substr(parser->str, parser->i, size); //TODO: Replace with a new gc_substr
+	token.str = gc_substr(get_gc(), parser->str, parser->i, size);
 	token.type = get_token_type(token.str, lexer);
 	lexer_add_token(token, lexer);
 	parser->i += size;
@@ -69,7 +70,7 @@ void	consume_double_quotes(t_parser *parser, t_lexer *lexer)
 		size++;
 	size++;
 	token.is_one_word = FT_TRUE;
-	token.str = ft_substr(parser->str, parser->i, size); //TODO: Replace with a new gc_substr
+	token.str = gc_substr(get_gc(), parser->str, parser->i, size);
 	token.type = get_token_type(token.str, lexer);
 	lexer_add_token(token, lexer);
 	parser->i += size;
@@ -82,7 +83,7 @@ void	consume_word(t_parser *parser, t_lexer *lexer)
 
 	size = ft_word_size(&parser->str[parser->i]);
 	token.is_one_word = FT_TRUE;
-	token.str = ft_substr(parser->str, parser->i, size); //TODO: Replace with a new gc_substr
+	token.str = gc_substr(get_gc(), parser->str, parser->i, size);
 	token.type = get_token_type(token.str, lexer);
 	lexer_add_token(token, lexer);
 	parser->i += size;

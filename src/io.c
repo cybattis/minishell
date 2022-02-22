@@ -18,7 +18,7 @@ char	*ft_get_line(void)
 	static char	*line_read;
 
 	if (line_read)
-		free(line_read);
+		gc_free(get_gc(), line_read);
 	line_read = readline(get_prompt());
 	if (!line_read)
 		bt_exit();

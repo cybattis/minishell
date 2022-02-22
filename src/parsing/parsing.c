@@ -12,6 +12,7 @@
 
 #include "parsing.h"
 #include "libft.h"
+#include "minishell.h"
 
 t_command_batch	parse_input(char *input)
 {
@@ -20,7 +21,7 @@ t_command_batch	parse_input(char *input)
 
 	input = expand_env_vars(input);
 	lexer = tokenize_input(input);
-	free(input);
+	gc_free(get_gc(), input);
 	ft_memset(&command_batch, 0, sizeof (t_command_batch));
 	if (!check_parsing_errors(lexer))
 		return (command_batch);

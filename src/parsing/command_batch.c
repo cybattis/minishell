@@ -10,8 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/parsing.h"
-#include "../../libft/libft.h"
+#include "parsing.h"
+#include "libft.h"
+#include "minishell.h"
 
 int	is_redir_token(int token)
 {
@@ -81,7 +82,7 @@ static char	**get_command_args(t_token *tokens)
 	char	**args;
 
 	arg_count = get_arg_count(tokens);
-	args = ft_calloc(arg_count + 1, sizeof (char *)); //TODO: Replace with gc_calloc
+	args = gc_calloc(get_gc(), arg_count + 1, sizeof (char *));
 	i = 0;
 	j = 0;
 	while (tokens[i].type == TOKEN_COMMAND || tokens[i].type == TOKEN_ARG ||
@@ -89,7 +90,7 @@ static char	**get_command_args(t_token *tokens)
 	{
 		if (tokens[i].type == TOKEN_COMMAND || tokens[i].type == TOKEN_ARG)
 		{
-			args[j] = ft_strdup(tokens[i].str); //TODO: Replace with gc_strdup
+			args[j] = gc_strdup(get_gc(),tokens[i].str);
 			j++;
 		}
 		i++;
@@ -119,7 +120,7 @@ static char	*get_redirection_file(t_token *tokens)
 	while (tokens[i].type && !is_redir_token(tokens[i].type))
 		i++;
 	i++;
-	file_name = ft_strdup(tokens[i].str); //TODO: REplace with gc_strdup
+	file_name = gc_strdup(get_gc(),tokens[i].str);
 	return (file_name);
 }
 
@@ -142,7 +143,7 @@ static void	populate_commands(t_lexer lexer, t_command *commands)
 	j = 0;
 	while (lexer.tokens[i].type != TOKEN_END)
 	{
-		commands[j].name = ft_strdup(lexer.tokens[i].str); //TODO: Replace with gc_strdup
+		commands[j].name = gc_strdup(get_gc(), lexer.tokens[i].str);
 		commands[j].is_builtin = is_builtin_command(commands[j].name);
 		commands[j].args = get_command_args(&lexer.tokens[i]);
 		i++;
@@ -163,6 +164,6 @@ void	create_command_batch(t_lexer lexer, t_command_batch *batch)
 
 	command_count = get_command_count(lexer);
 	batch->count = command_count;
-	batch->commands = ft_calloc(command_count, sizeof (t_command)); //TODO:Replace this with gc_calloc
+	batch->commands = gc_calloc(get_gc(), command_count, sizeof (t_command));
 	populate_commands(lexer, batch->commands);
 }

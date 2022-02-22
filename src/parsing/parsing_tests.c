@@ -10,8 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/parsing.h"
-#include "../../libft/libft.h"
+#include "parsing.h"
+#include "libft.h"
+#include "minishell.h"
 #include <fcntl.h>
 
 void	print_test(char *name)
@@ -49,7 +50,7 @@ void	start_tests()
 			lexer = tokenize_input(input);
 			lexer_print(&lexer);
 			lexer_destroy(&lexer);
-			free(input);
+			gc_free(get_gc(), input);
 			input = ft_get_next_line(fd);
 			input = ft_trimr(input);
 		}
@@ -70,8 +71,8 @@ void	start_tests()
 			printf("Input: %s\n", input);
 			expanded = expand_env_vars(input);
 			printf("Expanded: %s\n", expanded);
-			free(input);
-			free(expanded);
+			gc_free(get_gc(), input);
+			gc_free(get_gc(), expanded);
 			input = ft_get_next_line(fd);
 			input = ft_trimr(input);
 		}
@@ -93,8 +94,8 @@ void	start_tests()
 			lexer = tokenize_input(expanded);
 			lexer_print(&lexer);
 			lexer_destroy(&lexer);
-			free(input);
-			free(expanded);
+			gc_free(get_gc(), input);
+			gc_free(get_gc(), expanded);
 			input = ft_get_next_line(fd);
 			input = ft_trimr(input);
 		}

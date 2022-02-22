@@ -10,11 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft/libft.h"
-#include "../includes/minishell.h"
+#include "libft.h"
+#include "minishell.h"
 #include <sys/param.h>
-#include <sys/stat.h>
-#include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
 
@@ -27,10 +25,10 @@ int	is_git_repo(char *path)
 	ft_memset(&s, 0, sizeof (struct stat));
 	if (stat(full_path, &s) == 0)
 	{
-		free(full_path);
+		gc_free(get_gc(), full_path);
 		return (1);
 	}
-	free(full_path);
+	gc_free(get_gc(), full_path);
 	return (0);
 }
 
@@ -39,7 +37,7 @@ char	*find_git_repo(char *current_path)
 	size_t	i;
 	char	*path_to_repo;
 
-	path_to_repo = ft_strdup(current_path);
+	path_to_repo = gc_strdup(get_gc(), current_path);
 	while (ft_strlen(path_to_repo) && !is_git_repo(path_to_repo))
 	{
 		i = ft_strlen(path_to_repo);
@@ -76,8 +74,8 @@ char	*trim_branch(char *str)
 	offset = ft_strnstr(str, "heads/", ft_strlen(str));
 	if (offset == NULL)
 	{
-		free(str);
-		return (ft_strdup("Unknown"));
+		gc_free(get_gc(), str);
+		return (gc_strdup(get_gc(), "Unknown"));
 	}
 	ft_memmove(str, offset + 6, ft_strlen(offset + 6) + 1);
 	return (ft_trimr(str));
@@ -92,9 +90,9 @@ char	*get_git_branch(char *path)
 	full_path = ft_strjoin(path, "/.git/HEAD", 0);
 	fd = open(full_path, O_RDONLY);
 	if (!fd)
-		return (ft_strdup("Unknown"));
-	branch = ft_get_next_line(fd);
-	free(full_path);
+		return (gc_strdup(get_gc(), "Unknown"));
+	branch = gc_get_next_line(get_gc(), fd);
+	gc_free(get_gc(), full_path);
 	close(fd);
 	branch = trim_branch(branch);
 	return (branch);
@@ -112,9 +110,9 @@ char	*get_git_prompt(char *path_to_git, char *current_path)
 	prompt = ft_strjoin(prompt, " \e[1;92mgit:(\e[1;91m", 1);
 	prompt = ft_strjoin(prompt, git_branch, 3);
 	prompt = ft_strjoin(prompt, "\e[1;92m)\e[0;m", 1);
-	prompt = ft_strappend(prompt, '$');
-	prompt = ft_strappend(prompt, ' ');
-	free(path_to_git);
+	prompt = gc_strappend(get_gc(), prompt, '$');
+	prompt = gc_strappend(get_gc(), prompt, ' ');
+	gc_free(get_gc(), path_to_git);
 	return (prompt);
 }
 
@@ -129,10 +127,10 @@ char	*get_prompt(void)
 	if (git_repo)
 		return (get_git_prompt(git_repo, buf));
 	else
-		free(git_repo);
+		gc_free(get_gc(), git_repo);
 	prompt = ft_strjoin("\e[1;93mMinishell\e[0m: \e[1;94m", buf, 0);
 	prompt = ft_strjoin(prompt, "\e[0m", 1);
-	prompt = ft_strappend(prompt, '$');
-	prompt = ft_strappend(prompt, ' ');
+	prompt = gc_strappend(get_gc(), prompt, '$');
+	prompt = gc_strappend(get_gc(), prompt, ' ');
 	return (prompt);
 }

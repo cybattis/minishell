@@ -69,6 +69,7 @@ GCDIR				=		memory/garbage_collector/
 GC					=		gc_init.c gc_calloc.c gc_free.c gc_itoa.c gc_split.c gc_split_free.c gc_strdup.c			\
 							gc_strappend.c gc_substr.c gc_strjoin.c gc_strarray_init.c gc_strarray_append.c				\
 							gc_strarray_free.c gc_strarray_from.c gc_strarray_size.c gc_strarray_asstr.c				\
+							gc_get_next_line.c																			\
 
 
 SRCS				=		$(addprefix $(LINKLISTDIR), $(LINKLIST))													\

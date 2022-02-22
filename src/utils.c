@@ -16,6 +16,11 @@
 #include <stdio.h>
 #include <errno.h>
 
+t_gc	*get_gc()
+{
+	return (&g_minishell.gc);
+}
+
 void	ft_errno_exit(int errnum)
 {
 	printf("%s\n", strerror(errnum));

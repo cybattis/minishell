@@ -20,13 +20,17 @@ typedef struct s_app
 {
 	t_gc	gc;
 	char	**local_env;
+	char	**base_env;
 }	t_app;
 
 extern t_app	g_minishell;
 
+t_gc		*get_gc();
+
 char		*ft_get_line(void);
 char		*get_prompt(void);
 
+void		init_minishell(char **envp);
 int			init_signal(void);
 void		sig_handler(int signum);
 
@@ -45,6 +49,10 @@ int			bt_cd(char *path);
 
 int			bt_export(char **args);
 int			bt_env(void);
-int			bt_unset(char *var);
+int			bt_unset(char **args);
+
+void		set_env_var(char *name, char *value);
+void		unset_env_var(char *name);
+void		update_shell_env_vars();
 
 #endif

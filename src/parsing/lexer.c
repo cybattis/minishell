@@ -10,8 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/parsing.h"
-#include "../../libft/libft.h"
+#include "parsing.h"
+#include "libft.h"
+#include "minishell.h"
 
 void	skip_spaces(t_parser *parser)
 {
@@ -23,9 +24,9 @@ void	lexer_add_token(t_token new_token, t_lexer *lexer)
 {
 	t_token	*new_ptr;
 
-	new_ptr = ft_calloc(lexer->count + 1, sizeof (t_token)); //TODO: Replace this with gc_calloc
+	new_ptr = gc_calloc(get_gc(), lexer->count + 1, sizeof (t_token));
 	ft_memmove(new_ptr, lexer->tokens, lexer->count * sizeof (t_token));
-	free(lexer->tokens); //TODO: replace with gc_free
+	gc_free(get_gc(), lexer->tokens);
 	lexer->tokens = new_ptr;
 	lexer->tokens[lexer->count] = new_token;
 	lexer->count = lexer->count + 1;
@@ -79,7 +80,7 @@ t_lexer	tokenize_input(char *input)
 
 void	lexer_destroy(t_lexer *lexer)
 {
-	free(lexer->tokens);
+	gc_free(get_gc(), lexer->tokens);
 	lexer->tokens = NULL;
 	lexer->count = 0;
 }

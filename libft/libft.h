@@ -279,6 +279,7 @@ char		*gc_strappend(t_gc *gc, char *str, char c);
 char		*gc_strjoin(t_gc *gc, char *s1, char *s2, int to_free);
 char		*gc_substr(t_gc *gc, char const *s, unsigned int start, size_t len);
 char		**gc_split(t_gc *gc, char const *s, char c);
+char		*gc_get_next_line(t_gc *gc, int fd);
 void		gc_split_free(t_gc *gc, char **t);
 char		**gc_strarray_init(t_gc *gc);
 char		**gc_strarray_from(t_gc *gc, char **other, size_t size);
