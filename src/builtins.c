@@ -6,7 +6,7 @@
 /*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 15:04:11 by cybattis          #+#    #+#             */
-/*   Updated: 2022/02/21 20:35:10 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/02/22 14:13:37 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	bt_echo(t_command *cmd)
 int	bt_exit(void)
 {
 	printf("exit\n");
-	gc_clean(&g_minishell.gc);
+	gc_clean(get_gc());
 	exit(EXIT_SUCCESS);
 	return (0);
 }
@@ -54,9 +54,13 @@ int	bt_pwd(void)
 
 int	bt_cd(char *path)
 {
+	char	buf[MAXPATHLEN];
+
 	if (!path || path[0] == '~')
 		path = getenv("HOME");
 	if (path && chdir(path))
 		perror(strerror(errno));
+	set_env_var("OLDPWD", getenv("PWD"));
+	set_env_var("PWD", getcwd(buf, MAXPATHLEN));
 	return (0);
 }

@@ -11,8 +11,6 @@ INC_PATH		:=		-I$(LIB_DIR) -I$(MAKE_DIR)/includes
 
 LIB_PATH		:=		-L$(LIB_DIR)
 
-LIBS			:=		-lft
-
 OS				=	$(shell uname -s)
 ifeq ($(OS), Linux)
 	READLINE		:=		-L/usr/lib/x86_64-linux-gnu/ -lreadline -lhistory
@@ -22,19 +20,21 @@ else
 	INC_PATH		+=		-I ~/.brew/Cellar/readline/8.1.2/include/readline
 endif
 
+LIBS			:=		-lftd $(READLINE)
+
 BIN_CC			:=		gcc
 
 BIN_CFLAGS		:=
 BIN_CFLAGS		+=		-MD
 BIN_CFLAGS		+=		-Wall -Werror -Wextra
-BIN_CFLAGS		+=		-g3 #-fsanitize=address
+BIN_CFLAGS		+=		-g3 -fsanitize=address
 BIN_CFLAGS		+=		$(INC_PATH)
 
 BIN_LDFLAGS		:=
+BIN_LDFLAGS		+=		-fsanitize=address
 BIN_LDFLAGS		+=		$(LIB_PATH) $(LIBS)
-BIN_LDFLAGS		+=		#-fsanitize=address
 
-LIBFT_LIB		:=		$(LIB_DIR)/libft.a
+LIBFT_LIB		:=		$(LIB_DIR)/libftd.a
 
 export MAKE_DIR
 export OBJS_DIR

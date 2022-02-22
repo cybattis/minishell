@@ -24,7 +24,7 @@ $(OBJS_DIR)/%.o:	$(SRCS_DIR)/%.c | $(OBJS_DIR)
 
 $(NAME):	$(OBJS) $(MASTER_MAKE) $(LIBFT_LIB)
 	@printf "$(_BLUE)\nCompiled source files\n"
-	@$(BIN_CC) $(BIN_CFLAGS) $(OBJS) $(OBJ_PARSING) $(LIBFT_LIB) $(READLINE) -o ../$@
+	@$(BIN_CC) $(BIN_LDFLAGS) $(OBJS) $(OBJ_PARSING) -o ../$@
 	@printf "$(_GREEN)Finish compiling $(NAME)!$(_END)\n"
 
 .PHONY: bonus
