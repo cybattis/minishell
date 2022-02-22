@@ -6,7 +6,7 @@
 /*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 21:46:20 by cybattis          #+#    #+#             */
-/*   Updated: 2022/02/21 20:19:42 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/02/22 18:03:13 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ int			bt_unset(char **args);
 
 void		set_env_var(char *name, char *value);
 void		unset_env_var(char *name);
-void		update_shell_env_vars();
+void		update_shell_env_vars(void);
+
+
 
 #endif

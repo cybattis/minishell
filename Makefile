@@ -16,11 +16,11 @@ ifeq ($(OS), Linux)
 	READLINE		:=		-L/usr/lib/x86_64-linux-gnu/ -lreadline -lhistory
 	INC_PATH		+=
 else
-	READLINE		:=		-L ~/.brew/Cellar/readline/8.1.2/lib -lreadline
-	INC_PATH		+=		-I ~/.brew/Cellar/readline/8.1.2/include/readline
+	READLINE		:=		-L ~/.brew/opt/readline/lib -lreadline -lhistory
+	INC_PATH		+=		-I ~/.brew/opt/readline/include/readline
 endif
 
-LIBS			:=		-lftd $(READLINE)
+LIBS			:=		$(LIB_PATH) -lftd $(READLINE)
 
 BIN_CC			:=		gcc
 
@@ -32,7 +32,6 @@ BIN_CFLAGS		+=		$(INC_PATH)
 
 BIN_LDFLAGS		:=
 BIN_LDFLAGS		+=		-fsanitize=address
-BIN_LDFLAGS		+=		$(LIB_PATH) $(LIBS)
 
 LIBFT_LIB		:=		$(LIB_DIR)/libftd.a
 
