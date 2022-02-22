@@ -44,6 +44,6 @@ void	gc_clean(t_gc *gc)
 			free(gc->pointers[i]);
 		i++;
 	}
-	free(gc->pointers);
+	//free(gc->pointers);
 	gc->capacity = 0;
 }

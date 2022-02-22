@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include "minishell.h"
+#include "../libft/libft.h"
+#include "../includes/minishell.h"
 #include <sys/param.h>
 #include <sys/stat.h>
 #include <fcntl.h>
@@ -21,7 +21,7 @@ int	is_git_repo(char *path)
 	char		*full_path;
 	struct stat	s;
 
-	full_path = ft_strjoin(path, "/.git", 0);
+	full_path = gc_strjoin(get_gc(), path, "/.git", 0);
 	ft_memset(&s, 0, sizeof (struct stat));
 	if (stat(full_path, &s) == 0)
 	{
@@ -87,7 +87,7 @@ char	*get_git_branch(char *path)
 	char	*full_path;
 	int		fd;
 
-	full_path = ft_strjoin(path, "/.git/HEAD", 0);
+	full_path = gc_strjoin(get_gc(), path, "/.git/HEAD", 0);
 	fd = open(full_path, O_RDONLY);
 	if (!fd)
 		return (gc_strdup(get_gc(), "Unknown"));
@@ -106,10 +106,10 @@ char	*get_git_prompt(char *path_to_git, char *current_path)
 
 	folder = get_last_folders(path_to_git, current_path);
 	git_branch = get_git_branch(path_to_git);
-	prompt = ft_strjoin("\e[1;93mMinishell\e[0m: \e[1;94m", folder, 0);
-	prompt = ft_strjoin(prompt, " \e[1;92mgit:(\e[1;91m", 1);
-	prompt = ft_strjoin(prompt, git_branch, 3);
-	prompt = ft_strjoin(prompt, "\e[1;92m)\e[0;m", 1);
+	prompt = gc_strjoin(get_gc(), "\e[1;93mMinishell\e[0m: \e[1;94m", folder, 0);
+	prompt = gc_strjoin(get_gc(), prompt, " \e[1;92mgit:(\e[1;91m", 1);
+	prompt = gc_strjoin(get_gc(), prompt, git_branch, 3);
+	prompt = gc_strjoin(get_gc(), prompt, "\e[1;92m)\e[0;m", 1);
 	prompt = gc_strappend(get_gc(), prompt, '$');
 	prompt = gc_strappend(get_gc(), prompt, ' ');
 	gc_free(get_gc(), path_to_git);
@@ -128,8 +128,8 @@ char	*get_prompt(void)
 		return (get_git_prompt(git_repo, buf));
 	else
 		gc_free(get_gc(), git_repo);
-	prompt = ft_strjoin("\e[1;93mMinishell\e[0m: \e[1;94m", buf, 0);
-	prompt = ft_strjoin(prompt, "\e[0m", 1);
+	prompt = gc_strjoin(get_gc(), "\e[1;93mMinishell\e[0m: \e[1;94m", buf, 0);
+	prompt = gc_strjoin(get_gc(), prompt, "\e[0m", 1);
 	prompt = gc_strappend(get_gc(), prompt, '$');
 	prompt = gc_strappend(get_gc(), prompt, ' ');
 	return (prompt);
