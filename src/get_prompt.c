@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_prompt.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:22:09 by njennes           #+#    #+#             */
-/*   Updated: 2021/11/04 14:22:15 by njennes          ###   ########lyon.fr   */
+/*   Updated: 2022/02/22 19:38:57 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	*find_git_repo(char *current_path)
 	while (ft_strlen(path_to_repo) && !is_git_repo(path_to_repo))
 	{
 		i = ft_strlen(path_to_repo);
-		while (i >= 0 && path_to_repo[i] != '/')
+		while (i && path_to_repo[i] != '/')
 			i--;
 		path_to_repo[i] = 0;
 	}
@@ -58,9 +58,9 @@ char	*get_last_folders(char *path_to_git, char *full_path)
 	while (path_to_git[i] && path_to_git[i] == full_path[i])
 		i++;
 	i--;
-	while (i >= 0 && full_path[i] == '/')
+	while (i && full_path[i] == '/')
 		i--;
-	while (i >= 0 && full_path[i] != '/')
+	while (i && full_path[i] != '/')
 		i--;
 	i++;
 	ft_memmove(full_path, full_path + i, ft_strlen(full_path + i) + 1);

@@ -6,7 +6,7 @@
 /*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 12:55:27 by cybattis          #+#    #+#             */
-/*   Updated: 2022/02/21 17:03:47 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/02/23 11:46:16 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	sig_handler(int signum)
 	{
 		printf("\n");
 		rl_on_new_line();
+		rl_replace_line("", 0);
 		rl_redisplay();
 	}
 }

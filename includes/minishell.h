@@ -6,7 +6,7 @@
 /*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 21:46:20 by cybattis          #+#    #+#             */
-/*   Updated: 2022/02/22 18:03:13 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/02/22 19:39:24 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ typedef struct s_app
 
 extern t_app	g_minishell;
 
-t_gc		*get_gc();
+t_gc		*get_gc(void);
 
 char		*ft_get_line(void);
 char		*get_prompt(void);
@@ -54,7 +54,5 @@ int			bt_unset(char **args);
 void		set_env_var(char *name, char *value);
 void		unset_env_var(char *name);
 void		update_shell_env_vars(void);
-
-
 
 #endif
