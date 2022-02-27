@@ -49,15 +49,76 @@ int	get_last_token_type(t_lexer *lexer)
 	return (lexer->tokens[lexer->count - 1].type);
 }
 
+char	*parse_env_name(t_parser *parser)
+{
+	size_t	start;
+	char	*name;
+
+	start = parser->i;
+	while (parser->str[parser->i] && is_envchar(parser->str[parser->i]))
+		parser->i++;
+	name = gc_substr(get_gc(), parser->str, start, parser->i - start);
+	return (name);
+}
+
+void	handle_env_value(t_lexer *lexer, char *value)
+{
+	t_parser	value_parser;
+
+	value_parser.i = 0;
+	value_parser.str = value;
+	while (value_parser.str[value_parser.i])
+	{
+		skip_spaces(&value_parser);
+		if (value_parser.str[value_parser.i] == '\'')
+			lexer_add_token(consume_single_quotes(&value_parser, lexer), lexer);
+		else
+			lexer_add_token(consume_word(&value_parser, lexer), lexer);
+	}
+}
+
+void	handle_dollar_sign(t_parser *parser, t_lexer *lexer)
+{
+	t_token	token;
+	char	*env_name;
+	char	*env_value;
+
+	parser->i++;
+	if (!is_envchar(parser->str[parser->i]))
+	{
+		if (parser->str[parser->i] == '?')
+		{
+			token.str = gc_strdup(get_gc(), "0"); //TODO: get real last return value
+			token.type = get_token_type(token.str, lexer, 0);
+			token.is_one_word = 1;
+			lexer_add_token(token, lexer);
+			parser->i++;
+			return ;
+		}
+		token.str = gc_strdup(get_gc(), "$"); //TODO: get real last return value
+		token.type = get_token_type(token.str, lexer, 0);
+		token.is_one_word = 1;
+		lexer_add_token(token, lexer);
+		parser->i++;
+		return ;
+	}
+	env_name = parse_env_name(parser);
+	env_value = getenv(env_name);
+	gc_free(get_gc(), env_name);
+	handle_env_value(lexer, env_value);
+}
+
 void	get_next_token(t_parser *parser, t_lexer *lexer)
 {
 	skip_spaces(parser);
 	if (parser->str[parser->i] == '\'')
-		consume_single_quotes(parser, lexer);
+		lexer_add_token(consume_single_quotes(parser, lexer), lexer);
 	else if (parser->str[parser->i] == '\"')
-		consume_double_quotes(parser, lexer);
+		lexer_add_token(consume_double_quotes(parser, lexer), lexer);
+	else if (parser->str[parser->i] == '$')
+		handle_dollar_sign(parser, lexer);
 	else if (parser->str[parser->i] != '\0')
-		consume_word(parser, lexer);
+		lexer_add_token(consume_word(parser, lexer), lexer);
 	else
 		lexer_add_end(lexer);
 }
@@ -67,7 +128,6 @@ t_lexer	tokenize_input(char *input)
 	t_lexer		lexer;
 	t_parser	parser;
 
-	//TODO: Expand env vars before lexing
 	ft_memset(&lexer, 0, sizeof (t_lexer));
 	parser.i = 0;
 	parser.str = input;

@@ -23,7 +23,7 @@ $(OBJS_DIR)/%.o:	$(SRCS_DIR)/%.c | $(OBJS_DIR)
 	@printf "$(_GREEN)█$(_END)"
 
 $(NAME):	$(OBJS) $(MASTER_MAKE) $(LIBFT_LIB)
-	@printf "$(_BLUE)\nCompiled source files\n"
+	@printf "$(_BLUE)\nCompiled source files\n$(_END)"
 	@$(BIN_CC) $(BIN_LDFLAGS) $(OBJS) $(OBJ_PARSING) -o ../$@ $(LIBS)
 	@printf "$(_GREEN)Finish compiling $(NAME)!$(_END)\n"
 

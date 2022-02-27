@@ -34,6 +34,7 @@ typedef struct s_command
 	char		*name;
 	char		**args;
 	char		*redirection_file;
+	char		*str;
 }				t_command;
 
 typedef struct s_command_batch
@@ -62,12 +63,14 @@ typedef struct s_lexer
 }				t_lexer;
 
 //parsing.c
+t_command_batch	split_input_into_commands(char *input);
 t_command_batch	parse_input(char *input);
 
 //get_token.c
-void			consume_single_quotes(t_parser *parser, t_lexer *lexer);
-void			consume_double_quotes(t_parser *parser, t_lexer *lexer);
-void			consume_word(t_parser *parser, t_lexer *lexer);
+int				get_token_type(char *token, t_lexer *lexer, int handle_op);
+t_token			consume_single_quotes(t_parser *parser, t_lexer *lexer);
+t_token			consume_double_quotes(t_parser *parser, t_lexer *lexer);
+t_token			consume_word(t_parser *parser, t_lexer *lexer);
 
 //lexer.c
 t_lexer			tokenize_input(char *input);
