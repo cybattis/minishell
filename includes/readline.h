@@ -19,4 +19,6 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
+void	rl_replace_line(const char *, int);
+
 #endif
