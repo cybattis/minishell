@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cybattis <cybattis@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 17:10:07 by cybattis          #+#    #+#             */
-/*   Updated: 2022/02/21 20:28:05 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/02/28 16:44:42 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 extern char	**environ;
 
-static void	execute_bin(t_command *commands);
+static void	execute_bin(t_command *commands, int fd);
 static int	execute_builtin(t_command *command);
 static int	execute_extern(t_command *command);
 
@@ -57,16 +57,23 @@ static int	execute_builtin(t_command *command)
 
 static int	execute_extern(t_command *command)
 {
+//    ssize_t	nbytes;
+    int     fd[2];
 	int		child_ret;
 	pid_t	pid;
 	int		wait_status;
+    char    readbuffer[BUFSIZ];
 
 	wait_status = 0;
 	pid = fork();
-	if (!pid)
-		execute_bin(command);
-	else if (pid > 0)
+    pipe(fd);
+	if (!pid)           // child
+        execute_bin(command, fd[0]);
+	else if (pid > 0)   // parent
 	{
+        close(fd[1]);
+        read(fd[0], readbuffer, BUFSIZ);
+        dprintf(fd[0], "Received string: [%s]\n", readbuffer);
 		pid = wait(&wait_status);
 		child_ret = WIFEXITED(wait_status);
 		g_minishell.local_env[0] = gc_itoa(&g_minishell.gc, child_ret);
@@ -78,12 +85,13 @@ static int	execute_extern(t_command *command)
 	return (0);
 }
 
-static void	execute_bin(t_command *commands)
+static void	execute_bin(t_command *commands, int fd)
 {
 	char	**path;
 	char	*cmd_path;
 	int		j;
 
+    dup2(0, fd);
 	path = get_path();
 	j = 0;
 	execve(commands->name, commands->args, environ);
