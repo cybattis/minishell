@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cybattis <cybattis@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 17:10:07 by cybattis          #+#    #+#             */
-/*   Updated: 2022/02/28 16:44:42 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/01 17:04:31 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 extern char	**environ;
 
-static void	execute_bin(t_command *commands, int fd);
+static void	execute_bin(t_command *commands);
 static int	execute_builtin(t_command *command);
 static int	execute_extern(t_command *command);
 
@@ -27,6 +27,7 @@ int	execute_command(t_command_batch cmd_batch)
 	i = 0;
 	while (i < cmd_batch.count)
 	{
+		printf("%d %d\n", cmd_batch.commands[i].is_redirecting, cmd_batch.commands[i].redirection_type);
 		if (cmd_batch.commands[i].is_builtin == 1)
 			execute_builtin(&cmd_batch.commands[i]);
 		else
@@ -57,23 +58,16 @@ static int	execute_builtin(t_command *command)
 
 static int	execute_extern(t_command *command)
 {
-//    ssize_t	nbytes;
-    int     fd[2];
 	int		child_ret;
 	pid_t	pid;
 	int		wait_status;
-    char    readbuffer[BUFSIZ];
 
 	wait_status = 0;
 	pid = fork();
-    pipe(fd);
-	if (!pid)           // child
-        execute_bin(command, fd[0]);
-	else if (pid > 0)   // parent
+	if (!pid)
+		execute_bin(command);
+	else if (pid > 0)
 	{
-        close(fd[1]);
-        read(fd[0], readbuffer, BUFSIZ);
-        dprintf(fd[0], "Received string: [%s]\n", readbuffer);
 		pid = wait(&wait_status);
 		child_ret = WIFEXITED(wait_status);
 		g_minishell.local_env[0] = gc_itoa(&g_minishell.gc, child_ret);
@@ -85,13 +79,12 @@ static int	execute_extern(t_command *command)
 	return (0);
 }
 
-static void	execute_bin(t_command *commands, int fd)
+static void	execute_bin(t_command *commands)
 {
 	char	**path;
 	char	*cmd_path;
 	int		j;
 
-    dup2(0, fd);
 	path = get_path();
 	j = 0;
 	execve(commands->name, commands->args, environ);

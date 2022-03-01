@@ -6,7 +6,7 @@
 /*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 21:46:20 by njennes           #+#    #+#             */
-/*   Updated: 2022/02/19 15:46:51 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/01 17:11:40 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@
 int	is_redir_token(int token)
 {
 	if (token == TOKEN_REDIR_OUT || token == TOKEN_REDIR_OUT_APPEND ||
-		token == TOKEN_REDIR_IN || token == TOKEN_REDIR_IN_APPEND)
+		token == TOKEN_REDIR_IN || token == TOKEN_REDIR_IN_APPEND ||
+		token == TOKEN_PIPE)
 		return (1);
 	return (0);
 }
@@ -148,7 +149,7 @@ static void	populate_commands(t_lexer lexer, t_command *commands)
 		commands[j].args = get_command_args(&lexer.tokens[i]);
 		i++;
 		commands[j].redirection_type = get_redirection_type(&lexer.tokens[i]); //TODO: Check for multiple redirs
-		if (commands[j].redirection_type)
+		if (commands[j].redirection_type && commands[j].is_redirecting != TOKEN_PIPE)
 		{
 			commands[j].is_redirecting = 1;
 			commands[j].redirection_file = get_redirection_file(&lexer.tokens[i]);

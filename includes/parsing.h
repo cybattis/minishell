@@ -6,7 +6,7 @@
 /*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 21:46:20 by njennes           #+#    #+#             */
-/*   Updated: 2022/02/21 17:43:42 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/01 17:17:34 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 
 typedef struct s_command
 {
+	// int			as_pipe; ?
 	int			is_redirecting;
 	int			redirection_type;
 	int			is_builtin;
