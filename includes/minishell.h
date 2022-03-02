@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cybattis <cybattis@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 21:46:20 by cybattis          #+#    #+#             */
-/*   Updated: 2022/02/22 19:39:24 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/02 19:19:08 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,11 @@ int			init_signal(void);
 void		sig_handler(int signum);
 
 int			execute_command(t_command_batch cmd_batch);
+int			execute_builtin(t_command *command);
+void		execute_bin(t_command *commands);
 char		**get_path(void);
+
+int			execute_pipe(int *fds, t_command *command);
 
 void		ft_error_command(char *command);
 void		ft_errno_exit(int errnum);

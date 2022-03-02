@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cybattis <cybattis@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 17:10:07 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/01 17:04:31 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/03 00:17:35 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,28 +16,34 @@
 
 extern char	**environ;
 
-static void	execute_bin(t_command *commands);
-static int	execute_builtin(t_command *command);
 static int	execute_extern(t_command *command);
 
 int	execute_command(t_command_batch cmd_batch)
 {
+	int 	fds[2];
 	size_t	i;
 
 	i = 0;
 	while (i < cmd_batch.count)
 	{
-		printf("%d %d\n", cmd_batch.commands[i].is_redirecting, cmd_batch.commands[i].redirection_type);
-		if (cmd_batch.commands[i].is_builtin == 1)
-			execute_builtin(&cmd_batch.commands[i]);
+		if (cmd_batch.commands[i].as_pipe == 1)
+		{
+			pipe(fds);
+			execute_pipe(fds, &cmd_batch.commands[i]);
+		}
 		else
-			execute_extern(&cmd_batch.commands[i]);
+		{
+			if (cmd_batch.commands[i].is_builtin == 1)
+				execute_builtin(&cmd_batch.commands[i]);
+			else
+				execute_extern(&cmd_batch.commands[i]);
+		}
 		i++;
 	}
 	return (0);
 }
 
-static int	execute_builtin(t_command *command)
+int	execute_builtin(t_command *command)
 {
 	if (!ft_strcmp(command->name, "cd"))
 		bt_cd(command->args[1]);
@@ -79,7 +85,7 @@ static int	execute_extern(t_command *command)
 	return (0);
 }
 
-static void	execute_bin(t_command *commands)
+void	execute_bin(t_command *commands)
 {
 	char	**path;
 	char	*cmd_path;
@@ -92,7 +98,7 @@ static void	execute_bin(t_command *commands)
 	{
 		cmd_path = gc_strappend(&g_minishell.gc, path[j], '/');
 		cmd_path = gc_strjoin(&g_minishell.gc, cmd_path, commands->name, 1);
-		if (execve(cmd_path, commands->args, environ) == -1 && errno != ENOENT)
+		if (execve(cmd_path, commands->args, environ) < 0 && errno != ENOENT)
 			ft_errno_exit(errno);
 		j++;
 	}

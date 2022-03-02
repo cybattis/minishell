@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_batch.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cybattis <cybattis@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 21:46:20 by njennes           #+#    #+#             */
-/*   Updated: 2022/03/01 17:11:40 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/02 22:09:18 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static size_t	get_arg_count(t_token *tokens)
 	i = 0;
 	count = 0;
 	while (tokens[i].type == TOKEN_COMMAND || tokens[i].type == TOKEN_ARG ||
-			is_redir_token(tokens[i].type))
+			(is_redir_token(tokens[i].type) && tokens[i].type != TOKEN_PIPE))
 	{
 		if (tokens[i].type == TOKEN_COMMAND || tokens[i].type == TOKEN_ARG)
 			count++;
@@ -83,15 +83,17 @@ static char	**get_command_args(t_token *tokens)
 	char	**args;
 
 	arg_count = get_arg_count(tokens);
+//	printf("%zu\n", arg_count);
 	args = gc_calloc(get_gc(), arg_count + 1, sizeof (char *));
 	i = 0;
 	j = 0;
 	while (tokens[i].type == TOKEN_COMMAND || tokens[i].type == TOKEN_ARG ||
-			is_redir_token(tokens[i].type))
+			(is_redir_token(tokens[i].type) && tokens[i].type != TOKEN_PIPE))
 	{
 		if (tokens[i].type == TOKEN_COMMAND || tokens[i].type == TOKEN_ARG)
 		{
-			args[j] = gc_strdup(get_gc(),tokens[i].str);
+			args[j] = gc_strdup(get_gc(), tokens[i].str);
+//			printf("args %s\n", args[j]);
 			j++;
 		}
 		i++;
@@ -104,8 +106,7 @@ static int	get_redirection_type(t_token *tokens)
 	size_t	i;
 
 	i = 0;
-	while (tokens[i].type && !is_redir_token(tokens[i].type) &&
-			tokens[i].type != TOKEN_PIPE)
+	while (tokens[i].type && !is_redir_token(tokens[i].type))
 		i++;
 	if (is_redir_token(tokens[i].type))
 		return (tokens[i].type);
@@ -149,10 +150,12 @@ static void	populate_commands(t_lexer lexer, t_command *commands)
 		commands[j].args = get_command_args(&lexer.tokens[i]);
 		i++;
 		commands[j].redirection_type = get_redirection_type(&lexer.tokens[i]); //TODO: Check for multiple redirs
-		if (commands[j].redirection_type && commands[j].is_redirecting != TOKEN_PIPE)
+		if (commands[j].redirection_type && commands[j].redirection_type != TOKEN_END)
 		{
 			commands[j].is_redirecting = 1;
 			commands[j].redirection_file = get_redirection_file(&lexer.tokens[i]);
+			if (get_redirection_type(&lexer.tokens[i]) == TOKEN_PIPE)
+				commands[j].as_pipe = 1;
 		}
 		i += get_command_length(&lexer.tokens[i]);
 		j++;

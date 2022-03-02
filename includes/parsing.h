@@ -28,10 +28,10 @@
 
 typedef struct s_command
 {
-	// int			as_pipe; ?
+	int			as_pipe;
+	int			is_builtin;
 	int			is_redirecting;
 	int			redirection_type;
-	int			is_builtin;
 	char		*name;
 	char		**args;
 	char		*redirection_file;
