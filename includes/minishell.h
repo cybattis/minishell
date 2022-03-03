@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cybattis <cybattis@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 21:46:20 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/03 11:13:08 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/03 15:27:39 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void		execute_bin(t_command *commands);
 char		**get_path(void);
 
 int			execute_pipe(int *fds, t_command *command);
-int			redirection(t_command *command);
+int			redirection(int fd, t_command *command);
 
 int			ft_errno(int errnum);
 void		ft_error_command(char *command);

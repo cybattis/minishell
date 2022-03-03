@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cybattis <cybattis@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 17:10:07 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/03 11:33:53 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/03 15:48:40 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,12 @@ static int	execute_extern(t_command *command);
 
 int	execute_command(t_command_batch cmd_batch)
 {
+	int		fd;
 	int 	fds[2];
 	size_t	i;
 
 	i = 0;
+	fd = 0;
 	while (i < cmd_batch.count)
 	{
 		if (cmd_batch.commands[i].as_pipe == 1)
@@ -33,13 +35,22 @@ int	execute_command(t_command_batch cmd_batch)
 		}
 		else
 		{
+			if (cmd_batch.commands[i].is_redirecting == 1)
+				redirection(fd, &cmd_batch.commands[i]);
 			if (cmd_batch.commands[i].is_builtin == 1)
 				execute_builtin(&cmd_batch.commands[i]);
 			else
 				execute_extern(&cmd_batch.commands[i]);
+			if (cmd_batch.commands[i].is_redirecting == 1)
+			{
+				dup2(fd, STDOUT_FILENO);
+				close(fd);
+			}
 		}
 		i++;
 	}
+	fflush(stdin);
+	fflush(stdout);
 	return (0);
 }
 
