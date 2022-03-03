@@ -6,7 +6,7 @@
 /*   By: cybattis <cybattis@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 17:10:07 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/03 00:17:35 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/03 11:33:53 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ static int	execute_extern(t_command *command)
 	return (0);
 }
 
-void	execute_bin(t_command *commands)
+void	execute_bin(t_command *command)
 {
 	char	**path;
 	char	*cmd_path;
@@ -93,16 +93,16 @@ void	execute_bin(t_command *commands)
 
 	path = get_path();
 	j = 0;
-	execve(commands->name, commands->args, environ);
+	execve(command->name, command->args, environ);
 	while (path[j])
 	{
 		cmd_path = gc_strappend(&g_minishell.gc, path[j], '/');
-		cmd_path = gc_strjoin(&g_minishell.gc, cmd_path, commands->name, 1);
-		if (execve(cmd_path, commands->args, environ) < 0 && errno != ENOENT)
+		cmd_path = gc_strjoin(&g_minishell.gc, cmd_path, command->name, 1);
+		if (execve(cmd_path, command->args, environ) < 0 && errno != ENOENT)
 			ft_errno_exit(errno);
 		j++;
 	}
-	ft_error_command(commands->args[0]);
+	ft_error_command(command->args[0]);
 }
 
 char	**get_path(void)
