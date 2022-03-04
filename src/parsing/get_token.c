@@ -14,11 +14,11 @@
 #include "libft.h"
 #include "minishell.h"
 
-int	get_token_type(char *token, t_lexer *lexer)
+int	get_token_type(char *token, t_lexer *lexer, int handle_op)
 {
 	int	last_token;
 
-	if (ft_strlen(token) <= 2)
+	if (handle_op && ft_strlen(token) <= 2)
 	{
 		if (ft_strcmp(token, "|") == 0)
 			return (TOKEN_PIPE);
@@ -42,7 +42,7 @@ int	get_token_type(char *token, t_lexer *lexer)
 	return (TOKEN_UNKNOWN);
 }
 
-void	consume_single_quotes(t_parser *parser, t_lexer *lexer)
+t_token	consume_single_quotes(t_parser *parser, t_lexer *lexer)
 {
 	size_t	size;
 	t_token	token;
@@ -54,12 +54,12 @@ void	consume_single_quotes(t_parser *parser, t_lexer *lexer)
 	size++;
 	token.is_one_word = FT_TRUE;
 	token.str = gc_substr(get_gc(), parser->str, parser->i, size);
-	token.type = get_token_type(token.str, lexer);
-	lexer_add_token(token, lexer);
+	token.type = get_token_type(token.str, lexer, 0);
 	parser->i += size;
+	return (token);
 }
 
-void	consume_double_quotes(t_parser *parser, t_lexer *lexer)
+t_token	consume_double_quotes(t_parser *parser, t_lexer *lexer)
 {
 	size_t	size;
 	t_token	token;
@@ -71,20 +71,29 @@ void	consume_double_quotes(t_parser *parser, t_lexer *lexer)
 	size++;
 	token.is_one_word = FT_TRUE;
 	token.str = gc_substr(get_gc(), parser->str, parser->i, size);
-	token.type = get_token_type(token.str, lexer);
-	lexer_add_token(token, lexer);
+	token.type = get_token_type(token.str, lexer, 0);
 	parser->i += size;
+	return (token);
 }
 
-void	consume_word(t_parser *parser, t_lexer *lexer)
+t_token	consume_word(t_parser *parser, t_lexer *lexer)
 {
-	size_t	size;
+	size_t	start;
 	t_token	token;
 
-	size = ft_word_size(&parser->str[parser->i]);
+	start = parser->i;
+	while (parser->str[parser->i] &&
+			!ft_isspace(parser->str[parser->i]))
+	{
+		if (parser->str[parser->i] == '\'')
+			consume_single_quotes(parser, lexer);
+		else if (parser->str[parser->i] == '"')
+			consume_double_quotes(parser, lexer);
+		else
+			parser->i++;
+	}
 	token.is_one_word = FT_TRUE;
-	token.str = gc_substr(get_gc(), parser->str, parser->i, size);
-	token.type = get_token_type(token.str, lexer);
-	lexer_add_token(token, lexer);
-	parser->i += size;
+	token.str = gc_substr(get_gc(), parser->str, parser->i, parser->i - start);
+	token.type = get_token_type(token.str, lexer, 1);
+	return (token);
 }
