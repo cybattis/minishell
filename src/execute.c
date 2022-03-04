@@ -6,7 +6,7 @@
 /*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 17:10:07 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/03 17:04:14 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/04 14:04:43 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,13 @@ static int	execute_extern(t_command *command);
 
 int	execute_command(t_command_batch cmd_batch)
 {
-	int		fd;
+	int		save_fd[2];
 	int 	fds[2];
 	size_t	i;
 
 	i = 0;
-	fd = 0;
+	save_fd[0] = dup(STDIN_FILENO);
+	save_fd[1] = dup(STDOUT_FILENO);
 	while (i < cmd_batch.count)
 	{
 		if (cmd_batch.commands[i].as_pipe == 1)
@@ -37,15 +38,18 @@ int	execute_command(t_command_batch cmd_batch)
 		else
 		{
 			if (cmd_batch.commands[i].is_redirecting == 1)
-				redirection(fd, &cmd_batch.commands[i]);
+				redirection(&cmd_batch.commands[i]);
 			if (cmd_batch.commands[i].is_builtin == 1)
 				execute_builtin(&cmd_batch.commands[i]);
 			else
 				execute_extern(&cmd_batch.commands[i]);
-			if (cmd_batch.commands[i].is_redirecting == 1)
+			if (cmd_batch.count > 1 && (cmd_batch.commands[i].is_redirecting == 1 ||
+				cmd_batch.commands[i - 1].as_pipe == 1))
 			{
-				dup2(fd, STDOUT_FILENO);
-				close(fd);
+				dup2(save_fd[1], STDOUT_FILENO);
+				dup2(save_fd[0], STDIN_FILENO);
+				close(save_fd[0]);
+				close(save_fd[1]);
 			}
 		}
 		i++;

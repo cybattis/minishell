@@ -6,7 +6,7 @@
 /*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 17:10:07 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/03 15:50:27 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/04 14:00:30 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	execute_pipe(int *fds, t_command *command)
 	return (0);
 }
 
-int redirection(int fd, t_command *command)
+int redirection(t_command *command)
 {
 	if (command->redirection_file && command->redirection_type == TOKEN_REDIR_OUT)
 	{
@@ -67,23 +67,20 @@ int redirection(int fd, t_command *command)
 		fdout = open(command->redirection_file, O_WRONLY | O_CREAT | O_TRUNC, 0666);
 		if (fdout == -1)
 			return (ft_errno(errno));
-		fd = dup(STDOUT_FILENO);
 		dup2(fdout, STDOUT_FILENO);
 		close(fdout);
-		return (fd);
+		return (0);
 	}
 	if (command->redirection_file && command->redirection_type == TOKEN_REDIR_IN)
 	{
 		int fdin;
 
-		printf("redirection in %s\n", command->redirection_file);
 		fdin = open(command->redirection_file, O_RDONLY, 0666);
 		if (fdin == -1)
 			return (ft_errno(errno));
-		fd = dup(STDIN_FILENO);
 		dup2(fdin, STDIN_FILENO);
 		close(fdin);
-		return (fd);
+		return (0);
 	}
 	if (command->redirection_file && command->redirection_type == TOKEN_REDIR_OUT_APPEND)
 	{
@@ -92,21 +89,10 @@ int redirection(int fd, t_command *command)
 		fdout = open(command->redirection_file, O_WRONLY | O_APPEND);
 		if (fdout == -1)
 			return (ft_errno(errno));
-		fd = dup(STDOUT_FILENO);
 		dup2(fdout, STDOUT_FILENO);
 		close(fdout);
-		return (fd);
+		return (0);
 	}
-	if (command->redirection_file && command->redirection_type == TOKEN_REDIR_IN_APPEND)
-	{
-		int fdin;
-
-		fdin = open(command->redirection_file, O_RDONLY, 0666);
-		if (fdin == -1)
-			return (ft_errno(errno));
-		dup2(fdin, STDIN_FILENO);
-		close(fdin);
-		// TODO : set and send delimiter
-	}
+	// TODO: RDOC
 	return (0);
 }
