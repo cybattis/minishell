@@ -14,6 +14,13 @@
 #include "libft.h"
 #include "minishell.h"
 
+int	is_operator(char c)
+{
+	if (c == '|' || c == '>' || c == '<' || c == '&')
+		return (1);
+	return (0);
+}
+
 int	get_token_type(char *token, t_lexer *lexer, int handle_op)
 {
 	int	last_token;
@@ -38,62 +45,72 @@ int	get_token_type(char *token, t_lexer *lexer, int handle_op)
 	if (last_token == TOKEN_COMMAND || last_token == TOKEN_ARG)
 		return (TOKEN_ARG);
 	if (last_token == TOKEN_REDIR_OUT || last_token == TOKEN_REDIR_OUT_APPEND)
-		return (TOKEN_ARG);
+		return (TOKEN_FILE);
 	return (TOKEN_UNKNOWN);
 }
 
 t_token	consume_single_quotes(t_parser *parser, t_lexer *lexer)
 {
-	size_t	size;
+	size_t	start;
 	t_token	token;
 
-	size = 1;
-	while (parser->str[parser->i + size] &&
-			parser->str[parser->i + size] != '\'')
-		size++;
-	size++;
+	parser->i++;
+	start = parser->i;
+	while (parser->str[parser->i] &&
+			parser->str[parser->i] != '\'')
+		parser->i++;
 	token.is_one_word = FT_TRUE;
-	token.str = gc_substr(get_gc(), parser->str, parser->i, size);
+	token.str = gc_substr(get_gc(), parser->str, start, parser->i - start);
 	token.type = get_token_type(token.str, lexer, 0);
-	parser->i += size;
+	parser->i++;
 	return (token);
 }
 
 t_token	consume_double_quotes(t_parser *parser, t_lexer *lexer)
 {
-	size_t	size;
+	size_t	start;
 	t_token	token;
 
-	size = 1;
-	while (parser->str[parser->i + size] &&
-			parser->str[parser->i + size] != '"')
-		size++;
-	size++;
+	parser->i++;
+	start = parser->i;
+	while (parser->str[parser->i] &&
+			parser->str[parser->i] != '"')
+		parser->i++;
 	token.is_one_word = FT_TRUE;
-	token.str = gc_substr(get_gc(), parser->str, parser->i, size);
+	token.str = gc_substr(get_gc(), parser->str, start, parser->i - start);
 	token.type = get_token_type(token.str, lexer, 0);
-	parser->i += size;
+	parser->i++;
 	return (token);
+}
+
+void	token_append(t_token new, t_token *token)
+{
+	token->str = gc_strjoin(get_gc(), token->str, new.str, 1);
+	gc_free(get_gc(), new.str);
 }
 
 t_token	consume_word(t_parser *parser, t_lexer *lexer)
 {
-	size_t	start;
+	int		is_op;
 	t_token	token;
 
-	start = parser->i;
+	is_op = is_operator(parser->str[parser->i]);
+	token.str = gc_strdup(get_gc(), "");
 	while (parser->str[parser->i] &&
-			!ft_isspace(parser->str[parser->i]))
+			!ft_isspace(parser->str[parser->i]) &&
+			is_op == is_operator(parser->str[parser->i]))
 	{
 		if (parser->str[parser->i] == '\'')
-			consume_single_quotes(parser, lexer);
+			token_append(consume_single_quotes(parser, lexer), &token);
 		else if (parser->str[parser->i] == '"')
-			consume_double_quotes(parser, lexer);
+			token_append(consume_double_quotes(parser, lexer), &token);
 		else
+		{
+			token.str = gc_strappend(get_gc(), token.str, parser->str[parser->i]);
 			parser->i++;
+		}
 	}
 	token.is_one_word = FT_TRUE;
-	token.str = gc_substr(get_gc(), parser->str, parser->i, parser->i - start);
 	token.type = get_token_type(token.str, lexer, 1);
 	return (token);
 }

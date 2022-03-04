@@ -14,6 +14,8 @@
 #include "libft.h"
 #include "minishell.h"
 
+char	*token_type_to_str(int token_type);
+
 void	skip_spaces(t_parser *parser)
 {
 	while (parser->str[parser->i] == ' ')

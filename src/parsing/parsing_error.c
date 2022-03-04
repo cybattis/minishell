@@ -17,6 +17,9 @@ static int	check_token_order(int last, int current)
 {
 	if (last == TOKEN_PIPE && current == TOKEN_PIPE)
 		return (0);
+	if ((last == TOKEN_REDIR_OUT_APPEND || last == TOKEN_REDIR_OUT) &&
+			current != TOKEN_FILE)
+		return (0);
 	return (1);
 }
 
@@ -31,7 +34,7 @@ int	check_parsing_errors(t_lexer lexer)
 	while (i < lexer.count)
 	{
 		token = lexer.tokens[i].type;
-		if (i == 0 && token != TOKEN_COMMAND)
+		if (i == 0 && !(token == TOKEN_COMMAND || token == TOKEN_REDIR_IN || token == TOKEN_REDIR_IN_APPEND))
 			return (0);
 		if (!check_token_order(last_token, token))
 			return (0);

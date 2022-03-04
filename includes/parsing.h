@@ -25,16 +25,23 @@
 # define TOKEN_REDIR_IN 5
 # define TOKEN_REDIR_OUT_APPEND 6
 # define TOKEN_REDIR_IN_APPEND 7
+# define TOKEN_FILE 8
+
+typedef struct s_redir
+{
+	int			type;
+	char		*file;
+}				t_redir;
 
 typedef struct s_command
 {
+	int			is_piping;
 	int			is_redirecting;
-	int			redirection_type;
 	int			is_builtin;
 	char		*name;
 	char		**args;
-	char		*redirection_file;
 	char		*str;
+	t_redir		*redirections;
 }				t_command;
 
 typedef struct s_command_batch
@@ -63,7 +70,6 @@ typedef struct s_lexer
 }				t_lexer;
 
 //parsing.c
-t_command_batch	split_input_into_commands(char *input);
 t_command_batch	parse_input(char *input);
 
 //get_token.c

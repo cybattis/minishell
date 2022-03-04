@@ -98,40 +98,49 @@ static char	**get_command_args(t_token *tokens)
 	return (args);
 }
 
-static int	get_redirection_type(t_token *tokens)
+size_t	get_redirs_count(t_token *tokens)
 {
 	size_t	i;
+	size_t	count;
 
+	count = 0;
 	i = 0;
-	while (tokens[i].type && !is_redir_token(tokens[i].type) &&
-			tokens[i].type != TOKEN_PIPE)
+	while (tokens[i].type == TOKEN_COMMAND || tokens[i].type == TOKEN_ARG ||
+		   is_redir_token(tokens[i].type))
+	{
+		if (is_redir_token(tokens[i].type))
+			count++;
 		i++;
-	if (is_redir_token(tokens[i].type))
-		return (tokens[i].type);
-	return (TOKEN_END);
+	}
+	return (count);
 }
 
-static char	*get_redirection_file(t_token *tokens)
+t_redir	*get_redirections(t_token *tokens)
 {
+	t_redir	*redirs;
 	size_t	i;
-	char	*file_name;
+	size_t	j;
 
 	i = 0;
-	while (tokens[i].type && !is_redir_token(tokens[i].type))
+	j = 0;
+	redirs = gc_calloc(get_gc(), get_redirs_count(tokens) + 1, sizeof (t_redir));
+	while (tokens[i].type == TOKEN_COMMAND || tokens[i].type == TOKEN_ARG ||
+		   is_redir_token(tokens[i].type))
+	{
+		if (is_redir_token(tokens[i].type))
+		{
+			redirs[j].type = tokens[i].type;
+			if ((tokens[i].type == TOKEN_REDIR_OUT ||
+				tokens[i].type == TOKEN_REDIR_OUT_APPEND) &&
+				tokens[i + 1].type == TOKEN_FILE)
+			{
+				redirs[j].file = gc_strdup(get_gc(), tokens[i + 1].str);
+			}
+			j++;
+		}
 		i++;
-	i++;
-	file_name = gc_strdup(get_gc(),tokens[i].str);
-	return (file_name);
-}
-
-static size_t	get_command_length(t_token *tokens)
-{
-	size_t	i;
-
-	i = 0;
-	while (tokens[i].type && tokens[i].type != TOKEN_COMMAND)
-		i++;
-	return (i);
+	}
+	return (redirs);
 }
 
 static void	populate_commands(t_lexer lexer, t_command *commands)
@@ -143,17 +152,22 @@ static void	populate_commands(t_lexer lexer, t_command *commands)
 	j = 0;
 	while (lexer.tokens[i].type != TOKEN_END)
 	{
+		commands[j].args = get_command_args(&lexer.tokens[i]);
+		commands[j].redirections = get_redirections(&lexer.tokens[i]);
+		if (commands[j].redirections[0].type)
+			commands[j].is_redirecting = 1;
+		while (lexer.tokens[i].type != TOKEN_COMMAND)
+			i++;
 		commands[j].name = gc_strdup(get_gc(), lexer.tokens[i].str);
 		commands[j].is_builtin = is_builtin_command(commands[j].name);
-		commands[j].args = get_command_args(&lexer.tokens[i]);
-		i++;
-		commands[j].redirection_type = get_redirection_type(&lexer.tokens[i]); //TODO: Check for multiple redirs
-		if (commands[j].redirection_type)
+		while (lexer.tokens[i].type != TOKEN_END &&
+				lexer.tokens[i].type != TOKEN_PIPE)
+			i++;
+		if (lexer.tokens[i].type == TOKEN_PIPE)
 		{
-			commands[j].is_redirecting = 1;
-			commands[j].redirection_file = get_redirection_file(&lexer.tokens[i]);
+			commands[j].is_piping = FT_TRUE;
+			i++;
 		}
-		i += get_command_length(&lexer.tokens[i]);
 		j++;
 	}
 }
