@@ -6,13 +6,16 @@
 /*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 12:55:27 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/04 16:48:26 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/04 17:44:14 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <termios.h>
 #include "minishell.h"
 #include "readline.h"
 #include <signal.h>
+
+extern t_app g_minishell;
 
 int	init_signal(void)
 {
@@ -29,6 +32,9 @@ int	init_signal(void)
 
 void	sig_handler(int signum)
 {
+	// TODO: remove ^C
+	// enableRawMode(g_minishell.og_termios);
+	// disableRawMode(g_minishell.og_termios);
 	if (signum == SIGINT)
 	{
 		printf("\n");
