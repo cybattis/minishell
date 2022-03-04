@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: njennes <njennes@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 21:46:20 by njennes           #+#    #+#             */
-/*   Updated: 2022/02/16 22:17:25 by njennes          ###   ########.fr       */
+/*   Updated: 2022/03/04 16:55:49 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,7 @@ void	init_minishell(char **envp)
 {
 	init_signal();
 	gc_init(&g_minishell.gc, gc_callback, NULL);
-	g_minishell.local_env = gc_calloc(&g_minishell.gc, 2, sizeof(char *));
-	g_minishell.local_env[0] = 0;
+	g_minishell.last_return = 0;
 	g_minishell.base_env = envp;
 	update_shell_env_vars();
 }

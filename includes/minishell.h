@@ -6,7 +6,7 @@
 /*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 21:46:20 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/04 13:59:10 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/04 16:24:20 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 typedef struct s_app
 {
 	t_gc	gc;
-	char	**local_env;
+	int		last_return;
 	char	**base_env;
 }	t_app;
 
@@ -40,7 +40,7 @@ void		execute_bin(t_command *commands);
 char		**get_path(void);
 
 int			execute_pipe(int *fds, t_command *command);
-int			redirection(t_command *command);
+int			redirection(t_redir *redirections);
 
 int			ft_errno(int errnum);
 void		ft_error_command(char *command);

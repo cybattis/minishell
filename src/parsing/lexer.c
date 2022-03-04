@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: njennes <njennes@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 21:46:20 by njennes           #+#    #+#             */
-/*   Updated: 2022/02/16 22:17:25 by njennes          ###   ########.fr       */
+/*   Updated: 2022/03/04 17:01:00 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,14 +90,14 @@ void	handle_dollar_sign(t_parser *parser, t_lexer *lexer)
 	{
 		if (parser->str[parser->i] == '?')
 		{
-			token.str = gc_strdup(get_gc(), "0"); //TODO: get real last return value
+			token.str = gc_itoa(get_gc(), g_minishell.last_return);
 			token.type = get_token_type(token.str, lexer, 0);
 			token.is_one_word = 1;
 			lexer_add_token(token, lexer);
 			parser->i++;
 			return ;
 		}
-		token.str = gc_strdup(get_gc(), "$"); //TODO: get real last return value
+		token.str = gc_strdup(get_gc(), "$");
 		token.type = get_token_type(token.str, lexer, 0);
 		token.is_one_word = 1;
 		lexer_add_token(token, lexer);

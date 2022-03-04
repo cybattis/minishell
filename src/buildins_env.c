@@ -6,7 +6,7 @@
 /*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 13:48:19 by cybattis          #+#    #+#             */
-/*   Updated: 2022/02/21 20:23:24 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/04 16:34:26 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ int	bt_export(char **args)
 	{
 		if (!check_var(args[i]))
 		{
-			i++;
 			printf("minishell: export: `%s': not a valid identifier\n", args[i]);
+			i++;
 			continue ;
 		}
 		value_offset = 0;

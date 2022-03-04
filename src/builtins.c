@@ -6,7 +6,7 @@
 /*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 15:04:11 by cybattis          #+#    #+#             */
-/*   Updated: 2022/02/22 14:13:37 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/04 16:22:28 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,13 @@ int	bt_echo(t_command *cmd)
 	return (0);
 }
 
+// TODO: add arg return value + error if more than one arg
 int	bt_exit(void)
 {
 	printf("exit\n");
 	gc_clean(get_gc());
 	exit(EXIT_SUCCESS);
-	return (0);
+	return (1);
 }
 
 int	bt_pwd(void)

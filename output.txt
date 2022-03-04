@@ -1,3 +1,0 @@
-minishell: hey : command not found
-
-exit
