@@ -6,7 +6,7 @@
 /*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 21:46:20 by njennes           #+#    #+#             */
-/*   Updated: 2022/02/19 15:46:51 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/04 14:13:31 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@
 int	is_redir_token(int token)
 {
 	if (token == TOKEN_REDIR_OUT || token == TOKEN_REDIR_OUT_APPEND ||
-		token == TOKEN_REDIR_IN || token == TOKEN_REDIR_IN_APPEND)
+		token == TOKEN_REDIR_IN || token == TOKEN_REDIR_IN_APPEND ||
+		token == TOKEN_PIPE)
 		return (1);
 	return (0);
 }
@@ -45,8 +46,7 @@ static size_t	get_arg_count(t_token *tokens)
 
 	i = 0;
 	count = 0;
-	while (tokens[i].type == TOKEN_COMMAND || tokens[i].type == TOKEN_ARG ||
-			is_redir_token(tokens[i].type))
+	while (tokens[i].type == TOKEN_COMMAND || tokens[i].type == TOKEN_ARG)
 	{
 		if (tokens[i].type == TOKEN_COMMAND || tokens[i].type == TOKEN_ARG)
 			count++;
@@ -82,15 +82,16 @@ static char	**get_command_args(t_token *tokens)
 	char	**args;
 
 	arg_count = get_arg_count(tokens);
+//	printf("%zu\n", arg_count);
 	args = gc_calloc(get_gc(), arg_count + 1, sizeof (char *));
 	i = 0;
 	j = 0;
-	while (tokens[i].type == TOKEN_COMMAND || tokens[i].type == TOKEN_ARG ||
-			is_redir_token(tokens[i].type))
+	while (tokens[i].type == TOKEN_COMMAND || tokens[i].type == TOKEN_ARG)
 	{
 		if (tokens[i].type == TOKEN_COMMAND || tokens[i].type == TOKEN_ARG)
 		{
-			args[j] = gc_strdup(get_gc(),tokens[i].str);
+			args[j] = gc_strdup(get_gc(), tokens[i].str);
+//			printf("args %s\n", args[j]);
 			j++;
 		}
 		i++;

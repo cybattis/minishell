@@ -27,6 +27,12 @@ void	ft_errno_exit(int errnum)
 	exit(EXIT_FAILURE);
 }
 
+int	ft_errno(int errnum)
+{
+	printf("%s\n", strerror(errnum));
+	return (1);
+}
+
 void	ft_error_command(char *command)
 {
 	printf("minishell: %s : command not found\n", command);
