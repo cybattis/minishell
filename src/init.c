@@ -31,9 +31,14 @@ void	update_shell_path()
 void	update_shell_level()
 {
 	char	*new_shell_level;
+	char	*old_shlvl;
 	int		old_shell_level;
 
-	old_shell_level = ft_atoi(getenv("SHLVL"));
+	old_shlvl = getenv("SHLVL");
+	if (!old_shlvl)
+		environ = gc_strarray_append(get_gc(), environ, "SHLVL=0");
+	old_shlvl = getenv("SHLVL");
+	old_shell_level = ft_atoi(old_shlvl);
 	new_shell_level = gc_itoa(get_gc(), old_shell_level + 1);
 	set_env_var("SHLVL", new_shell_level);
 	gc_free(get_gc(), new_shell_level);
