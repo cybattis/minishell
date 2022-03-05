@@ -36,15 +36,15 @@ int	get_token_type(char *token, t_lexer *lexer, int handle_op)
 		if (ft_strcmp(token, ">>") == 0)
 			return (TOKEN_REDIR_OUT_APPEND);
 		if (ft_strcmp(token, "<<") == 0)
-			return (TOKEN_REDIR_IN_APPEND);
+			return (TOKEN_REDIR_RDOC);
 	}
 	last_token = get_last_token_type(lexer);
-	if (last_token == TOKEN_EMPTY || last_token == TOKEN_PIPE ||
-		last_token == TOKEN_REDIR_IN || last_token == TOKEN_REDIR_IN_APPEND)
+	if (last_token == TOKEN_EMPTY || last_token == TOKEN_PIPE)
 		return (TOKEN_COMMAND);
 	if (last_token == TOKEN_COMMAND || last_token == TOKEN_ARG)
 		return (TOKEN_ARG);
-	if (last_token == TOKEN_REDIR_OUT || last_token == TOKEN_REDIR_OUT_APPEND)
+	if (last_token == TOKEN_REDIR_OUT || last_token == TOKEN_REDIR_OUT_APPEND
+		|| last_token == TOKEN_REDIR_IN || last_token == TOKEN_REDIR_RDOC)
 		return (TOKEN_FILE);
 	return (TOKEN_UNKNOWN);
 }

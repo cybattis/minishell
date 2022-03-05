@@ -24,7 +24,7 @@
 # define TOKEN_REDIR_OUT 4
 # define TOKEN_REDIR_IN 5
 # define TOKEN_REDIR_OUT_APPEND 6
-# define TOKEN_REDIR_IN_APPEND 7
+# define TOKEN_REDIR_RDOC 7
 # define TOKEN_FILE 8
 
 typedef struct s_redir

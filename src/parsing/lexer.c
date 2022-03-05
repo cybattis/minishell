@@ -159,7 +159,7 @@ char	*token_type_to_str(int token_type)
 		return ("TOKEN_ARG");
 	if (token_type == TOKEN_COMMAND)
 		return ("TOKEN_COMMAND");
-	if (token_type == TOKEN_REDIR_IN_APPEND)
+	if (token_type == TOKEN_REDIR_RDOC)
 		return ("TOKEN_REDIR_IN_APPEND");
 	if (token_type == TOKEN_REDIR_IN)
 		return ("TOKEN_REDIR_IN");

@@ -17,7 +17,7 @@
 int	is_redir_token(int token)
 {
 	if (token == TOKEN_REDIR_OUT || token == TOKEN_REDIR_OUT_APPEND ||
-		token == TOKEN_REDIR_IN || token == TOKEN_REDIR_IN_APPEND ||
+		token == TOKEN_REDIR_IN || token == TOKEN_REDIR_RDOC ||
 		token == TOKEN_PIPE)
 		return (1);
 	return (0);
@@ -131,12 +131,7 @@ t_redir	*get_redirections(t_token *tokens)
 		if (is_redir_token(tokens[i].type))
 		{
 			redirs[j].type = tokens[i].type;
-			if ((tokens[i].type == TOKEN_REDIR_OUT ||
-				tokens[i].type == TOKEN_REDIR_OUT_APPEND) &&
-				tokens[i + 1].type == TOKEN_FILE)
-			{
-				redirs[j].file = gc_strdup(get_gc(), tokens[i + 1].str);
-			}
+			redirs[j].file = gc_strdup(get_gc(), tokens[i + 1].str);
 			j++;
 		}
 		i++;
