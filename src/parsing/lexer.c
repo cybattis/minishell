@@ -14,8 +14,6 @@
 #include "libft.h"
 #include "minishell.h"
 
-char	*token_type_to_str(int token_type);
-
 void	skip_spaces(t_parser *parser)
 {
 	while (parser->str[parser->i] == ' ')
@@ -113,11 +111,7 @@ void	handle_dollar_sign(t_parser *parser, t_lexer *lexer)
 void	get_next_token(t_parser *parser, t_lexer *lexer)
 {
 	skip_spaces(parser);
-	if (parser->str[parser->i] == '\'')
-		lexer_add_token(consume_single_quotes(parser, lexer), lexer);
-	else if (parser->str[parser->i] == '\"')
-		lexer_add_token(consume_double_quotes(parser, lexer), lexer);
-	else if (parser->str[parser->i] == '$')
+	if (parser->str[parser->i] == '$')
 		handle_dollar_sign(parser, lexer);
 	else if (parser->str[parser->i] != '\0')
 		lexer_add_token(consume_word(parser, lexer), lexer);
@@ -169,6 +163,8 @@ char	*token_type_to_str(int token_type)
 		return ("TOKEN_PIPE");
 	if (token_type == TOKEN_END)
 		return ("TOKEN_END");
+	if (token_type == TOKEN_FILE)
+		return ("TOKEN_FILE");
 	return ("NOT_A_TOKEN");
 }
 

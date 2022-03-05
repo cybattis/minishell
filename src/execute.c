@@ -43,7 +43,7 @@ int	execute_command(t_command_batch cmd_batch)
 				execute_builtin(&cmd_batch.commands[i]);
 			else
 				execute_extern(&cmd_batch.commands[i]);
-			if (cmd_batch.count >= 1 && (cmd_batch.commands[i].is_redirecting == 1 ||
+			if (cmd_batch.commands[i].is_redirecting == 1 || ( i >= 1 &&
 				cmd_batch.commands[i - 1].is_piping == 1))
 			{
 				dup2(save_fd[1], STDOUT_FILENO);

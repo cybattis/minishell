@@ -46,7 +46,8 @@ static size_t	get_arg_count(t_token *tokens)
 
 	i = 0;
 	count = 0;
-	while (tokens[i].type == TOKEN_COMMAND || tokens[i].type == TOKEN_ARG)
+	while (tokens[i].type == TOKEN_COMMAND || tokens[i].type == TOKEN_ARG
+		|| tokens[i].type == TOKEN_FILE || is_redir_token(tokens[i].type))
 	{
 		if (tokens[i].type == TOKEN_COMMAND || tokens[i].type == TOKEN_ARG)
 			count++;
@@ -82,16 +83,15 @@ static char	**get_command_args(t_token *tokens)
 	char	**args;
 
 	arg_count = get_arg_count(tokens);
-//	printf("%zu\n", arg_count);
 	args = gc_calloc(get_gc(), arg_count + 1, sizeof (char *));
 	i = 0;
 	j = 0;
-	while (tokens[i].type == TOKEN_COMMAND || tokens[i].type == TOKEN_ARG)
+	while (tokens[i].type == TOKEN_COMMAND || tokens[i].type == TOKEN_ARG
+			|| tokens[i].type == TOKEN_FILE || is_redir_token(tokens[i].type))
 	{
 		if (tokens[i].type == TOKEN_COMMAND || tokens[i].type == TOKEN_ARG)
 		{
 			args[j] = gc_strdup(get_gc(), tokens[i].str);
-//			printf("args %s\n", args[j]);
 			j++;
 		}
 		i++;
@@ -107,7 +107,7 @@ size_t	get_redirs_count(t_token *tokens)
 	count = 0;
 	i = 0;
 	while (tokens[i].type == TOKEN_COMMAND || tokens[i].type == TOKEN_ARG ||
-		   is_redir_token(tokens[i].type))
+		   is_redir_token(tokens[i].type) || tokens[i].type == TOKEN_FILE)
 	{
 		if (is_redir_token(tokens[i].type))
 			count++;
@@ -126,12 +126,15 @@ t_redir	*get_redirections(t_token *tokens)
 	j = 0;
 	redirs = gc_calloc(get_gc(), get_redirs_count(tokens) + 1, sizeof (t_redir));
 	while (tokens[i].type == TOKEN_COMMAND || tokens[i].type == TOKEN_ARG ||
-		   is_redir_token(tokens[i].type))
+		   is_redir_token(tokens[i].type) || tokens[i].type == TOKEN_FILE)
 	{
 		if (is_redir_token(tokens[i].type))
 		{
 			redirs[j].type = tokens[i].type;
-			redirs[j].file = gc_strdup(get_gc(), tokens[i + 1].str);
+			if (tokens[i + 1].str)
+				redirs[j].file = gc_strdup(get_gc(), tokens[i + 1].str);
+			else
+				ft_printf("Minishell: syntax error near unexpected token 'newline'");
 			j++;
 		}
 		i++;

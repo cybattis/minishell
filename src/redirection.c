@@ -29,7 +29,6 @@ int redirection(t_redir *redirections)
 	ft_memset(fds, 0, sizeof(int) * 2);
 	while (redirections[i].type)
 	{
-		printf("%s\n", token_type_to_str(redirections[i].type));
 		if (redirections[i].type == TOKEN_REDIR_IN)
 			fds[0] = redir_in(fds[0], redirections[i]);
 		else if (redirections[i].type == TOKEN_REDIR_OUT)
