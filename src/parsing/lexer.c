@@ -6,7 +6,7 @@
 /*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 21:46:20 by njennes           #+#    #+#             */
-/*   Updated: 2022/03/04 17:01:00 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/05 13:28:45 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,8 +159,8 @@ char	*token_type_to_str(int token_type)
 		return ("TOKEN_ARG");
 	if (token_type == TOKEN_COMMAND)
 		return ("TOKEN_COMMAND");
-	if (token_type == TOKEN_REDIR_IN_APPEND)
-		return ("TOKEN_REDIR_IN_APPEND");
+	if (token_type == TOKEN_REDIR_RDOC)
+		return ("TOKEN_REDIR_RDOC");
 	if (token_type == TOKEN_REDIR_IN)
 		return ("TOKEN_REDIR_IN");
 	if (token_type == TOKEN_EMPTY)

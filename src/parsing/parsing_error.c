@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_error.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: njennes <njennes@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 21:46:20 by njennes           #+#    #+#             */
-/*   Updated: 2022/02/16 22:17:25 by njennes          ###   ########.fr       */
+/*   Updated: 2022/03/05 13:28:45 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	check_parsing_errors(t_lexer lexer)
 	while (i < lexer.count)
 	{
 		token = lexer.tokens[i].type;
-		if (i == 0 && !(token == TOKEN_COMMAND || token == TOKEN_REDIR_IN || token == TOKEN_REDIR_IN_APPEND))
+		if (i == 0 && !(token == TOKEN_COMMAND || token == TOKEN_REDIR_IN || token == TOKEN_REDIR_RDOC))
 			return (0);
 		if (!check_token_order(last_token, token))
 			return (0);

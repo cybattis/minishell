@@ -6,7 +6,7 @@
 /*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 21:46:20 by njennes           #+#    #+#             */
-/*   Updated: 2022/03/04 14:13:31 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/05 13:28:45 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 int	is_redir_token(int token)
 {
 	if (token == TOKEN_REDIR_OUT || token == TOKEN_REDIR_OUT_APPEND ||
-		token == TOKEN_REDIR_IN || token == TOKEN_REDIR_IN_APPEND ||
+		token == TOKEN_REDIR_IN || token == TOKEN_REDIR_RDOC ||
 		token == TOKEN_PIPE)
 		return (1);
 	return (0);

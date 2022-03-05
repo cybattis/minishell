@@ -6,7 +6,7 @@
 /*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 17:10:07 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/04 17:04:14 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/05 14:05:50 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ int	execute_command(t_command_batch cmd_batch)
 	save_fd[1] = dup(STDOUT_FILENO);
 	while (i < cmd_batch.count)
 	{
+		if (cmd_batch.commands[i].is_redirecting == 1)
+				redirection(cmd_batch.commands[i].redirections);
 		if (cmd_batch.commands[i].is_piping == 1)
 		{
 			pipe(fds);
@@ -37,13 +39,11 @@ int	execute_command(t_command_batch cmd_batch)
 		}
 		else
 		{
-			if (cmd_batch.commands[i].is_redirecting == 1)
-				redirection(&cmd_batch.commands[i]);
 			if (cmd_batch.commands[i].is_builtin == 1)
 				execute_builtin(&cmd_batch.commands[i]);
 			else
 				execute_extern(&cmd_batch.commands[i]);
-			if (cmd_batch.count > 1 && (cmd_batch.commands[i].is_redirecting == 1 ||
+			if (cmd_batch.count >= 1 && (cmd_batch.commands[i].is_redirecting == 1 ||
 				cmd_batch.commands[i - 1].is_piping == 1))
 			{
 				dup2(save_fd[1], STDOUT_FILENO);
