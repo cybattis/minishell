@@ -6,7 +6,7 @@
 /*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 21:46:20 by njennes           #+#    #+#             */
-/*   Updated: 2022/03/05 13:28:45 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/05 14:53:04 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ t_redir	*get_redirections(t_token *tokens)
 			if (tokens[i + 1].str)
 				redirs[j].file = gc_strdup(get_gc(), tokens[i + 1].str);
 			else
-				ft_printf("Minishell: syntax error near unexpected token 'newline'");
+				ft_printf("Minishell: syntax error near unexpected token 'newline'\n");
 			j++;
 		}
 		i++;
