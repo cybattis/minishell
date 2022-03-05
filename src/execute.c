@@ -6,7 +6,7 @@
 /*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 17:10:07 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/05 14:54:40 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/05 15:24:18 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 
 extern char	**environ;
 
+static void	clean_fds(int save_fd[2]);
 static int	execute_extern(t_command *command);
 
 int	execute_command(t_command_batch cmd_batch)
@@ -31,49 +32,33 @@ int	execute_command(t_command_batch cmd_batch)
 	while (i < cmd_batch.count)
 	{
 		if (cmd_batch.commands[i].is_redirecting == 1)
-			redirection(cmd_batch.commands[i].redirections);
+			if (redirection(cmd_batch.commands[i].redirections) && i >= 1)
+				clean_fds(fds);
 		if (cmd_batch.commands[i].is_piping == 1)
-		{
-			pipe(fds);
 			execute_pipe(fds, &cmd_batch.commands[i]);
-		}
 		else
 		{
 			if (cmd_batch.commands[i].is_builtin == 1)
 				execute_builtin(&cmd_batch.commands[i]);
 			else
 				execute_extern(&cmd_batch.commands[i]);
-			if (cmd_batch.commands[i].is_redirecting == 1 || ( i >= 1 &&
+			if (cmd_batch.commands[i].is_redirecting == 1 || (i >= 1 &&
 				cmd_batch.commands[i - 1].is_piping == 1))
-			{
-				dup2(save_fd[1], STDOUT_FILENO);
-				dup2(save_fd[0], STDIN_FILENO);
-				close(save_fd[0]);
-				close(save_fd[1]);
-			}
+				clean_fds(save_fd);
 		}
 		i++;
 	}
 	return (0);
 }
 
-int	execute_builtin(t_command *command)
+static void	clean_fds(int save_fd[2])
 {
-	if (!ft_strcmp(command->name, "cd"))
-		bt_cd(command->args[1]);
-	else if (!ft_strcmp(command->name, "echo"))
-		bt_echo(command);
-	else if (!ft_strcmp(command->name, "pwd"))
-		bt_pwd();
-	else if (!ft_strcmp(command->name, "unset"))
-		bt_unset(&command->args[1]);
-	else if (!ft_strcmp(command->name, "env"))
-		bt_env();
-	else if (!ft_strcmp(command->name, "export"))
-		bt_export(&command->args[1]);
-	else if (!ft_strcmp(command->name, "exit"))
-		bt_exit();
-	return (0);
+	if (dup2(save_fd[1], STDOUT_FILENO) < 0)
+		ft_errno_exit(errno);
+	if (dup2(save_fd[0], STDIN_FILENO) < 0)
+		ft_errno_exit(errno);
+	close(save_fd[0]);
+	close(save_fd[1]);
 }
 
 static int	execute_extern(t_command *command)

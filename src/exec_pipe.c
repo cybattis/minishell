@@ -6,7 +6,7 @@
 /*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 17:10:07 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/04 17:07:55 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/05 15:33:38 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ int	execute_pipe(int *fds, t_command *command)
 	pid_t	pid;
 	int		status;
 
+	pipe(fds);
 	status = 0;
 	pid = fork();
 	if (!pid)
 	{
 		dup2(fds[1], STDOUT_FILENO);
 		close(fds[0]);
-		close(fds[1]);
 		if (command->is_builtin == 1)
 		{
 			execute_builtin(command);
@@ -41,7 +41,6 @@ int	execute_pipe(int *fds, t_command *command)
 	if (pid > 0)
 	{
 		dup2(fds[0], STDIN_FILENO);
-		close(fds[0]);
 		close(fds[1]);
 		pid = wait(&status);
 		g_minishell.last_return = WIFEXITED(status);

@@ -6,7 +6,7 @@
 /*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 14:55:35 by cybattis          #+#    #+#             */
-/*   Updated: 2022/02/21 20:21:57 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/05 15:36:37 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,20 @@
 #include <stdio.h>
 #include <errno.h>
 
-t_gc	*get_gc()
+t_gc	*get_gc(void)
 {
 	return (&g_minishell.gc);
 }
 
 void	ft_errno_exit(int errnum)
 {
-	printf("%s\n", strerror(errnum));
+	printf("minishell: %s\n", strerror(errnum));
 	exit(EXIT_FAILURE);
 }
 
 int	ft_errno(int errnum)
 {
-	printf("%s\n", strerror(errnum));
+	printf("minishell: %s\n", strerror(errnum));
 	return (1);
 }
 

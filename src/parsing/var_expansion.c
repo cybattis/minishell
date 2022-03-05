@@ -6,7 +6,7 @@
 /*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 21:46:20 by njennes           #+#    #+#             */
-/*   Updated: 2022/02/21 18:17:09 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/05 15:28:37 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ size_t	get_env_var_len(char *str)
 }
 
 //TODO: Make this faster by treating chunks of chars
-//TODO: append blocks of characters that doesn't need expansion instead of adding them one by one
+//TODO: append blocks of characters that doesn't need expansion instead
+// of adding them one by one
 char	*expand_env_vars(char *str)
 {
 	size_t	i;
@@ -77,7 +78,8 @@ char	*expand_env_vars(char *str)
 		if (quote != '\'' && str[i] == '$' && is_envchar(str[i + 1]))
 		{
 			i++;
-			env_var = get_var(gc_substr(get_gc(), str, i,get_env_var_len(&str[i])));
+			env_var = get_var(gc_substr(get_gc(), str, i,
+						get_env_var_len(&str[i])));
 			new_str = gc_strjoin(get_gc(), new_str, env_var, 1);
 			while (str[i] && is_envchar(str[i + 1]))
 				i++;

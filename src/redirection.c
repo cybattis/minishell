@@ -6,11 +6,11 @@
 /*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 14:54:11 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/05 14:56:28 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/05 15:22:00 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../includes/minishell.h"
 #include <fcntl.h>
 #include <unistd.h>
 #include <errno.h>
@@ -66,40 +66,28 @@ static int	redir_in(int fd, t_redir redirections)
 {
 	if (fd)
 		close(fd);
-	if (redirections.file)
-	{
-		fd = open(redirections.file, O_RDONLY, 0666);
-		if (fd == -1)
-			ft_errno(errno);
-		return (fd);
-	}
-	return (-1);
+	fd = open(redirections.file, O_RDONLY, 0666);
+	if (fd == -1)
+		ft_errno(errno);
+	return (fd);
 }
 
 static int	redir_out(int fd, t_redir redirections)
 {
 	if (fd)
 		close(fd);
-	if (redirections.file)
-	{
-		fd = open(redirections.file, O_WRONLY | O_CREAT | O_TRUNC, 0666);
-		if (fd == -1)
-			ft_errno(errno);
-		return (fd);
-	}
-	return (-1);
+	fd = open(redirections.file, O_WRONLY | O_CREAT | O_TRUNC, 0666);
+	if (fd == -1)
+		ft_errno(errno);
+	return (fd);
 }
 
 static int	redir_out_append(int fd, t_redir redirections)
 {
 	if (fd)
 		close(fd);
-	if (redirections.file)
-	{
-		fd = open(redirections.file, O_WRONLY | O_CREAT | O_APPEND);
-		if (fd == -1)
-			ft_errno(errno);
-		return (fd);
-	}
-	return (-1);
+	fd = open(redirections.file, O_WRONLY | O_CREAT | O_APPEND, 0666);
+	if (fd == -1)
+		return (ft_errno(errno));
+	return (fd);
 }

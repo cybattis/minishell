@@ -6,7 +6,7 @@
 /*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 21:46:20 by njennes           #+#    #+#             */
-/*   Updated: 2022/03/05 13:28:45 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/05 15:31:23 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,18 @@ static int	check_token_order(int last, int current, t_token curr_token)
 {
 	if (last == TOKEN_PIPE && current == TOKEN_PIPE)
 		return (0);
-	if ((last == TOKEN_REDIR_OUT || last == TOKEN_REDIR_OUT_APPEND ||
-		last == TOKEN_REDIR_IN || last == TOKEN_REDIR_RDOC) &&
-		current != TOKEN_FILE)
+	if ((last == TOKEN_REDIR_OUT || last == TOKEN_REDIR_OUT_APPEND
+			|| last == TOKEN_REDIR_IN || last == TOKEN_REDIR_RDOC)
+		&& current != TOKEN_FILE)
 	{
 		if (curr_token.str)
-			ft_printf("Minishell: syntax error near unexpected token '%s'\n", curr_token.str);
+			ft_printf("Minishell: syntax error near unexpected token '%s'\n",
+				curr_token.str);
 		else
-			ft_printf("Minishell: syntax error near unexpected token 'newline'\n");
+		{
+			ft_printf("Minishell: syntax error near ");
+			ft_printf("unexpected token 'newline'\n");
+		}
 		return (0);
 	}
 	return (1);
@@ -41,7 +45,8 @@ int	check_parsing_errors(t_lexer lexer)
 	while (i < lexer.count)
 	{
 		token = lexer.tokens[i].type;
-		if (i == 0 && !(token == TOKEN_COMMAND || token == TOKEN_REDIR_IN || token == TOKEN_REDIR_RDOC))
+		if (i == 0 && !(token == TOKEN_COMMAND || token == TOKEN_REDIR_IN
+				|| token == TOKEN_REDIR_RDOC))
 			return (0);
 		if (!check_token_order(last_token, token, lexer.tokens[i]))
 			return (0);
