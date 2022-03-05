@@ -6,7 +6,7 @@
 /*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 14:54:11 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/05 15:22:00 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/05 16:09:27 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@
 static int	redir_in(int fd, t_redir redirections);
 static int	redir_out(int fd, t_redir redirections);
 static int	redir_out_append(int fd, t_redir redirections);
-static int	set_redirection(int	fds[2]);
+static int	set_redirection(int fds[2]);
 
-int redirection(t_redir *redirections)
+int	redirection(t_redir *redirections)
 {
 	int	fds[2];
 	int	i;
@@ -40,12 +40,10 @@ int redirection(t_redir *redirections)
 			return (1);
 		i++;
 	}
-	if (set_redirection(fds))
-		return (1);
-	return (0);
+	return (set_redirection(fds));
 }
 
-static int	set_redirection(int	fds[2])
+static int	set_redirection(int fds[2])
 {
 	if (fds[0])
 	{

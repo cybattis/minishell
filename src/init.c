@@ -6,7 +6,7 @@
 /*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 21:46:20 by njennes           #+#    #+#             */
-/*   Updated: 2022/03/04 17:43:08 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/05 16:13:47 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,8 @@
 #include <unistd.h>
 
 extern char	**environ;
-extern t_app g_minishell;
 
-void	update_shell_path()
+void	update_shell_path(void)
 {
 	char	*path_to_minishell;
 	char	buf[MAXPATHLEN];
@@ -29,7 +28,7 @@ void	update_shell_path()
 	gc_free(get_gc(), path_to_minishell);
 }
 
-void	update_shell_level()
+void	update_shell_level(void)
 {
 	char	*new_shell_level;
 	char	*old_shlvl;
@@ -45,7 +44,7 @@ void	update_shell_level()
 	gc_free(get_gc(), new_shell_level);
 }
 
-void	update_shell_env_vars()
+void	update_shell_env_vars(void)
 {
 	environ = gc_strarray_from(get_gc(), environ, gc_strarray_size(environ));
 	update_shell_path();

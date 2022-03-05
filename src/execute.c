@@ -6,7 +6,7 @@
 /*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 17:10:07 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/05 15:24:18 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/05 16:16:32 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,12 @@
 
 extern char	**environ;
 
-static void	clean_fds(int save_fd[2]);
-static int	execute_extern(t_command *command);
+static int	execute(t_command *command);
 
 int	execute_command(t_command_batch cmd_batch)
 {
 	int		save_fd[2];
-	int 	fds[2];
+	int		fds[2];
 	size_t	i;
 
 	i = 0;
@@ -31,19 +30,16 @@ int	execute_command(t_command_batch cmd_batch)
 	save_fd[1] = dup(STDOUT_FILENO);
 	while (i < cmd_batch.count)
 	{
-		if (cmd_batch.commands[i].is_redirecting == 1)
-			if (redirection(cmd_batch.commands[i].redirections) && i >= 1)
-				clean_fds(fds);
+		if (cmd_batch.commands[i].is_redirecting == 1
+			&& redirection(cmd_batch.commands[i].redirections))
+			clean_fds(save_fd);
 		if (cmd_batch.commands[i].is_piping == 1)
 			execute_pipe(fds, &cmd_batch.commands[i]);
 		else
 		{
-			if (cmd_batch.commands[i].is_builtin == 1)
-				execute_builtin(&cmd_batch.commands[i]);
-			else
-				execute_extern(&cmd_batch.commands[i]);
-			if (cmd_batch.commands[i].is_redirecting == 1 || (i >= 1 &&
-				cmd_batch.commands[i - 1].is_piping == 1))
+			execute(&cmd_batch.commands[i]);
+			if (cmd_batch.commands[i].is_redirecting == 1
+				|| (i >= 1 && cmd_batch.commands[i - 1].is_piping == 1))
 				clean_fds(save_fd);
 		}
 		i++;
@@ -51,21 +47,24 @@ int	execute_command(t_command_batch cmd_batch)
 	return (0);
 }
 
-static void	clean_fds(int save_fd[2])
+int	clean_fds(int save_fd[2])
 {
 	if (dup2(save_fd[1], STDOUT_FILENO) < 0)
-		ft_errno_exit(errno);
+		ft_errno(errno);
 	if (dup2(save_fd[0], STDIN_FILENO) < 0)
-		ft_errno_exit(errno);
+		ft_errno(errno);
 	close(save_fd[0]);
 	close(save_fd[1]);
+	return (1);
 }
 
-static int	execute_extern(t_command *command)
+static int	execute(t_command *command)
 {
 	pid_t	pid;
 	int		wait_status;
 
+	if (command->is_builtin == 1)
+		return (execute_builtin(command));
 	wait_status = 0;
 	pid = fork();
 	if (!pid)
@@ -74,10 +73,9 @@ static int	execute_extern(t_command *command)
 	{
 		pid = wait(&wait_status);
 		g_minishell.last_return = WIFEXITED(wait_status);
+		return (0);
 	}
-	else
-		gc_callback(NULL);
-	return (0);
+	return (gc_callback(NULL));
 }
 
 void	execute_bin(t_command *command)

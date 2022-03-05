@@ -6,7 +6,7 @@
 /*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 14:55:35 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/05 15:36:37 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/05 15:57:10 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,5 @@ int	gc_callback(void *ptr)
 	(void)ptr;
 	gc_clean(&g_minishell.gc);
 	ft_errno_exit(errno);
-	return (0);
+	return (1);
 }

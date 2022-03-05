@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: njennes <njennes@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 21:46:20 by njennes           #+#    #+#             */
-/*   Updated: 2022/02/16 22:17:25 by njennes          ###   ########.fr       */
+/*   Updated: 2022/03/05 16:14:17 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	env_var_index(const char *name)
 		if (environ[i][0] == 0)
 		{
 			i++;
-			continue;
+			continue ;
 		}
 		j = 0;
 		while (name[j] && name[j] == environ[i][j])
@@ -39,7 +39,7 @@ int	env_var_index(const char *name)
 	return (-1);
 }
 
-int	get_empty_var_index()
+int	get_empty_var_index(void)
 {
 	size_t	i;
 

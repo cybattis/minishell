@@ -6,7 +6,7 @@
 /*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 21:46:20 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/05 15:09:14 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/05 16:00:45 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ t_gc		*get_gc(void);
 
 char		*ft_get_line(void);
 char		*get_prompt(void);
+char		*get_git_prompt(char *path_to_git, char *current_path);
+int			is_git_repo(char *path);
 
 void		init_minishell(char **envp);
 int			init_signal(void);
@@ -38,6 +40,7 @@ void		sig_handler(int signum);
 
 int			execute_command(t_command_batch cmd_batch);
 void		execute_bin(t_command *commands);
+int			clean_fds(int save_fd[2]);
 char		**get_path(void);
 
 int			execute_pipe(int *fds, t_command *command);

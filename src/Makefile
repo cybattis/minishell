@@ -2,7 +2,8 @@
 NAME		=	minishell
 
 SRCS		=	main.c io.c signal.c execute.c utils.c builtins.c buildins_env.c	\
-				get_prompt.c env.c init.c exec_pipe.c redirection.c terminal.c
+				get_prompt.c env.c init.c exec_pipe.c redirection.c terminal.c		\
+				get_git_prompt.c
 
 OBJS		=	$(addprefix $(OBJS_DIR)/, $(SRCS:.c=.o))
 

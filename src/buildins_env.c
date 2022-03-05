@@ -6,7 +6,7 @@
 /*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 13:48:19 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/04 16:34:26 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/05 15:48:07 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,29 +46,29 @@ static int	check_var(char *var)
 	return (1);
 }
 
-int	bt_export(char **args)
+int	bt_export(char **arg)
 {
 	size_t	value_offset;
 	size_t	i;
 
 	i = 0;
-	while (args[i])
+	while (arg[i])
 	{
-		if (!check_var(args[i]))
+		if (!check_var(arg[i]))
 		{
-			printf("minishell: export: `%s': not a valid identifier\n", args[i]);
+			printf("minishell: export: `%s': not a valid identifier\n", arg[i]);
 			i++;
 			continue ;
 		}
 		value_offset = 0;
-		while (args[i][value_offset] && args[i][value_offset] != '=')
+		while (arg[i][value_offset] && arg[i][value_offset] != '=')
 			value_offset++;
-		if (args[i][value_offset])
+		if (arg[i][value_offset])
 		{
-			args[i][value_offset] = 0;
+			arg[i][value_offset] = 0;
 			value_offset++;
 		}
-		set_env_var(args[i], &args[i][value_offset]);
+		set_env_var(arg[i], &arg[i][value_offset]);
 		i++;
 	}
 	return (0);

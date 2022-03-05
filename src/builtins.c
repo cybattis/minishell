@@ -6,7 +6,7 @@
 /*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 15:04:11 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/05 15:08:55 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/05 15:58:19 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 
 int	execute_builtin(t_command *command)
 {
+	if (!command->name)
+		return (0);
 	if (!ft_strcmp(command->name, "cd"))
 		bt_cd(command->args[1]);
 	else if (!ft_strcmp(command->name, "echo"))

@@ -6,7 +6,7 @@
 /*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 17:10:07 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/05 15:33:38 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/05 16:16:39 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,9 @@ int	execute_pipe(int *fds, t_command *command)
 		close(fds[1]);
 		pid = wait(&status);
 		g_minishell.last_return = WIFEXITED(status);
+		return (0);
 	}
-	else
-		gc_callback(NULL);
-	return (0);
+	return (gc_callback(NULL));
 }
 
 // TODO: RDOC
