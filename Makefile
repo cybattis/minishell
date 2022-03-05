@@ -53,12 +53,10 @@ export READLINE
 .PHONY: all
 all: header
 	@$(MAKE) -C $(LIB_DIR)
-	@$(MAKE) -C $(SRCS_DIR)/parsing -r -R --warn-undefined-variables
 	@$(MAKE) -C $(SRCS_DIR) -r -R --warn-undefined-variables
 
 debug: header
 	@$(MAKE) -C $(LIB_DIR) debug
-	@$(MAKE) -C $(SRCS_DIR)/parsing -r -R --warn-undefined-variables
 	@$(MAKE) -C $(SRCS_DIR) -r -R --warn-undefined-variables
 
 .PHONY: bonus
@@ -77,7 +75,6 @@ fclean:
 .PHONY: tests
 tests:
 	@$(MAKE) -C $(LIB_DIR) debug
-	@$(MAKE) -C src/parsing/ tests
 
 .PHONY: re
 re: fclean all
