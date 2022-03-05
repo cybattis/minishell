@@ -28,11 +28,13 @@ static size_t	get_command_count(t_lexer lexer)
 	size_t	i;
 	size_t	count;
 
+	if (lexer.tokens[0].type == TOKEN_END)
+		return (0);
 	i = 0;
-	count = 0;
+	count = 1;
 	while (i < lexer.count)
 	{
-		if (lexer.tokens[i].type == TOKEN_COMMAND)
+		if (lexer.tokens[i].type == TOKEN_PIPE)
 			count++;
 		i++;
 	}
@@ -58,6 +60,8 @@ static size_t	get_arg_count(t_token *tokens)
 
 static int	is_builtin_command(char *str)
 {
+	if (!str)
+		return (1);
 	if (ft_strcmp(str, "echo") == 0)
 		return (1);
 	if (ft_strcmp(str, "pwd") == 0)
@@ -152,12 +156,12 @@ static void	populate_commands(t_lexer lexer, t_command *commands)
 		commands[j].redirections = get_redirections(&lexer.tokens[i]);
 		if (commands[j].redirections[0].type)
 			commands[j].is_redirecting = 1;
-		while (lexer.tokens[i].type != TOKEN_COMMAND)
+		while (lexer.tokens[i].type && lexer.tokens[i].type != TOKEN_COMMAND)
 			i++;
 		commands[j].name = gc_strdup(get_gc(), lexer.tokens[i].str);
 		commands[j].is_builtin = is_builtin_command(commands[j].name);
-		while (lexer.tokens[i].type != TOKEN_END &&
-				lexer.tokens[i].type != TOKEN_PIPE)
+		ft_printf("name: %s, is_builtin: %d\n", commands[j].name, commands[j].is_builtin);
+		while (lexer.tokens[i].type && lexer.tokens[i].type != TOKEN_PIPE)
 			i++;
 		if (lexer.tokens[i].type == TOKEN_PIPE)
 		{
@@ -174,6 +178,6 @@ void	create_command_batch(t_lexer lexer, t_command_batch *batch)
 
 	command_count = get_command_count(lexer);
 	batch->count = command_count;
-	batch->commands = gc_calloc(get_gc(), command_count, sizeof (t_command));
+	batch->commands = gc_calloc(get_gc(), command_count + 1, sizeof (t_command));
 	populate_commands(lexer, batch->commands);
 }

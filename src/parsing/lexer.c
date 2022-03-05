@@ -172,6 +172,7 @@ void	lexer_print(t_lexer *lexer)
 {
 	size_t	i;
 
+	ft_printf("Lexer: size %d\n", (int)lexer->count);
 	i = 0;
 	while (i < lexer->count)
 	{

@@ -20,9 +20,11 @@ t_command_batch	parse_input(char *input)
 	t_lexer			lexer;
 
 	lexer = tokenize_input(input);
+	lexer_print(&lexer);
 	ft_memset(&command_batch, 0, sizeof (t_command_batch));
 	if (!check_parsing_errors(lexer))
 		return (command_batch);
+	ft_printf("heyy\n");
 	create_command_batch(lexer, &command_batch);
 	lexer_destroy(&lexer);
 	return (command_batch);

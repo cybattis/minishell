@@ -45,9 +45,6 @@ int	check_parsing_errors(t_lexer lexer)
 	while (i < lexer.count)
 	{
 		token = lexer.tokens[i].type;
-		if (i == 0 && !(token == TOKEN_COMMAND || token == TOKEN_REDIR_IN
-				|| token == TOKEN_REDIR_RDOC))
-			return (0);
 		if (!check_token_order(last_token, token, lexer.tokens[i]))
 			return (0);
 		last_token = token;
