@@ -15,8 +15,6 @@
 #include "readline.h"
 #include <signal.h>
 
-extern t_app g_minishell;
-
 int	init_signal(void)
 {
 	struct sigaction	sa;

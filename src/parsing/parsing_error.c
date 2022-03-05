@@ -13,10 +13,20 @@
 #include "../../includes/parsing.h"
 #include "../../libft/libft.h"
 
-static int	check_token_order(int last, int current)
+static int	check_token_order(int last, int current, t_token curr_token)
 {
 	if (last == TOKEN_PIPE && current == TOKEN_PIPE)
 		return (0);
+	if ((last == TOKEN_REDIR_OUT || last == TOKEN_REDIR_OUT_APPEND ||
+		last == TOKEN_REDIR_IN || last == TOKEN_REDIR_RDOC) &&
+		current != TOKEN_FILE)
+	{
+		if (curr_token.str)
+			ft_printf("Minishell: syntax error near unexpected token '%s'\n", curr_token.str);
+		else
+			ft_printf("Minishell: syntax error near unexpected token 'newline'\n");
+		return (0);
+	}
 	return (1);
 }
 
@@ -33,7 +43,7 @@ int	check_parsing_errors(t_lexer lexer)
 		token = lexer.tokens[i].type;
 		if (i == 0 && !(token == TOKEN_COMMAND || token == TOKEN_REDIR_IN || token == TOKEN_REDIR_RDOC))
 			return (0);
-		if (!check_token_order(last_token, token))
+		if (!check_token_order(last_token, token, lexer.tokens[i]))
 			return (0);
 		last_token = token;
 		i++;

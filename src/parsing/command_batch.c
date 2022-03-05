@@ -131,10 +131,7 @@ t_redir	*get_redirections(t_token *tokens)
 		if (is_redir_token(tokens[i].type))
 		{
 			redirs[j].type = tokens[i].type;
-			if (tokens[i + 1].str)
-				redirs[j].file = gc_strdup(get_gc(), tokens[i + 1].str);
-			else
-				ft_printf("Minishell: syntax error near unexpected token 'newline'\n");
+			redirs[j].file = gc_strdup(get_gc(), tokens[i + 1].str);
 			j++;
 		}
 		i++;

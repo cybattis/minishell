@@ -31,9 +31,7 @@ int	execute_command(t_command_batch cmd_batch)
 	while (i < cmd_batch.count)
 	{
 		if (cmd_batch.commands[i].is_redirecting == 1)
-		{
-			if (redirection(cmd_batch.commands[i].redirections))
-				
+			redirection(cmd_batch.commands[i].redirections);
 		if (cmd_batch.commands[i].is_piping == 1)
 		{
 			pipe(fds);
