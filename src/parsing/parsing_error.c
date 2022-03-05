@@ -17,9 +17,6 @@ static int	check_token_order(int last, int current)
 {
 	if (last == TOKEN_PIPE && current == TOKEN_PIPE)
 		return (0);
-	if ((last == TOKEN_REDIR_OUT_APPEND || last == TOKEN_REDIR_OUT) &&
-			current != TOKEN_FILE)
-		return (0);
 	return (1);
 }
 

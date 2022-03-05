@@ -20,8 +20,6 @@ t_command_batch	parse_input(char *input)
 	t_lexer			lexer;
 
 	lexer = tokenize_input(input);
-	input = expand_env_vars(input);
-	gc_free(get_gc(), input);
 	ft_memset(&command_batch, 0, sizeof (t_command_batch));
 	if (!check_parsing_errors(lexer))
 		return (command_batch);

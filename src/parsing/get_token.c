@@ -6,7 +6,7 @@
 /*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 21:46:20 by njennes           #+#    #+#             */
-/*   Updated: 2022/03/05 13:28:45 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/05 14:19:24 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,12 @@ int	get_token_type(char *token, t_lexer *lexer, int handle_op)
 			return (TOKEN_REDIR_RDOC);
 	}
 	last_token = get_last_token_type(lexer);
-	if (last_token == TOKEN_EMPTY || last_token == TOKEN_PIPE ||
-		last_token == TOKEN_REDIR_IN || last_token == TOKEN_REDIR_RDOC)
+	if (last_token == TOKEN_EMPTY || last_token == TOKEN_PIPE)
 		return (TOKEN_COMMAND);
 	if (last_token == TOKEN_COMMAND || last_token == TOKEN_ARG)
 		return (TOKEN_ARG);
-	if (last_token == TOKEN_REDIR_OUT || last_token == TOKEN_REDIR_OUT_APPEND)
+	if (last_token == TOKEN_REDIR_OUT || last_token == TOKEN_REDIR_OUT_APPEND
+		|| last_token == TOKEN_REDIR_IN || last_token == TOKEN_REDIR_RDOC)
 		return (TOKEN_FILE);
 	return (TOKEN_UNKNOWN);
 }
