@@ -160,7 +160,6 @@ static void	populate_commands(t_lexer lexer, t_command *commands)
 			i++;
 		commands[j].name = gc_strdup(get_gc(), lexer.tokens[i].str);
 		commands[j].is_builtin = is_builtin_command(commands[j].name);
-		ft_printf("name: %s, is_builtin: %d\n", commands[j].name, commands[j].is_builtin);
 		while (lexer.tokens[i].type && lexer.tokens[i].type != TOKEN_PIPE)
 			i++;
 		if (lexer.tokens[i].type == TOKEN_PIPE)

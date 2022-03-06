@@ -37,7 +37,7 @@ void	lexer_add_end(t_lexer *lexer)
 	t_token	token;
 
 	token.type = TOKEN_END;
-	token.str = NULL;
+	token.str = gc_strdup(get_gc(), "newline");
 	token.is_one_word = 1;
 	lexer_add_token(token, lexer);
 }

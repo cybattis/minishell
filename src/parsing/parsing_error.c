@@ -21,14 +21,8 @@ static int	check_token_order(int last, int current, t_token curr_token)
 			|| last == TOKEN_REDIR_IN || last == TOKEN_REDIR_RDOC)
 		&& current != TOKEN_FILE)
 	{
-		if (curr_token.str)
-			ft_printf("Minishell: syntax error near unexpected token '%s'\n",
+		ft_printf("Minishell: syntax error near unexpected token '%s'\n",
 				curr_token.str);
-		else
-		{
-			ft_printf("Minishell: syntax error near ");
-			ft_printf("unexpected token 'newline'\n");
-		}
 		return (0);
 	}
 	return (1);
