@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cybattis <cybattis@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 17:10:07 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/05 16:16:32 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/06 11:57:46 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,18 +61,19 @@ int	clean_fds(int save_fd[2])
 static int	execute(t_command *command)
 {
 	pid_t	pid;
-	int		wait_status;
+	int		wstatus;
 
 	if (command->is_builtin == 1)
 		return (execute_builtin(command));
-	wait_status = 0;
+	wstatus = 0;
 	pid = fork();
 	if (!pid)
 		execute_bin(command);
 	else if (pid > 0)
 	{
-		pid = wait(&wait_status);
-		g_minishell.last_return = WIFEXITED(wait_status);
+		waitpid(pid, &wstatus, 0);
+		if (WIFEXITED(wstatus))
+			g_minishell.last_return = WEXITSTATUS(wstatus);
 		return (0);
 	}
 	return (gc_callback(NULL));

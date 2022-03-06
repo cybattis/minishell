@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cybattis <cybattis@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 15:04:11 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/05 16:27:15 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/06 11:47:39 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	execute_builtin(t_command *command)
 	else if (!ft_strcmp(command->name, "export"))
 		bt_export(&command->args[1]);
 	else if (!ft_strcmp(command->name, "exit"))
-		bt_exit();
+		bt_exit(command->args);
 	return (0);
 }
 
@@ -56,13 +56,17 @@ int	bt_echo(t_command *cmd)
 	return (0);
 }
 
-// TODO: add arg return value + error if more than one arg
-int	bt_exit(void)
+int	bt_exit(char **args)
 {
+	int ret_value;
+
 	printf("exit\n");
+	if (args[1])
+		ret_value = ft_atoi(args[1]);
+	else
+		ret_value = EXIT_SUCCESS;
 	gc_clean(get_gc());
-	exit(EXIT_SUCCESS);
-	return (1);
+	exit(ret_value);
 }
 
 int	bt_pwd(void)

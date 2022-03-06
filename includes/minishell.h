@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cybattis <cybattis@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 21:46:20 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/05 16:00:45 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/06 11:29:18 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int			gc_callback(void *ptr);
 
 int			execute_builtin(t_command *command);
 int			bt_echo(t_command *cmd);
-int			bt_exit(void);
+int			bt_exit(char **args);
 int			bt_pwd(void);
 int			bt_cd(char *path);
 
