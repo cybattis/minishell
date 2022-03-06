@@ -5,15 +5,19 @@ SRCS		=	main.c get_line.c signal.c execute.c utils.c builtins.c	\
 				builtins_env.c get_prompt.c env.c init.c exec_pipe.c	\
 				redirection.c terminal.c get_git_prompt.c				\
 
-OBJS		=	$(addprefix $(OBJS_DIR)/, $(SRCS:.c=.o))
+PARS_DIR	=	parsing
+PARSING		=	get_token.c lexer.c parsing.c var_expansion.c			\
+				command_batch.c	parsing_error.c
+SRC_PARSING	=	$(addprefix $(PARS_DIR)/, $(PARSING))
 
-SRC_PARSING	=	get_token.c lexer.c parsing.c var_expansion.c command_batch.c		\
-				parsing_error.c
-OBJ_PARSING	=	$(addprefix $(OBJS_DIR)/, $(SRC_PARSING:.c=.o))
+
+OBJS		=	$(addprefix $(OBJS_DIR)/, $(SRCS:.c=.o))
+OBJS_PARS	=	$(addprefix $(OBJS_DIR)/, $(PARSING:.c=.o))
 
 HEADERS		=	$(MAKE_DIR)/includes/minishell.h
 
-DEPENDS		=	$(addprefix $(OBJS_DIR)/, $(SRCS:.c=.d))
+DEPENDS		=	$(addprefix $(OBJS_DIR)/, $(SRCS:.c=.d))				\
+				$(addprefix $(OBJS_DIR)/, $(OBJS_PARS:.c=.d))
 
 # Recipe
 # ****************************************************************************
@@ -21,13 +25,17 @@ DEPENDS		=	$(addprefix $(OBJS_DIR)/, $(SRCS:.c=.d))
 .PHONY: all
 all:	$(NAME)
 
+$(OBJS_DIR)/%.o:	$(SRCS_DIR)/$(PARS_DIR)/%.c | $(OBJS_DIR)
+	@$(BIN_CC) $(BIN_CFLAGS) -c $< -o $@
+	@printf "$(_GREEN)█$(_END)"
+
 $(OBJS_DIR)/%.o:	$(SRCS_DIR)/%.c | $(OBJS_DIR)
 	@$(BIN_CC) $(BIN_CFLAGS) -c $< -o $@
 	@printf "$(_GREEN)█$(_END)"
 
-$(NAME):	$(OBJS) $(MASTER_MAKE) $(LIBFT_LIB)
+$(NAME):	$(OBJS) $(OBJS_PARS) $(MASTER_MAKE) $(LIBFT_LIB)
 	@printf "$(_BLUE)\nCompiled source files\n$(_END)"
-	@$(BIN_CC) $(BIN_LDFLAGS) $(OBJS) $(OBJ_PARSING) -o ../$@ $(LIBS)
+	@$(BIN_CC) $(BIN_LDFLAGS) $(OBJS) $(OBJS_PARS) -o ../$@ $(LIBS)
 	@printf "$(_GREEN)Finish compiling $(NAME)!$(_END)\n"
 
 .PHONY: bonus

@@ -12,8 +12,6 @@
 
 #include "minishell.h"
 
-t_app	g_minishell;
-
 int	main(int argc, char **argv, char **envp)
 {
 	char			*line_read;

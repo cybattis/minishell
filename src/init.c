@@ -15,6 +15,7 @@
 #include <sys/param.h>
 #include <unistd.h>
 
+t_app	g_minishell;
 extern char	**environ;
 
 void	update_shell_path(void)
