@@ -17,8 +17,7 @@
 int	is_redir_token(int token)
 {
 	if (token == TOKEN_REDIR_OUT || token == TOKEN_REDIR_OUT_APPEND ||
-		token == TOKEN_REDIR_IN || token == TOKEN_REDIR_RDOC ||
-		token == TOKEN_PIPE)
+		token == TOKEN_REDIR_IN || token == TOKEN_REDIR_RDOC)
 		return (1);
 	return (0);
 }
