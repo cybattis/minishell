@@ -60,7 +60,6 @@ typedef struct s_token
 {
 	int			type;
 	char		*str;
-	int			is_one_word;
 }				t_token;
 
 typedef struct s_lexer
@@ -73,27 +72,40 @@ typedef struct s_lexer
 t_command_batch	parse_input(char *input);
 
 //get_token.c
-int				get_token_type(char *token, t_lexer *lexer, int handle_op);
 t_token			consume_single_quotes(t_parser *parser, t_lexer *lexer);
 t_token			consume_double_quotes(t_parser *parser, t_lexer *lexer);
 t_token			consume_word(t_parser *parser, t_lexer *lexer);
 
-//lexer.c
+//token_type.c
+int				is_operator(char c);
+int				is_redir_token(int token);
+int				get_token_type(char *token, t_lexer *lexer, int handle_op);
+
+
+//tokenizer.c
 t_lexer			tokenize_input(char *input);
+void			skip_spaces(t_parser *parser);
+
+//lexer.c
 int				get_last_token_type(t_lexer *lexer);
 void			lexer_add_token(t_token token, t_lexer *lexer);
 void			lexer_add_end(t_lexer *lexer);
 void			lexer_destroy(t_lexer *lexer);
 
-//var_expansion.c
+//handle_env.c
 int				is_envchar(char c);
-char			*expand_env_vars(char *str);
+t_token			handle_dollar_sign(t_parser *parser, t_lexer *lexer, int chop_tokens);
 
 //parsing_error.c
 int				check_parsing_errors(t_lexer lexer);
 
 //command_batch.c
 void			create_command_batch(t_lexer lexer, t_command_batch *batch);
+
+//command_batch_helper.c
+size_t			get_redirs_count(t_token *tokens);
+size_t			get_arg_count(t_token *tokens);
+int				is_builtin_command(char *str);
 
 //Debug
 void			lexer_print(t_lexer *lexer);

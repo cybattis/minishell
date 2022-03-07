@@ -6,8 +6,10 @@ SRCS		=	main.c get_line.c signal.c execute.c utils.c builtins.c	\
 				redirection.c terminal.c get_git_prompt.c				\
 
 PARS_DIR	=	parsing
-PARSING		=	get_token.c lexer.c parsing.c var_expansion.c			\
-				command_batch.c	parsing_error.c
+PARSING		=	get_token.c lexer.c parsing.c command_batch.c			\
+				parsing_error.c tokenizer.c command_batch_helper.c		\
+				token_type.c env_handling.c
+
 SRC_PARSING	=	$(addprefix $(PARS_DIR)/, $(PARSING))
 
 

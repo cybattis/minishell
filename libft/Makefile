@@ -62,7 +62,7 @@ MATRIX				=		mat4_init.c mat4_mult.c mat4_mvp.c mat4_rotation.c mat4_scale.c
 
 #Standard
 STANDARDDIR			=		standard/
-STANDARD			=		ft_error_exit.c
+STANDARD			=		ft_error_exit.c ft_random.c
 
 #Garbage collector
 GCDIR				=		memory/garbage_collector/
