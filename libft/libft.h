@@ -151,6 +151,8 @@ int			ft_printf(const char *str, ...);
 
 //Standard
 void		ft_error_exit(char *message);
+char		ft_randc();
+uint32_t	ft_randi(uint32_t min, uint32_t max);
 
 //Memory Management
 int			ft_memcmp(const void *s1, const void *s2, size_t n);
