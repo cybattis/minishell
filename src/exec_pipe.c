@@ -19,26 +19,23 @@
 
 extern char	**environ;
 
-int	execute_pipe(int *fds, t_command *command)
+void execute_pipe_child(t_command *command, int *pipe_fds);
+
+int	execute_pipe(t_command *command)
 {
 	pid_t	pid;
+	int		pipe_fds[2];
 	int		wstatus;
 
-	pipe(fds);
+	pipe(pipe_fds);
 	wstatus = 0;
 	pid = fork();
 	if (!pid)
-	{
-		dup2(fds[1], STDOUT_FILENO);
-		close(fds[0]);
-		if (command->is_builtin == 1)
-			exit(execute_builtin(command));
-		execute_bin(command);
-	}
+		execute_pipe_child(command, pipe_fds);
 	if (pid > 0)
 	{
-		dup2(fds[0], STDIN_FILENO);
-		close(fds[1]);
+		dup2(pipe_fds[0], STDIN_FILENO);
+		close(pipe_fds[1]);
 		waitpid(pid, &wstatus, 0);
 		if (WIFEXITED(wstatus))
 			g_minishell.last_return = WEXITSTATUS(wstatus);
@@ -47,5 +44,12 @@ int	execute_pipe(int *fds, t_command *command)
 	return (gc_callback(NULL));
 }
 
-// TODO: RDOC
-// TODO: fix child return
+void execute_pipe_child(t_command *command, int *pipe_fds)
+{
+	dup2(pipe_fds[1], STDOUT_FILENO);
+	close(pipe_fds[0]);
+	redirection(command->redirections);
+	if (command->is_builtin == 1)
+		exit(execute_builtin(command));
+	execute_bin(command);
+}

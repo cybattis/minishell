@@ -37,7 +37,7 @@ int	redirection(t_redir *redirections)
 		else if (redirections[i].type == TOKEN_REDIR_OUT_APPEND)
 			fds[1] = redir_out_append(fds[1], redirections[i]);
 		if (fds[0] == -1 || fds[1] == -1)
-			return (1);
+			return (-1);
 		i++;
 	}
 	return (set_redirection(fds));
@@ -48,16 +48,18 @@ static int	set_redirection(int fds[2])
 	if (fds[0])
 	{
 		if (dup2(fds[0], STDIN_FILENO) < 0)
-			return (ft_errno(errno));
+			return (-ft_errno(errno));
 		close(fds[0]);
 	}
 	if (fds[1])
 	{
 		if (dup2(fds[1], STDOUT_FILENO) < 0)
-			return (ft_errno(errno));
+			return (-ft_errno(errno));
 		close(fds[1]);
 	}
-	return (0);
+	if (fds[1])
+		return (fds[1]);
+	return (-1);
 }
 
 static int	redir_in(int fd, t_redir redirections)

@@ -22,7 +22,6 @@ static int	execute(t_command *command);
 int	execute_command(t_command_batch cmd_batch)
 {
 	int		save_fd[2];
-	int		fds[2];
 	size_t	i;
 
 	i = 0;
@@ -30,17 +29,12 @@ int	execute_command(t_command_batch cmd_batch)
 	save_fd[1] = dup(STDOUT_FILENO);
 	while (i < cmd_batch.count)
 	{
-		if (cmd_batch.commands[i].is_redirecting == 1
-			&& redirection(cmd_batch.commands[i].redirections))
-			clean_fds(save_fd);
 		if (cmd_batch.commands[i].is_piping == 1)
-			execute_pipe(fds, &cmd_batch.commands[i]);
+			execute_pipe(&cmd_batch.commands[i]);
 		else
 		{
 			execute(&cmd_batch.commands[i]);
-			if (cmd_batch.commands[i].is_redirecting == 1
-				|| (i >= 1 && cmd_batch.commands[i - 1].is_piping == 1))
-				clean_fds(save_fd);
+			clean_fds(save_fd);
 		}
 		i++;
 	}
@@ -64,11 +58,17 @@ static int	execute(t_command *command)
 	int		wstatus;
 
 	if (command->is_builtin == 1)
+	{
+		redirection(command->redirections);
 		return (execute_builtin(command));
+	}
 	wstatus = 0;
 	pid = fork();
 	if (!pid)
+	{
+		redirection(command->redirections);
 		execute_bin(command);
+	}
 	else if (pid > 0)
 	{
 		waitpid(pid, &wstatus, 0);
@@ -76,6 +76,7 @@ static int	execute(t_command *command)
 			g_minishell.last_return = WEXITSTATUS(wstatus);
 		return (0);
 	}
+
 	return (gc_callback(NULL));
 }
 

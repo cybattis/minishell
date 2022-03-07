@@ -61,6 +61,11 @@ int	bt_exit(char **args)
 	int ret_value;
 
 	printf("exit\n");
+	if (gc_strarray_size(args) > 2)
+	{
+		printf("minishell: exit: too many arguments\n");
+		return (1);
+	}
 	if (args[1])
 		ret_value = ft_atoi(args[1]);
 	else

@@ -43,7 +43,7 @@ void		execute_bin(t_command *commands);
 int			clean_fds(int save_fd[2]);
 char		**get_path(void);
 
-int			execute_pipe(int *fds, t_command *command);
+int			execute_pipe(t_command *command);
 int			redirection(t_redir *redirections);
 
 int			ft_errno(int errnum);
