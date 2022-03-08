@@ -43,6 +43,7 @@ int	redir_heredoc(t_redir redirections)
 	return (generate_temp_file(str_out));
 }
 
+//TODO: add random tmp file name
 static int	generate_temp_file(char *str_out)
 {
 	int		fd_temp;
