@@ -3,21 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   terminal.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 16:48:07 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/07 11:41:32 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/08 16:09:00 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "minishell.h"
 #include <unistd.h>
 #include <termios.h>
 
-// TODO: put this in signal SIGINT
-// void	disable_raw_mode(struct termios termios)
-// {
-// }
+ void	enable_alt_termmode(void)
+ {
+	 struct termios	raw;
 
-// void	enable_raw_mode(struct termios termios)
-// {
-// }
+	 tcgetattr(STDOUT_FILENO, &raw);
+	 g_minishell.termios = raw;
+	 raw.c_cflag = ~ISIG;
+	 tcsetattr(STDOUT_FILENO, TCSANOW, &raw);
+ }
+
+ void	disable_alt_termmode(void)
+ {
+	 tcsetattr(STDOUT_FILENO, TCSANOW, &g_minishell.termios);
+ }
+

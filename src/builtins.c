@@ -13,7 +13,6 @@
 #include "minishell.h"
 #include <string.h>
 #include <errno.h>
-#include <term.h>
 #include <sys/param.h>
 
 int	execute_builtin(t_command *command)

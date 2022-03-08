@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "readline.h"
 #include "minishell.h"
 #include <errno.h>
 #include <sys/wait.h>

@@ -14,14 +14,12 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <errno.h>
-#include <string.h>
 
 static int	redir_in(int fd, t_redir redirections);
 static int	redir_out(int fd, t_redir redirections);
 static int	redir_out_append(int fd, t_redir redirections);
 static int	set_redirection(int fds[2]);
 
-// TODO: fix heredoc stuck when combined with pipe
 int	redirection(t_redir *redirections)
 {
 	int	fds[2];

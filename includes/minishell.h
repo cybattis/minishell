@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 21:46:20 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/07 18:24:58 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/08 16:12:39 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void		unset_env_var(char *name);
 void		update_shell_env_vars(void);
 int			get_empty_var_index(void);
 
-void		enableRawMode(struct termios termios);
-void		disableRawMode(struct termios termios);
+void		enable_alt_termmode(void);
+void		disable_alt_termmode(void);
 
 #endif

@@ -3,14 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 12:55:27 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/07 17:04:18 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/08 17:01:07 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <termios.h>
 #include "minishell.h"
 #include "readline.h"
 #include <signal.h>
@@ -41,4 +40,5 @@ void	sig_handler(int signum)
 
 // TODO: make ^C invisible
 // TODO: impl. signal for child -- in cat ˆD does nothing and is visible
-// TODO: cat | cat | ls -- enter quit one cat 
+// TODO: cat | cat | ls -- enter quit one cat
+// TODO: make relative command ex: LS ou CAT working -- tolower()
