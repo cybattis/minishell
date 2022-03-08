@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cybattis <cybattis@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 17:10:07 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/06 11:47:05 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/08 11:50:30 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 extern char	**environ;
 
-void execute_pipe_child(t_command *command, int *pipe_fds);
+void	execute_pipe_child(t_command *command, int *pipe_fds);
 
 int	execute_pipe(t_command *command)
 {
@@ -44,11 +44,18 @@ int	execute_pipe(t_command *command)
 	return (gc_callback(NULL));
 }
 
-void execute_pipe_child(t_command *command, int *pipe_fds)
+void	execute_pipe_child(t_command *command, int *pipe_fds)
 {
-	dup2(pipe_fds[1], STDOUT_FILENO);
-	close(pipe_fds[0]);
-	redirection(command->redirections);
+	if (redirection(command->redirections) <= 1)
+	{
+		dup2(pipe_fds[1], STDOUT_FILENO);
+		close(pipe_fds[0]);
+	}
+	else
+	{
+		close(pipe_fds[1]);
+		close(pipe_fds[0]);
+	}
 	if (command->is_builtin == 1)
 		exit(execute_builtin(command));
 	execute_bin(command);

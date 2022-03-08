@@ -6,7 +6,7 @@
 /*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 14:34:44 by njennes           #+#    #+#             */
-/*   Updated: 2022/02/21 20:19:35 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/07 12:26:32 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,11 @@
 # define FT_EACH 1
 # define FT_UNIQUE 2
 # define FT_GROUPS 3
+
+# define FREE_NONE 0
+# define FREE_FIRST 1
+# define FREE_SECOND 2
+# define FREE_BOTH 	3
 
 typedef struct s_list
 {

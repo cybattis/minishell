@@ -6,7 +6,7 @@
 /*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 21:46:20 by njennes           #+#    #+#             */
-/*   Updated: 2022/03/05 16:13:47 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/07 11:40:55 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <sys/param.h>
 #include <unistd.h>
 
-t_app	g_minishell;
+t_app		g_minishell;
 extern char	**environ;
 
 void	update_shell_path(void)
@@ -58,6 +58,5 @@ void	init_minishell(char **envp)
 	gc_init(&g_minishell.gc, gc_callback, NULL);
 	g_minishell.last_return = 0;
 	g_minishell.base_env = envp;
-	tcgetattr(STDIN_FILENO, &g_minishell.og_termios);
 	update_shell_env_vars();
 }

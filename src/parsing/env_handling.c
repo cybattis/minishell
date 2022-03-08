@@ -24,6 +24,7 @@ t_token	handle_dollar_sign(t_parser *parser, t_lexer *lexer, int chop_tokens)
 	char	*env_value;
 
 	parser->i++;
+	ft_memset(&token, 0, sizeof(t_token));
 	if (!is_envchar(parser->str[parser->i]))
 	{
 		if (parser->str[parser->i] == '?')

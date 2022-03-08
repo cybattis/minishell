@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cybattis <cybattis@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 14:54:11 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/05 16:09:27 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/07 19:54:49 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static int	redir_out(int fd, t_redir redirections);
 static int	redir_out_append(int fd, t_redir redirections);
 static int	set_redirection(int fds[2]);
 
+// TODO: fix heredoc stuck when combined with pipe
 int	redirection(t_redir *redirections)
 {
 	int	fds[2];
@@ -28,10 +29,13 @@ int	redirection(t_redir *redirections)
 
 	i = 0;
 	ft_memset(fds, 0, sizeof(int) * 2);
+	unlink("/tmp/sh-thd-123456");
 	while (redirections[i].type)
 	{
 		if (redirections[i].type == TOKEN_REDIR_IN)
 			fds[0] = redir_in(fds[0], redirections[i]);
+		else if (redirections[i].type == TOKEN_REDIR_HEREDOC)
+			fds[0] = redir_heredoc(redirections[i]);
 		else if (redirections[i].type == TOKEN_REDIR_OUT)
 			fds[1] = redir_out(fds[1], redirections[i]);
 		else if (redirections[i].type == TOKEN_REDIR_OUT_APPEND)

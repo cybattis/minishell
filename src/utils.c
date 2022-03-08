@@ -39,16 +39,6 @@ void	ft_error_command(char *command)
 	exit(EXIT_FAILURE);
 }
 
-size_t	ft_arglen(char const **args)
-{
-	size_t	i;
-
-	i = 0;
-	while (args[i])
-		i++;
-	return (i);
-}
-
 int	gc_callback(void *ptr)
 {
 	(void)ptr;

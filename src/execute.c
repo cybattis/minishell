@@ -6,7 +6,7 @@
 /*   By: cybattis <cybattis@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 17:10:07 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/06 11:57:46 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/07 19:50:47 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ static int	execute(t_command *command)
 			g_minishell.last_return = WEXITSTATUS(wstatus);
 		return (0);
 	}
-
 	return (gc_callback(NULL));
 }
 

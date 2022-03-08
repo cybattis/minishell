@@ -6,7 +6,7 @@
 /*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 21:46:20 by njennes           #+#    #+#             */
-/*   Updated: 2022/03/05 14:15:21 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/07 11:37:17 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # define TOKEN_REDIR_OUT 4
 # define TOKEN_REDIR_IN 5
 # define TOKEN_REDIR_OUT_APPEND 6
-# define TOKEN_REDIR_RDOC 7
+# define TOKEN_REDIR_HEREDOC 7
 # define TOKEN_FILE 8
 
 typedef struct s_redir

@@ -6,7 +6,7 @@
 /*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 12:55:27 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/04 17:44:14 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/07 17:04:18 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,6 @@ int	init_signal(void)
 
 void	sig_handler(int signum)
 {
-	// TODO: remove ^C
-	// enableRawMode(g_minishell.og_termios);
-	// disableRawMode(g_minishell.og_termios);
 	if (signum == SIGINT)
 	{
 		printf("\n");
@@ -41,3 +38,7 @@ void	sig_handler(int signum)
 		rl_redisplay();
 	}
 }
+
+// TODO: make ^C invisible
+// TODO: impl. signal for child -- in cat ˆD does nothing and is visible
+// TODO: cat | cat | ls -- enter quit one cat 

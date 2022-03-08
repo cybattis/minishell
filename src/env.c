@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 21:46:20 by njennes           #+#    #+#             */
-/*   Updated: 2022/03/05 16:14:17 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/08 12:07:13 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,29 @@
 
 extern char	**environ;
 
-int	env_var_index(const char *name)
+static void	update_env_var(char *name, char *value);
+static void	create_env_var(char *name, char *value);
+static int	env_var_index(const char *name);
+
+void	set_env_var(char *name, char *value)
+{
+	if (env_var_index(name) != -1)
+		update_env_var(name, value);
+	else
+		create_env_var(name, value);
+}
+
+void	unset_env_var(char *name)
+{
+	int	i;
+
+	i = env_var_index(name);
+	if (i == -1)
+		return ;
+	environ[i][0] = 0;
+}
+
+static int	env_var_index(const char *name)
 {
 	size_t	i;
 	size_t	j;
@@ -39,21 +61,7 @@ int	env_var_index(const char *name)
 	return (-1);
 }
 
-int	get_empty_var_index(void)
-{
-	size_t	i;
-
-	i = 0;
-	while (environ[i])
-	{
-		if (environ[i][0] == 0)
-			return ((int)i);
-		i++;
-	}
-	return (-1);
-}
-
-void	update_env_var(char *name, char *value)
+static void	update_env_var(char *name, char *value)
 {
 	size_t	i;
 
@@ -64,7 +72,7 @@ void	update_env_var(char *name, char *value)
 	environ[i] = gc_strjoin(get_gc(), environ[i], value, 1);
 }
 
-void	create_env_var(char *name, char *value)
+static void	create_env_var(char *name, char *value)
 {
 	char	*new_entry;
 	int		empty_index;
@@ -81,22 +89,4 @@ void	create_env_var(char *name, char *value)
 		environ[empty_index] = gc_strdup(get_gc(), new_entry);
 	}
 	gc_free(get_gc(), new_entry);
-}
-
-void	set_env_var(char *name, char *value)
-{
-	if (env_var_index(name) != -1)
-		update_env_var(name, value);
-	else
-		create_env_var(name, value);
-}
-
-void	unset_env_var(char *name)
-{
-	int	i;
-
-	i = env_var_index(name);
-	if (i == -1)
-		return ;
-	environ[i][0] = 0;
 }

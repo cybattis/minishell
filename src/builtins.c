@@ -58,7 +58,7 @@ int	bt_echo(t_command *cmd)
 
 int	bt_exit(char **args)
 {
-	int ret_value;
+	int	ret_value;
 
 	printf("exit\n");
 	if (gc_strarray_size(args) > 2)

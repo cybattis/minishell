@@ -6,7 +6,7 @@
 /*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 21:46:20 by njennes           #+#    #+#             */
-/*   Updated: 2022/03/05 15:31:23 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/07 11:37:17 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	check_token_order(int last, int current, t_token curr_token)
 	if (last == TOKEN_PIPE && current == TOKEN_PIPE)
 		return (0);
 	if ((last == TOKEN_REDIR_OUT || last == TOKEN_REDIR_OUT_APPEND
-			|| last == TOKEN_REDIR_IN || last == TOKEN_REDIR_RDOC)
+			|| last == TOKEN_REDIR_IN || last == TOKEN_REDIR_HEREDOC)
 		&& current != TOKEN_FILE)
 	{
 		ft_printf("Minishell: syntax error near unexpected token '%s'\n",

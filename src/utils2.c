@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   terminal.c                                         :+:      :+:    :+:   */
+/*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/03 16:48:07 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/07 11:41:32 by cybattis         ###   ########.fr       */
+/*   Created: 2022/02/19 14:55:35 by cybattis          #+#    #+#             */
+/*   Updated: 2022/03/05 15:57:10 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <termios.h>
+#include <stdlib.h>
 
-// TODO: put this in signal SIGINT
-// void	disable_raw_mode(struct termios termios)
-// {
-// }
+size_t	ft_arglen(char const **args)
+{
+	size_t	i;
 
-// void	enable_raw_mode(struct termios termios)
-// {
-// }
+	i = 0;
+	while (args[i])
+		i++;
+	return (i);
+}

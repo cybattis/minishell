@@ -1,23 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   terminal.c                                         :+:      :+:    :+:   */
+/*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/03 16:48:07 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/07 11:41:32 by cybattis         ###   ########.fr       */
+/*   Created: 2022/02/16 21:46:20 by njennes           #+#    #+#             */
+/*   Updated: 2022/03/08 12:07:13 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <termios.h>
+#include <stdlib.h>
 
-// TODO: put this in signal SIGINT
-// void	disable_raw_mode(struct termios termios)
-// {
-// }
+extern char	**environ;
 
-// void	enable_raw_mode(struct termios termios)
-// {
-// }
+int	get_empty_var_index(void)
+{
+	size_t	i;
+
+	i = 0;
+	while (environ[i])
+	{
+		if (environ[i][0] == 0)
+			return ((int)i);
+		i++;
+	}
+	return (-1);
+}

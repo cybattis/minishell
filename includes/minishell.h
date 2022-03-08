@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cybattis <cybattis@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 21:46:20 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/06 11:29:18 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/07 18:24:58 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@
 
 typedef struct s_app
 {
-	t_gc				gc;
-	int					last_return;
-	char				**base_env;
-	struct termios		og_termios;
+	t_gc			gc;
+	int				last_return;
+	char			**base_env;
+	struct termios	termios;
 }	t_app;
 
 extern t_app	g_minishell;
@@ -45,6 +45,7 @@ char		**get_path(void);
 
 int			execute_pipe(t_command *command);
 int			redirection(t_redir *redirections);
+int			redir_heredoc(t_redir redirections);
 
 int			ft_errno(int errnum);
 void		ft_error_command(char *command);
@@ -65,8 +66,9 @@ int			bt_unset(char **args);
 void		set_env_var(char *name, char *value);
 void		unset_env_var(char *name);
 void		update_shell_env_vars(void);
+int			get_empty_var_index(void);
 
-void 		enableRawMode(struct termios og_termios);
-void 		disableRawMode(struct termios og_termios);
+void		enableRawMode(struct termios termios);
+void		disableRawMode(struct termios termios);
 
 #endif

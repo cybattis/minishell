@@ -3,7 +3,8 @@ NAME		=	minishell
 
 SRCS		=	main.c get_line.c signal.c execute.c utils.c builtins.c	\
 				builtins_env.c get_prompt.c env.c init.c exec_pipe.c	\
-				redirection.c terminal.c get_git_prompt.c				\
+				redirection.c terminal.c get_git_prompt.c heredoc.c		\
+				utils2.c env_utils.c
 
 PARS_DIR	=	parsing
 PARSING		=	get_token.c lexer.c parsing.c command_batch.c			\
