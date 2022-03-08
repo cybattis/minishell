@@ -6,7 +6,7 @@
 /*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 21:46:20 by njennes           #+#    #+#             */
-/*   Updated: 2022/03/08 12:13:02 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/08 12:13:12 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ int	is_operator(char c)
 
 int	is_redir_token(int token)
 {
-	if (token == TOKEN_REDIR_OUT || token == TOKEN_REDIR_OUT_APPEND ||
-		token == TOKEN_REDIR_IN || token == TOKEN_REDIR_HEREDOC)
+	if (token == TOKEN_REDIR_OUT || token == TOKEN_REDIR_OUT_APPEND
+		|| token == TOKEN_REDIR_IN || token == TOKEN_REDIR_HEREDOC)
 		return (1);
 	return (0);
 }

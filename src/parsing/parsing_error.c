@@ -22,7 +22,7 @@ static int	check_token_order(int last, int current, t_token curr_token)
 		&& current != TOKEN_FILE)
 	{
 		ft_printf("Minishell: syntax error near unexpected token '%s'\n",
-				curr_token.str);
+			curr_token.str);
 		return (0);
 	}
 	return (1);

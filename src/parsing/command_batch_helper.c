@@ -22,7 +22,7 @@ size_t	get_arg_count(t_token *tokens)
 	i = 0;
 	count = 0;
 	while (tokens[i].type == TOKEN_COMMAND || tokens[i].type == TOKEN_ARG
-		   || tokens[i].type == TOKEN_FILE || is_redir_token(tokens[i].type))
+		|| tokens[i].type == TOKEN_FILE || is_redir_token(tokens[i].type))
 	{
 		if (tokens[i].type == TOKEN_COMMAND || tokens[i].type == TOKEN_ARG)
 			count++;
@@ -59,8 +59,8 @@ size_t	get_redirs_count(t_token *tokens)
 
 	count = 0;
 	i = 0;
-	while (tokens[i].type == TOKEN_COMMAND || tokens[i].type == TOKEN_ARG ||
-		   is_redir_token(tokens[i].type) || tokens[i].type == TOKEN_FILE)
+	while (tokens[i].type == TOKEN_COMMAND || tokens[i].type == TOKEN_ARG
+		|| is_redir_token(tokens[i].type) || tokens[i].type == TOKEN_FILE)
 	{
 		if (is_redir_token(tokens[i].type))
 			count++;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_token.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 21:46:20 by njennes           #+#    #+#             */
-/*   Updated: 2022/03/05 14:19:24 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/08 12:20:54 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,7 @@ t_token	consume_single_quotes(t_parser *parser, t_lexer *lexer)
 
 	parser->i++;
 	start = parser->i;
-	while (parser->str[parser->i] &&
-			parser->str[parser->i] != '\'')
+	while (parser->str[parser->i] && parser->str[parser->i] != '\'')
 		parser->i++;
 	token.str = gc_substr(get_gc(), parser->str, start, parser->i - start);
 	token.type = get_token_type(token.str, lexer, 0);
@@ -39,8 +38,7 @@ t_token	consume_double_quotes(t_parser *parser, t_lexer *lexer)
 
 	parser->i++;
 	start = parser->i;
-	while (parser->str[parser->i] &&
-			parser->str[parser->i] != '"')
+	while (parser->str[parser->i] && parser->str[parser->i] != '"')
 	{
 		if (parser->str[parser->i] == '$')
 			token_append(handle_dollar_sign(parser, lexer, 0), &token);
@@ -59,19 +57,19 @@ t_token	consume_word(t_parser *parser, t_lexer *lexer)
 
 	is_op = is_operator(parser->str[parser->i]);
 	token.str = gc_strdup(get_gc(), "");
-	while (parser->str[parser->i] &&
-			!ft_isspace(parser->str[parser->i]) &&
-			is_op == is_operator(parser->str[parser->i]))
+	while (parser->str[parser->i] && !ft_isspace(parser->str[parser->i])
+		&& is_op == is_operator(parser->str[parser->i]))
 	{
 		if (parser->str[parser->i] == '\'')
 			token_append(consume_single_quotes(parser, lexer), &token);
 		else if (parser->str[parser->i] == '"')
 			token_append(consume_double_quotes(parser, lexer), &token);
 		else if (parser->str[parser->i] == '$')
-			token_append(handle_dollar_sign(parser, lexer, 0) ,&token);
+			token_append(handle_dollar_sign(parser, lexer, 0), &token);
 		else
 		{
-			token.str = gc_strappend(get_gc(), token.str, parser->str[parser->i]);
+			token.str = gc_strappend(get_gc(),
+					token.str, parser->str[parser->i]);
 			parser->i++;
 		}
 	}

@@ -25,7 +25,7 @@ void	create_command_batch(t_lexer lexer, t_command_batch *batch)
 
 	command_count = get_command_count(lexer);
 	batch->count = command_count;
-	batch->commands = gc_calloc(get_gc(), command_count + 1, sizeof (t_command));
+	batch->commands = gc_calloc(get_gc(), command_count + 1, sizeof(t_command));
 	populate_commands(lexer, batch->commands);
 }
 
@@ -87,7 +87,7 @@ static char	**get_command_args(t_token *tokens)
 	i = 0;
 	j = 0;
 	while (tokens[i].type == TOKEN_COMMAND || tokens[i].type == TOKEN_ARG
-			|| tokens[i].type == TOKEN_FILE || is_redir_token(tokens[i].type))
+		|| tokens[i].type == TOKEN_FILE || is_redir_token(tokens[i].type))
 	{
 		if (tokens[i].type == TOKEN_COMMAND || tokens[i].type == TOKEN_ARG)
 		{
@@ -107,9 +107,9 @@ static t_redir	*get_redirections(t_token *tokens)
 
 	i = 0;
 	j = 0;
-	redirs = gc_calloc(get_gc(), get_redirs_count(tokens) + 1, sizeof (t_redir));
-	while (tokens[i].type == TOKEN_COMMAND || tokens[i].type == TOKEN_ARG ||
-		   is_redir_token(tokens[i].type) || tokens[i].type == TOKEN_FILE)
+	redirs = gc_calloc(get_gc(), get_redirs_count(tokens) + 1, sizeof(t_redir));
+	while (tokens[i].type == TOKEN_COMMAND || tokens[i].type == TOKEN_ARG
+		|| is_redir_token(tokens[i].type) || tokens[i].type == TOKEN_FILE)
 	{
 		if (is_redir_token(tokens[i].type))
 		{

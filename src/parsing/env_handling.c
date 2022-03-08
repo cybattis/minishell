@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_env.c                                       :+:      :+:    :+:   */
+/*   env_handling.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: njennes <cybattis@student.42.fr>           +#+  +:+       +#+        */
+/*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 21:46:20 by njennes           #+#    #+#             */
-/*   Updated: 2022/03/05 14:19:24 by njennes          ###   ########.fr       */
+/*   Updated: 2022/03/08 12:30:15 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "../../libft/libft.h"
 #include "../../includes/minishell.h"
 
+static void	which_sign(t_parser *parser, t_token *token);
 static void	handle_env_value(t_lexer *lexer, char *value);
 static char	*parse_env_name(t_parser *parser);
 
@@ -27,13 +28,7 @@ t_token	handle_dollar_sign(t_parser *parser, t_lexer *lexer, int chop_tokens)
 	ft_memset(&token, 0, sizeof(t_token));
 	if (!is_envchar(parser->str[parser->i]))
 	{
-		if (parser->str[parser->i] == '?')
-		{
-			token.str = gc_itoa(get_gc(), g_minishell.last_return);
-			parser->i++;
-		}
-		else
-			token.str = gc_strdup(get_gc(), "$");
+		which_sign(parser, &token);
 		token.type = get_token_type(token.str, lexer, 0);
 		if (chop_tokens)
 			lexer_add_token(token, lexer);
@@ -45,6 +40,17 @@ t_token	handle_dollar_sign(t_parser *parser, t_lexer *lexer, int chop_tokens)
 	if (chop_tokens)
 		handle_env_value(lexer, env_value);
 	return (token);
+}
+
+static void	which_sign(t_parser *parser, t_token *token)
+{
+	if (parser->str[parser->i] == '?')
+	{
+		token->str = gc_itoa(get_gc(), g_minishell.last_return);
+		parser->i++;
+	}
+	else
+		token->str = gc_strdup(get_gc(), "$");
 }
 
 int	is_envchar(char c)
