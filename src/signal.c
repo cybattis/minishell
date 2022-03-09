@@ -40,6 +40,5 @@ void	sig_handler(int signum)
 }
 
 // TODO: make ^C invisible
-// TODO: impl. signal for child -- in cat ˆD does nothing and is visible
 // TODO: cat | cat | ls -- enter quit one cat
 // TODO: make relative command ex: LS ou CAT working -- tolower()
