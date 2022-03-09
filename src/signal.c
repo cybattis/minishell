@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: cybattis <cybattis@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 12:55:27 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/08 17:01:07 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/09 17:27:22 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,3 +42,4 @@ void	sig_handler(int signum)
 // TODO: make ^C invisible
 // TODO: cat | cat | ls -- enter quit one cat
 // TODO: make relative command ex: LS ou CAT working -- tolower()
+// TODO: Fix crash cause by git_prompt when pressing enter 7 times with empty line
