@@ -19,7 +19,7 @@ char	**gc_strarray_from(t_gc *gc, char **other, size_t size)
 
 	if (!other)
 		return (gc_strarray_init(gc));
-	array = gc_calloc(gc, size + 1,  sizeof (char *));
+	array = gc_calloc(gc, size + 1, sizeof (char *));
 	ft_memmove(array, other, size * sizeof (char *));
 	i = 0;
 	while (i < size)

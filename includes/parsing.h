@@ -13,7 +13,7 @@
 #ifndef PARSING_H
 # define PARSING_H
 
-#include <stddef.h>
+# include <stddef.h>
 
 # define TOKEN_UNKNOWN -2
 # define TOKEN_EMPTY -1
@@ -81,7 +81,6 @@ int				is_operator(char c);
 int				is_redir_token(int token);
 int				get_token_type(char *token, t_lexer *lexer, int handle_op);
 
-
 //tokenizer.c
 t_lexer			tokenize_input(char *input);
 void			skip_spaces(t_parser *parser);
@@ -94,7 +93,8 @@ void			lexer_destroy(t_lexer *lexer);
 
 //handle_env.c
 int				is_envchar(char c);
-t_token			handle_dollar_sign(t_parser *parser, t_lexer *lexer, int chop_tokens);
+t_token			handle_dollar_sign(t_parser *parser, t_lexer *lexer,
+					int chop_tokens);
 
 //parsing_error.c
 int				check_parsing_errors(t_lexer lexer);
