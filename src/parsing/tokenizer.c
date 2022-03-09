@@ -29,18 +29,23 @@ t_lexer	tokenize_input(char *input)
 	return (lexer);
 }
 
-void	skip_spaces(t_parser *parser)
+int	skip_spaces(t_parser *parser)
 {
-	while (parser->str[parser->i] == ' ')
+	int	skipped;
+
+	skipped = 0;
+	while (ft_isspace(parser->str[parser->i]))
+	{
 		parser->i++;
+		skipped = 1;
+	}
+	return (skipped);
 }
 
 static void	get_next_token(t_parser *parser, t_lexer *lexer)
 {
 	skip_spaces(parser);
-	if (parser->str[parser->i] == '$')
-		handle_dollar_sign(parser, lexer, 1);
-	else if (parser->str[parser->i] != '\0')
+	if (parser->str[parser->i] != '\0')
 		lexer_add_token(consume_word(parser, lexer), lexer);
 	else
 		lexer_add_end(lexer);

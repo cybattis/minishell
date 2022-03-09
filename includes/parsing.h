@@ -83,7 +83,7 @@ int				get_token_type(char *token, t_lexer *lexer, int handle_op);
 
 //tokenizer.c
 t_lexer			tokenize_input(char *input);
-void			skip_spaces(t_parser *parser);
+int				skip_spaces(t_parser *parser);
 
 //lexer.c
 int				get_last_token_type(t_lexer *lexer);
@@ -93,8 +93,8 @@ void			lexer_destroy(t_lexer *lexer);
 
 //handle_env.c
 int				is_envchar(char c);
-t_token			handle_dollar_sign(t_parser *parser, t_lexer *lexer,
-					int chop_tokens);
+void			handle_dollar_sign(t_parser *parser, t_lexer *lexer,
+					int chop_tokens, t_token *current);
 
 //parsing_error.c
 int				check_parsing_errors(t_lexer lexer);

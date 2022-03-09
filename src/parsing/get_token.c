@@ -33,18 +33,20 @@ t_token	consume_single_quotes(t_parser *parser, t_lexer *lexer)
 
 t_token	consume_double_quotes(t_parser *parser, t_lexer *lexer)
 {
-	size_t	start;
 	t_token	token;
 
 	parser->i++;
-	start = parser->i;
+	token.str = gc_strdup(get_gc(), "");
 	while (parser->str[parser->i] && parser->str[parser->i] != '"')
 	{
 		if (parser->str[parser->i] == '$')
-			token_append(handle_dollar_sign(parser, lexer, 0), &token);
-		parser->i++;
+			handle_dollar_sign(parser, lexer, 0, &token);
+		else
+		{
+			token.str = gc_strappend(get_gc(), token.str, parser->str[parser->i]);
+			parser->i++;
+		}
 	}
-	token.str = gc_substr(get_gc(), parser->str, start, parser->i - start);
 	token.type = get_token_type(token.str, lexer, 0);
 	parser->i++;
 	return (token);
@@ -65,7 +67,7 @@ t_token	consume_word(t_parser *parser, t_lexer *lexer)
 		else if (parser->str[parser->i] == '"')
 			token_append(consume_double_quotes(parser, lexer), &token);
 		else if (parser->str[parser->i] == '$')
-			token_append(handle_dollar_sign(parser, lexer, 0), &token);
+			handle_dollar_sign(parser, lexer, 1, &token);
 		else
 		{
 			token.str = gc_strappend(get_gc(),

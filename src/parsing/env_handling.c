@@ -15,42 +15,41 @@
 #include "../../includes/minishell.h"
 
 static void	which_sign(t_parser *parser, t_token *token);
-static void	handle_env_value(t_lexer *lexer, char *value);
+static void	chop_var(t_lexer *lexer, char *value, t_token *current);
 static char	*parse_env_name(t_parser *parser);
 
-t_token	handle_dollar_sign(t_parser *parser, t_lexer *lexer, int chop_tokens)
+void	handle_dollar_sign(t_parser *parser, t_lexer *lexer,
+			int chop_tokens, t_token *current)
 {
-	t_token	token;
 	char	*env_name;
 	char	*env_value;
 
 	parser->i++;
-	ft_memset(&token, 0, sizeof(t_token));
 	if (!is_envchar(parser->str[parser->i]))
 	{
-		which_sign(parser, &token);
-		token.type = get_token_type(token.str, lexer, 0);
-		if (chop_tokens)
-			lexer_add_token(token, lexer);
-		return (token);
+		which_sign(parser, current);
+		current->type = get_token_type(current->str, lexer, 0);
+		return ;
 	}
 	env_name = parse_env_name(parser);
 	env_value = getenv(env_name);
 	gc_free(get_gc(), env_name);
 	if (chop_tokens)
-		handle_env_value(lexer, env_value);
-	return (token);
+		chop_var(lexer, env_value, current);
+	else
+		current->str = gc_strjoin(get_gc(), current->str, env_value, FREE_FIRST);
 }
 
 static void	which_sign(t_parser *parser, t_token *token)
 {
 	if (parser->str[parser->i] == '?')
 	{
-		token->str = gc_itoa(get_gc(), g_minishell.last_return);
+		token->str = gc_strjoin(get_gc(), token->str,
+					gc_itoa(get_gc(), g_minishell.last_return), FREE_BOTH);
 		parser->i++;
 	}
 	else
-		token->str = gc_strdup(get_gc(), "$");
+		token->str = gc_strappend(get_gc(), token->str, '$');
 }
 
 int	is_envchar(char c)
@@ -60,19 +59,40 @@ int	is_envchar(char c)
 	return (0);
 }
 
-static void	handle_env_value(t_lexer *lexer, char *value)
+static void	chop_var(t_lexer *lexer, char *value, t_token *current)
 {
+	t_token		token;
 	t_parser	value_parser;
+	int			pushed_current;
 
 	value_parser.i = 0;
 	value_parser.str = value;
+	pushed_current = 0;
+	if (skip_spaces(&value_parser))
+	{
+		lexer_add_token(*current, lexer);
+		current->str = gc_strdup(get_gc(), "");
+		pushed_current = 1;
+	}
 	while (value_parser.str[value_parser.i])
 	{
-		skip_spaces(&value_parser);
 		if (value_parser.str[value_parser.i] == '\'')
-			lexer_add_token(consume_single_quotes(&value_parser, lexer), lexer);
+			token = consume_single_quotes(&value_parser, lexer);
 		else
-			lexer_add_token(consume_word(&value_parser, lexer), lexer);
+			token = consume_word(&value_parser, lexer);
+		if (pushed_current)
+			lexer_add_token(token, lexer);
+		else
+		{
+			current->str = gc_strjoin(get_gc(), current->str, token.str, FREE_BOTH);
+			if (skip_spaces(&value_parser))
+			{
+				lexer_add_token(*current, lexer);
+				current->str = gc_strdup(get_gc(), "");
+				pushed_current = 1;
+			}
+		}
+		skip_spaces(&value_parser);
 	}
 }
 
