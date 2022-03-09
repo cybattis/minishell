@@ -57,6 +57,7 @@ void	init_minishell(char **envp)
 	init_signal();
 	gc_init(&g_minishell.gc, gc_callback, NULL);
 	g_minishell.last_return = 0;
+	g_minishell.is_executing = 0;
 	g_minishell.base_env = envp;
 	update_shell_env_vars();
 }

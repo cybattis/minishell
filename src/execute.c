@@ -62,6 +62,7 @@ static int	execute(t_command *command)
 		return (execute_builtin(command));
 	}
 	wstatus = 0;
+	g_minishell.is_executing = 1;
 	pid = fork();
 	if (!pid)
 	{
@@ -73,6 +74,7 @@ static int	execute(t_command *command)
 		waitpid(pid, &wstatus, 0);
 		if (WIFEXITED(wstatus))
 			g_minishell.last_return = WEXITSTATUS(wstatus);
+		g_minishell.is_executing = 0;
 		return (0);
 	}
 	return (gc_callback(NULL));

@@ -21,6 +21,7 @@ typedef struct s_app
 {
 	t_gc			gc;
 	int				last_return;
+	int				is_executing;
 	char			**base_env;
 	struct termios	termios;
 }	t_app;

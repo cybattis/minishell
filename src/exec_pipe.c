@@ -27,6 +27,7 @@ int	execute_pipe(t_command *command)
 	int		pipe_fds[2];
 	int		wstatus;
 
+	g_minishell.is_executing = 1;
 	pipe(pipe_fds);
 	wstatus = 0;
 	pid = fork();
@@ -39,6 +40,7 @@ int	execute_pipe(t_command *command)
 		waitpid(pid, &wstatus, 0);
 		if (WIFEXITED(wstatus))
 			g_minishell.last_return = WEXITSTATUS(wstatus);
+		g_minishell.is_executing = 0;
 		return (0);
 	}
 	return (gc_callback(NULL));
