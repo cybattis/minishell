@@ -38,6 +38,8 @@ int			is_git_repo(char *path);
 void		init_minishell(char **envp);
 int			init_signal(void);
 void		sig_handler(int signum);
+int			init_signal_child(void);
+void		sig_handler_child(int signum);
 
 int			execute_command(t_command_batch cmd_batch);
 void		execute_bin(t_command *commands);

@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cybattis <cybattis@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 17:10:07 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/07 19:50:47 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/10 14:50:55 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <errno.h>
 #include <sys/wait.h>
+#include <string.h>
 
 extern char	**environ;
 
@@ -88,13 +89,20 @@ void	execute_bin(t_command *command)
 
 	path = get_path();
 	j = 0;
-	execve(command->name, command->args, environ);
+	if (execve(cmd_path, command->args, environ) < 0 && errno != ENOENT)
+	{
+		printf("minishell: %s\n", strerror(errno));
+		exit(126);
+	}
 	while (path[j])
 	{
 		cmd_path = gc_strappend(&g_minishell.gc, path[j], '/');
 		cmd_path = gc_strjoin(&g_minishell.gc, cmd_path, command->name, 1);
 		if (execve(cmd_path, command->args, environ) < 0 && errno != ENOENT)
-			ft_errno_exit(errno);
+		{
+			printf("minishell: %s\n", strerror(errno));
+			exit(126);
+		}
 		j++;
 	}
 	ft_error_command(command->args[0]);

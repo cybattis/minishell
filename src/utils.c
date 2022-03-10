@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 14:55:35 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/05 15:57:10 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/10 14:36:16 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	ft_errno(int errnum)
 void	ft_error_command(char *command)
 {
 	printf("minishell: %s : command not found\n", command);
-	exit(EXIT_FAILURE);
+	exit(127);
 }
 
 int	gc_callback(void *ptr)
