@@ -6,7 +6,7 @@
 /*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 17:10:07 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/10 14:50:55 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/12 15:56:15 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,25 +19,16 @@ extern char	**environ;
 
 static int	execute(t_command *command);
 
-int	execute_command(t_command_batch cmd_batch)
+int	execute_command(t_command_batch batch)
 {
 	int		save_fd[2];
-	size_t	i;
 
-	i = 0;
 	save_fd[0] = dup(STDIN_FILENO);
 	save_fd[1] = dup(STDOUT_FILENO);
-	while (i < cmd_batch.count)
-	{
-		if (cmd_batch.commands[i].is_piping == 1)
-			execute_pipe(&cmd_batch.commands[i]);
-		else
-		{
-			execute(&cmd_batch.commands[i]);
-			clean_fds(save_fd);
-		}
-		i++;
-	}
+	if (batch.commands[0].is_piping == 1)
+		execute_pipe(&batch);
+	execute(&batch.commands[batch.count - 1]);
+	clean_fds(save_fd);
 	return (0);
 }
 

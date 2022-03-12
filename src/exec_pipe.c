@@ -6,47 +6,58 @@
 /*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 17:10:07 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/08 11:50:30 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/12 18:06:47 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
 #include <sys/stat.h>
+#include "minishell.h"
 #include <sys/wait.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 
 extern char	**environ;
 
-void	execute_pipe_child(t_command *command, int *pipe_fds);
+static void	execute_pipe_child(t_command *command, int *pipe_fds, int *pipe_next);
 
-int	execute_pipe(t_command *command)
+int	execute_pipe(t_command_batch *batch)
 {
+	size_t 	i;
 	pid_t	pid;
-	int		pipe_fds[2];
+	int		pipe_current[2];
+	int		pipe_next[2];
 	int		wstatus;
 
+	i = 0;
 	g_minishell.is_executing = 1;
-	pipe(pipe_fds);
-	wstatus = 0;
-	pid = fork();
-	if (!pid)
-		execute_pipe_child(command, pipe_fds);
+	pipe(pipe_current);
+	while (i < batch->count - 1)
+	{
+		pid = fork();
+		pipe(pipe_next);
+		if (!pid)
+			execute_pipe_child(&batch->commands[i], pipe_current, pipe_next);
+		i++;
+	}
 	if (pid > 0)
 	{
-		dup2(pipe_fds[0], STDIN_FILENO);
-		close(pipe_fds[1]);
-		waitpid(pid, &wstatus, 0);
-		if (WIFEXITED(wstatus))
-			g_minishell.last_return = WEXITSTATUS(wstatus);
-		g_minishell.is_executing = 0;
+		dup2(pipe_current[0], STDIN_FILENO);
+		close(pipe_current[1]);
+		while (i > 0)
+		{
+			wstatus = 0;
+			waitpid(pid, &wstatus, 0);
+			if (WIFEXITED(wstatus))
+				g_minishell.last_return = WEXITSTATUS(wstatus);
+			g_minishell.is_executing = 0;
+			i--;
+		}
 		return (0);
 	}
 	return (gc_callback(NULL));
 }
 
-void	execute_pipe_child(t_command *command, int *pipe_fds)
+static void	execute_pipe_child(t_command *command, int *pipe_fds, int *pipe_next)
 {
 	if (redirection(command->redirections) <= 1)
 	{

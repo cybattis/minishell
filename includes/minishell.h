@@ -46,7 +46,7 @@ void		execute_bin(t_command *commands);
 int			clean_fds(int save_fd[2]);
 char		**get_path(void);
 
-int			execute_pipe(t_command *command);
+int			execute_pipe(t_command_batch *batch);
 int			redirection(t_redir *redirections);
 int			redir_heredoc(t_redir redirections);
 
