@@ -6,7 +6,7 @@
 /*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 17:10:07 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/12 15:56:15 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/16 13:42:07 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,40 +32,23 @@ int	execute_command(t_command_batch batch)
 	return (0);
 }
 
-int	clean_fds(int save_fd[2])
-{
-	if (dup2(save_fd[1], STDOUT_FILENO) < 0)
-		ft_errno(errno);
-	if (dup2(save_fd[0], STDIN_FILENO) < 0)
-		ft_errno(errno);
-	close(save_fd[0]);
-	close(save_fd[1]);
-	return (1);
-}
-
 static int	execute(t_command *command)
 {
 	pid_t	pid;
 	int		wstatus;
 
+	redirection(command->redirections);
 	if (command->is_builtin == 1)
-	{
-		redirection(command->redirections);
 		return (execute_builtin(command));
-	}
 	wstatus = 0;
 	g_minishell.is_executing = 1;
 	pid = fork();
 	if (!pid)
-	{
-		redirection(command->redirections);
 		execute_bin(command);
-	}
 	else if (pid > 0)
 	{
 		waitpid(pid, &wstatus, 0);
-		if (WIFEXITED(wstatus))
-			g_minishell.last_return = WEXITSTATUS(wstatus);
+		g_minishell.last_return = WEXITSTATUS(wstatus);
 		g_minishell.is_executing = 0;
 		return (0);
 	}
@@ -97,6 +80,17 @@ void	execute_bin(t_command *command)
 		j++;
 	}
 	ft_error_command(command->args[0]);
+}
+
+int	clean_fds(int save_fd[2])
+{
+	if (dup2(save_fd[1], STDOUT_FILENO) < 0)
+		ft_errno(errno);
+	if (dup2(save_fd[0], STDIN_FILENO) < 0)
+		ft_errno(errno);
+	close(save_fd[0]);
+	close(save_fd[1]);
+	return (1);
 }
 
 char	**get_path(void)
