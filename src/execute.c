@@ -89,7 +89,7 @@ void	execute_bin(t_command *command)
 
 	path = get_path();
 	j = 0;
-	if (execve(cmd_path, command->args, environ) < 0 && errno != ENOENT)
+	if (execve(command->name, command->args, environ) < 0 && errno != ENOENT)
 	{
 		printf("minishell: %s\n", strerror(errno));
 		exit(126);
