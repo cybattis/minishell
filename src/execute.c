@@ -6,7 +6,7 @@
 /*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 17:10:07 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/16 13:42:07 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/17 14:04:32 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ int	execute_command(t_command_batch batch)
 	save_fd[1] = dup(STDOUT_FILENO);
 	if (batch.commands[0].is_piping == 1)
 		execute_pipe(&batch);
-	execute(&batch.commands[batch.count - 1]);
+	else
+		execute(&batch.commands[batch.count - 1]);
 	clean_fds(save_fd);
 	return (0);
 }
@@ -63,7 +64,7 @@ void	execute_bin(t_command *command)
 
 	path = get_path();
 	j = 0;
-	if (execve(cmd_path, command->args, environ) < 0 && errno != ENOENT)
+	if (execve(command->name, command->args, environ) < 0 && errno != ENOENT)
 	{
 		printf("minishell: %s\n", strerror(errno));
 		exit(126);
