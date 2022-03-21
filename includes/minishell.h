@@ -6,7 +6,7 @@
 /*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 21:46:20 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/08 16:12:39 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/21 15:47:35 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,21 @@
 # include "libft.h"
 # include <termios.h>
 
-typedef struct s_app
+typedef struct s_mini
 {
 	t_gc			gc;
 	int				last_return;
 	int				is_executing;
 	char			**base_env;
 	struct termios	termios;
-}	t_app;
+}	t_mini;
 
-extern t_app	g_minishell;
+typedef struct s_pipe
+{
+	int fd[2];
+}	t_pipe;
+
+extern t_mini	g_minishell;
 
 t_gc		*get_gc(void);
 
@@ -46,11 +51,12 @@ void		execute_bin(t_command *commands);
 int			clean_fds(int save_fd[2]);
 char		**get_path(void);
 
-int			execute_pipe(t_command_batch *batch);
+int			execute_pipe(t_command_batch *batch, t_pipe *pipes);
+t_pipe		*init_pipe(size_t nbr);
 int			redirection(t_redir *redirections);
 int			redir_heredoc(t_redir redirections);
 
-int			ft_errno(int errnum);
+int			ft_print_errno(void);
 void		ft_error_command(char *command);
 void		ft_errno_exit(int errnum);
 size_t		ft_arglen(char const **args);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cybattis <cybattis@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 17:10:07 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/20 12:58:33 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/21 16:01:38 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,43 +17,23 @@
 
 extern char	**environ;
 
-static void	execute_pipe_child(t_command *command, int *pipe_prev, int *pipe_next, size_t i);
+static void	fork_pipe(t_command_batch *batch, t_pipe *pipes);
 
-int	execute_pipe(t_command_batch *batch)
+int	execute_pipe(t_command_batch *batch, t_pipe *pipes)
 {
 	size_t i;
 	pid_t pid;
-	int pipe_prev[2];
-	int pipe_next[2];
 	int wstatus;
 
 	i = 0;
 	pid = 0;
 	g_minishell.is_executing = 1;
-	pipe(pipe_next);
-	while (pid >= 0 && i < batch->count)
-	{
-		if (i > 0 && i < batch->count - 1)
-		{
-			pipe_prev[0] = pipe_next[0];
-			pipe_prev[1] = pipe_next[1];
-			pipe(pipe_next);
-		}
-		pid = fork();
-		if (!pid)
-			execute_pipe_child(&batch->commands[i], pipe_prev, pipe_next, i);
-		i++;
-	}
+	fork_pipe(batch, pipes);
 	if (pid > 0)
 	{
 		wstatus = 0;
-		close(pipe_prev[0]);
-		close(pipe_prev[1]);
-		if (batch->count > 2)
-		{
-			close(pipe_next[0]);
-			close(pipe_next[1]);
-		}
+		dup2(pipes[0].fd[0], STDIN_FILENO);
+		close(pipes[0].fd[0]);
 		while (i > 0)
 		{
 			waitpid(pid, &wstatus, 0);
@@ -61,30 +41,48 @@ int	execute_pipe(t_command_batch *batch)
 			i--;
 		}
 		g_minishell.is_executing = 0;
+		return (0);
 	}
-	else
-		return (gc_callback(NULL));
-	return (0);
+	return (ft_print_errno());
 }
 
-static void	execute_pipe_child(t_command *command, int *pipe_prev, int *pipe_next, size_t i)
+static void	fork_pipe(t_command_batch *batch, t_pipe *pipes)
 {
-	if (i > 0)
+	size_t	i;
+	pid_t	pid;
+
+	i = 0;
+	pid = 0;
+	while (pid >= 0 && i < batch->count)
 	{
-		dup2(pipe_prev[0], STDIN_FILENO);
-		close(pipe_prev[1]);
+		pipe(pipes[i].fd);
+		pid = fork();
+		if (!pid)
+		{
+			if (redirection(batch->commands[i].redirections) <= 1)
+			{
+				dup2(pipes[i].fd[1], STDOUT_FILENO);
+				close(pipes[i].fd[0]);
+			}
+			else
+			{
+				close(pipes[i].fd[1]);
+				close(pipes[i].fd[0]);
+			}
+			if (batch->commands[i].is_builtin == 1)
+				exit(execute_builtin(&batch->commands[i]));
+			execute_bin(&batch->commands[i]);
+		}
+		i++;
 	}
-	if (redirection(command->redirections) <= 1)
-	{
-		dup2(pipe_next[1], STDOUT_FILENO);
-		close(pipe_next[0]);
-	}
-	else
-	{
-		close(pipe_prev[1]);
-		close(pipe_prev[0]);
-	}
-	if (command->is_builtin == 1)
-		exit(execute_builtin(command));
-	execute_bin(command);
+}
+
+t_pipe	*init_pipe(size_t nbr)
+{
+	t_pipe	*pipes;
+
+	pipes = gc_calloc(get_gc(), nbr, sizeof(t_pipe));
+	if (!pipes)
+		return (NULL);
+	return (pipes);
 }
