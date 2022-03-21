@@ -6,7 +6,7 @@
 /*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 17:10:07 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/21 19:13:26 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/21 19:40:39 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int	execute_pipe(t_command_batch *batch, t_pipe *pipes)
 	int wstatus;
 
 	i = 0;
-	pid = 0;
 	g_minishell.is_executing = 1;
 	if (fork_pipe(batch, pipes))
 		return (1);
@@ -79,7 +78,7 @@ static int	fork_pipe(t_command_batch *batch, t_pipe *pipes)
 		}
 		else if (pid < 0)
 			return (ft_print_errno());
-		pipes->pid = pid;
+		pipes[i].pid = pid;
 		i++;
 	}
 	return (0);
