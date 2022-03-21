@@ -6,7 +6,7 @@
 /*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 17:10:07 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/21 15:47:35 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/21 17:54:50 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,10 @@ int	execute_command(t_command_batch batch)
 	{
 		pipes = init_pipe(batch.count);
 		execute_pipe(&batch, pipes);
+		gc_free(get_gc(), pipes);
 	}
 	else
-		execute(&batch.commands[batch.count - 1]);
+		execute(&batch.commands[0]);
 	clean_fds(save_fd);
 	return (0);
 }
@@ -42,7 +43,8 @@ static int	execute(t_command *command)
 	pid_t	pid;
 	int		wstatus;
 
-	redirection(command->redirections);
+	if (command->is_redirecting)
+		redirection(command->redirections);
 	if (command->is_builtin == 1)
 		return (execute_builtin(command));
 	wstatus = 0;

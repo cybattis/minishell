@@ -6,7 +6,7 @@
 /*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 14:54:11 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/21 15:02:58 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/21 16:40:59 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ static int	set_redirection(int fds[2]);
 
 int	redirection(t_redir *redirections)
 {
-	int	fds[2];
 	int	i;
+	int	fds[2];
 
 	i = 0;
 	ft_memset(fds, 0, sizeof(int) * 2);

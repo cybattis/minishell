@@ -6,7 +6,7 @@
 /*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 21:46:20 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/21 15:47:35 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/21 16:01:38 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ typedef struct s_mini
 
 typedef struct s_pipe
 {
-	int fd[2];
+	pid_t	pid;
+	int		fd[2];
 }	t_pipe;
 
 extern t_mini	g_minishell;
