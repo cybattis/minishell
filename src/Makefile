@@ -8,7 +8,7 @@ PARS_DIR	=	parsing
 PARSING		=	parsing.c command_split.c minishell_error.c get_redirections.c get_redirections_helper.c				\
 				parsing_helper.c get_next_word.c get_single_quotes.c get_double_quotes.c get_env_var_first_word.c		\
 				get_env_var_raw.c env_var_helper.c parsing_error.c file_and_directories.c strip_out_operators.c			\
-				tokenize.c lexer.c token_type.c command_batch.c
+				tokenize.c lexer.c token_type.c command_batch.c cleanup.c
 
 EXEC_DIR	=	exec
 EXEC		=	execute.c exec_pipe.c builtins.c builtins_env.c
