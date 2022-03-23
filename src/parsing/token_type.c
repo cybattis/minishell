@@ -1,39 +1,17 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   token_type.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/16 21:46:20 by njennes           #+#    #+#             */
-/*   Updated: 2022/03/08 12:13:12 by cybattis         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "parsing.h"
-#include "libft.h"
-#include "minishell.h"
 
-int	is_operator(char c)
+int	get_last_token_type(t_lexer *lexer)
 {
-	if (c == '|' || c == '>' || c == '<' || c == '&')
-		return (1);
-	return (0);
+	if (lexer->count == 0)
+		return (TOKEN_EMPTY);
+	return (lexer->tokens[lexer->count - 1].type);
 }
 
-int	is_redir_token(int token)
-{
-	if (token == TOKEN_REDIR_OUT || token == TOKEN_REDIR_OUT_APPEND
-		|| token == TOKEN_REDIR_IN || token == TOKEN_REDIR_HEREDOC)
-		return (1);
-	return (0);
-}
-
-int	get_token_type(char *token, t_lexer *lexer, int handle_op)
+int	get_token_type(char *token, t_lexer *lexer)
 {
 	int	last_token;
 
-	if (handle_op && ft_strlen(token) <= 2)
+	if (ft_strlen(token) <= 2)
 	{
 		if (ft_strcmp(token, "|") == 0)
 			return (TOKEN_PIPE);

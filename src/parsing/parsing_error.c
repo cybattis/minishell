@@ -1,48 +1,22 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   parsing_error.c                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/16 21:46:20 by njennes           #+#    #+#             */
-/*   Updated: 2022/03/07 11:37:17 by cybattis         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+#include "parsing.h"
 
-#include "../../includes/parsing.h"
-#include "../../libft/libft.h"
-
-static int	check_token_order(int last, int current, t_token curr_token)
+char	*error_ambiguous_redirection(char *str)
 {
-	if (last == TOKEN_PIPE && current == TOKEN_PIPE)
-		return (0);
-	if ((last == TOKEN_REDIR_OUT || last == TOKEN_REDIR_OUT_APPEND
-			|| last == TOKEN_REDIR_IN || last == TOKEN_REDIR_HEREDOC)
-		&& current != TOKEN_FILE)
-	{
-		ft_printf("Minishell: syntax error near unexpected token '%s'\n",
-			curr_token.str);
-		return (0);
-	}
-	return (1);
+	t_err_or_charptr	redir;
+
+	redir = get_next_word(str, 0);
+	printf("minishell: %s: ambiguous redirect\n", redir.result);
+	return (NULL);
 }
 
-int	check_parsing_errors(t_lexer lexer)
+char	*parsing_error(char *str)
 {
-	int		last_token;
-	int		token;
-	size_t	i;
+	printf("%s\n", str);
+	return (NULL);
+}
 
-	i = 0;
-	last_token = TOKEN_EMPTY;
-	while (i < lexer.count)
-	{
-		token = lexer.tokens[i].type;
-		if (!check_token_order(last_token, token, lexer.tokens[i]))
-			return (0);
-		last_token = token;
-		i++;
-	}
-	return (1);
+char	*file_error(char *str, char *file)
+{
+	printf("minishell: %s: %s\n", file, str);
+	return (NULL);
 }
