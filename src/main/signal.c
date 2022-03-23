@@ -39,18 +39,18 @@ void	sig_handler(int signum)
 	}
 }
 
-int	init_signal_child(void)
-{
-	struct sigaction	sa;
-
-	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = 0;
-	sa.sa_handler = sig_handler_child;
-	sigaction(SIGINT, &sa, NULL);
-	signal(SIGTSTP, SIG_IGN);
-	signal(SIGQUIT, SIG_IGN);
-	return (0);
-}
+//int	init_signal_child(void)
+//{
+//	struct sigaction	sa;
+//
+//	sigemptyset(&sa.sa_mask);
+//	sa.sa_flags = 0;
+//	sa.sa_handler = sig_handler_child;
+//	sigaction(SIGINT, &sa, NULL);
+//	signal(SIGTSTP, SIG_IGN);
+//	signal(SIGQUIT, SIG_IGN);
+//	return (0);
+//}
 
 void	sig_handler_child(int signum)
 {
@@ -64,3 +64,5 @@ void	sig_handler_child(int signum)
 // 		SIGINT child return = 130
 // TODO: cat | cat | ls -- enter quit one cat
 // TODO: make relative command ex: LS ou CAT working -- tolower()
+// TODO: symbolic link
+// TODO: add error check and retrun for builtins

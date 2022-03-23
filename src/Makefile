@@ -1,9 +1,7 @@
 
 NAME		=	minishell
 
-SRCS		=	main.c get_line.c signal.c execute.c utils.c builtins.c	\
-				builtins_env.c get_prompt.c env.c init.c exec_pipe.c	\
-				redirection.c terminal.c get_git_prompt.c heredoc.c		\
+SRCS		=	utils.c env.c redirection.c terminal.c heredoc.c		\
 				utils2.c env_utils.c
 
 PARS_DIR	=	parsing
@@ -11,16 +9,25 @@ PARSING		=	get_token.c lexer.c parsing.c command_batch.c			\
 				parsing_error.c tokenizer.c command_batch_helper.c		\
 				token_type.c env_handling.c
 
+EXEC_DIR	=	exec
+EXEC		=	execute.c exec_pipe.c builtins.c builtins_env.c
+
+MAIN_DIR	=	main
+MAIN		=	main.c get_line.c get_git_prompt.c get_prompt.c init.c	\
+				signal.c
+
 SRC_PARSING	=	$(addprefix $(PARS_DIR)/, $(PARSING))
+SRC_EXEC	=	$(addprefix $(EXEC_DIR)/, $(EXEC))
+SRC_MAIN	=	$(addprefix $(MAIN_DIR)/, $(MAIN))
 
-
-OBJS		=	$(addprefix $(OBJS_DIR)/, $(SRCS:.c=.o))
-OBJS_PARS	=	$(addprefix $(OBJS_DIR)/, $(PARSING:.c=.o))
+OBJS		=	$(addprefix $(OBJS_DIR)/, $(SRCS:.c=.o))				\
+				$(addprefix $(OBJS_DIR)/, $(PARSING:.c=.o))				\
+				$(addprefix $(OBJS_DIR)/, $(EXEC:.c=.o))				\
+				$(addprefix $(OBJS_DIR)/, $(MAIN:.c=.o))
 
 HEADERS		=	$(MAKE_DIR)/includes/minishell.h
 
-DEPENDS		=	$(addprefix $(OBJS_DIR)/, $(SRCS:.c=.d))				\
-				$(addprefix $(OBJS_DIR)/, $(OBJS_PARS:.c=.d))
+DEPENDS		=	$(addprefix $(OBJS_DIR)/, $(OBJS:.o=.d))
 
 # Recipe
 # ****************************************************************************
@@ -28,7 +35,7 @@ DEPENDS		=	$(addprefix $(OBJS_DIR)/, $(SRCS:.c=.d))				\
 .PHONY: all
 all:	$(NAME)
 
-$(OBJS_DIR)/%.o:	$(SRCS_DIR)/$(PARS_DIR)/%.c | $(OBJS_DIR)
+$(OBJS_DIR)/%.o:	$(SRCS_DIR)/*/%.c | $(OBJS_DIR)
 	@$(BIN_CC) $(BIN_CFLAGS) -c $< -o $@
 	@printf "$(_GREEN)█$(_END)"
 
@@ -36,9 +43,9 @@ $(OBJS_DIR)/%.o:	$(SRCS_DIR)/%.c | $(OBJS_DIR)
 	@$(BIN_CC) $(BIN_CFLAGS) -c $< -o $@
 	@printf "$(_GREEN)█$(_END)"
 
-$(NAME):	$(OBJS) $(OBJS_PARS) $(MASTER_MAKE) $(LIBFT_LIB)
+$(NAME):	$(OBJS) $(MASTER_MAKE) $(LIBFT_LIB)
 	@printf "$(_BLUE)\nCompiled source files\n$(_END)"
-	@$(BIN_CC) $(BIN_LDFLAGS) $(OBJS) $(OBJS_PARS) -o ../$@ $(LIBS)
+	@$(BIN_CC) $(BIN_LDFLAGS) $(OBJS) -o ../$(NAME) $(LIBS)
 	@printf "$(_GREEN)Finish compiling $(NAME)!$(_END)\n"
 
 .PHONY: bonus

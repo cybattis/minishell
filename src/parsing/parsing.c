@@ -38,7 +38,6 @@ t_command_batch	parse_input(char *input)
 	if (!check_parsing_errors(lexer))
 		return (command_batch);
 	create_command_batch(lexer, &command_batch);
-	lexer_print(&lexer);
 	lexer_destroy(&lexer);
 	return (command_batch);
 }

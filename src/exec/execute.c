@@ -6,7 +6,7 @@
 /*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 17:10:07 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/10 14:50:55 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/23 14:09:43 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,37 +19,25 @@ extern char	**environ;
 
 static int	execute(t_command *command);
 
-int	execute_command(t_command_batch cmd_batch)
+int	execute_command(t_command_batch batch)
 {
+	t_pipe	*pipes;
 	int		save_fd[2];
-	size_t	i;
 
-	i = 0;
 	save_fd[0] = dup(STDIN_FILENO);
 	save_fd[1] = dup(STDOUT_FILENO);
-	while (i < cmd_batch.count)
+	if (batch.count == 0)
+		return (0);
+	if (batch.commands[0].is_piping == 1)
 	{
-		if (cmd_batch.commands[i].is_piping == 1)
-			execute_pipe(&cmd_batch.commands[i]);
-		else
-		{
-			execute(&cmd_batch.commands[i]);
-			clean_fds(save_fd);
-		}
-		i++;
+		pipes = init_pipe(batch.count);
+		execute_pipe(&batch, pipes);
+		gc_free(get_gc(), pipes);
 	}
+	else
+		execute(&batch.commands[0]);
+	clean_fds(save_fd);
 	return (0);
-}
-
-int	clean_fds(int save_fd[2])
-{
-	if (dup2(save_fd[1], STDOUT_FILENO) < 0)
-		ft_errno(errno);
-	if (dup2(save_fd[0], STDIN_FILENO) < 0)
-		ft_errno(errno);
-	close(save_fd[0]);
-	close(save_fd[1]);
-	return (1);
 }
 
 static int	execute(t_command *command)
@@ -57,28 +45,26 @@ static int	execute(t_command *command)
 	pid_t	pid;
 	int		wstatus;
 
-	if (command->is_builtin == 1)
-	{
+	if (command->is_redirecting)
 		redirection(command->redirections);
+	if (command->is_builtin == 1)
 		return (execute_builtin(command));
-	}
 	wstatus = 0;
 	g_minishell.is_executing = 1;
 	pid = fork();
 	if (!pid)
 	{
-		redirection(command->redirections);
+		signal(SIGINT, SIG_DFL);
 		execute_bin(command);
 	}
 	else if (pid > 0)
 	{
 		waitpid(pid, &wstatus, 0);
-		if (WIFEXITED(wstatus))
-			g_minishell.last_return = WEXITSTATUS(wstatus);
+		g_minishell.last_return = WEXITSTATUS(wstatus);
 		g_minishell.is_executing = 0;
 		return (0);
 	}
-	return (gc_callback(NULL));
+	return (ft_print_errno());
 }
 
 void	execute_bin(t_command *command)
@@ -106,6 +92,17 @@ void	execute_bin(t_command *command)
 		j++;
 	}
 	ft_error_command(command->args[0]);
+}
+
+int	clean_fds(int save_fd[2])
+{
+	if (dup2(save_fd[1], STDOUT_FILENO) < 0)
+		ft_print_errno();
+	if (dup2(save_fd[0], STDIN_FILENO) < 0)
+		ft_print_errno();
+	close(save_fd[0]);
+	close(save_fd[1]);
+	return (1);
 }
 
 char	**get_path(void)

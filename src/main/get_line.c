@@ -40,7 +40,7 @@ static int	write_to_prompt(char *msg)
 	tty_name = ttyname(STDIN_FILENO);
 	fd = open(tty_name, O_WRONLY);
 	if (fd == -1)
-		return (ft_errno(errno));
+		return (ft_print_errno());
 	write(fd, msg, ft_strlen(msg));
 	gc_clean(get_gc());
 	exit(EXIT_SUCCESS);
