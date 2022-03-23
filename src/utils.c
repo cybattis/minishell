@@ -27,7 +27,7 @@ void	ft_errno_exit(int errnum)
 	exit(EXIT_FAILURE);
 }
 
-int ft_print_errno(void)
+int	ft_print_errno(void)
 {
 	printf("minishell: %s\n", strerror(errno));
 	return (1);

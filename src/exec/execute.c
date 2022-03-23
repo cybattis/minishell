@@ -6,7 +6,7 @@
 /*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 17:10:07 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/21 19:38:53 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/23 14:09:43 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,13 @@ static int	execute(t_command *command);
 
 int	execute_command(t_command_batch batch)
 {
-	t_pipe *pipes;
+	t_pipe	*pipes;
 	int		save_fd[2];
 
 	save_fd[0] = dup(STDIN_FILENO);
 	save_fd[1] = dup(STDOUT_FILENO);
+	if (batch.count == 0)
+		return (0);
 	if (batch.commands[0].is_piping == 1)
 	{
 		pipes = init_pipe(batch.count);
@@ -51,7 +53,10 @@ static int	execute(t_command *command)
 	g_minishell.is_executing = 1;
 	pid = fork();
 	if (!pid)
+	{
+		signal(SIGINT, SIG_DFL);
 		execute_bin(command);
+	}
 	else if (pid > 0)
 	{
 		waitpid(pid, &wstatus, 0);
