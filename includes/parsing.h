@@ -14,7 +14,6 @@
 # define PARSING_H
 
 # include <stddef.h>
-# include "libft.h"
 
 # define TOKEN_UNKNOWN -2
 # define TOKEN_EMPTY -1
@@ -44,7 +43,6 @@ typedef struct s_command
 	int			is_builtin;
 	char		*name;
 	char		**args;
-	char		*str;
 	t_redir		*redirections;
 }				t_command;
 
@@ -77,8 +75,6 @@ typedef struct s_err_or_charptr
 	char		*error;
 	char		*result;
 }				t_err_or_charptr;
-
-t_gc				*get_gc();
 
 char				*token_to_str(int token);
 t_command_batch		parse_input(char *input);
@@ -124,5 +120,6 @@ void				lexer_add_token(t_lexer *lexer, t_token token);
 void				lexer_add_end(t_lexer *lexer);
 
 void				populate_command_batch(t_command_batch *batch, t_lexer *lexers, size_t count);
+void				destroy_command_batch(t_command_batch batch);
 
 #endif
