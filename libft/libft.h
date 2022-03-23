@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 14:34:44 by njennes           #+#    #+#             */
-/*   Updated: 2022/03/07 12:26:32 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/23 18:25:32 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,7 @@ long		ft_atol(const char *str);
 char		*ft_strdup(const char *s1);
 char		*ft_strappend(char *str, char c);
 char		*ft_strchr(const char *s, int c);
+int			ft_strichr(const char *s, int c);
 char		*ft_strrchr(const char *s, int c);
 char		*ft_strjoin(char *s1, char *s2, int to_free);
 char		*ft_strtrim(char const *s1, char const *set);
@@ -139,6 +140,7 @@ size_t		ft_strlcpy(char *dst, const char *src, size_t dstsize);
 size_t		ft_strlcat(char *dst, const char *src, size_t dstsize);
 size_t		ft_str_count(char *str, char c, int mode);
 size_t		ft_word_size(char *str);
+int			ft_nbrlen(long nb);
 
 //Stringview
 t_StringV	sv_create(const char *str);
@@ -148,11 +150,14 @@ void		sv_delete(t_StringV stringV);
 //Basic IO
 int			ft_putchar_fd(char c, int fd);
 int			ft_putstr_fd(char *s, int fd);
+int			ft_putstr(char *s);
 int			ft_putendl_fd(char *s, int fd);
+int			ft_putnbr(long n);
 int			ft_putnbr_fd(long n, int fd);
 int			ft_putnbr_base_fd(size_t nbr, char *base, int fd);
 char		*ft_get_next_line(int fd);
 int			ft_printf(const char *str, ...);
+int			ft_dprintf(int fd, const char *format, ...);
 
 //Standard
 void		ft_error_exit(char *message);

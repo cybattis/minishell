@@ -31,8 +31,7 @@ void	sig_handler(int signum)
 {
 	if (signum == SIGINT)
 	{
-		if (!g_minishell.is_executing)
-			printf("\n");
+		printf("\n");
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		if (!g_minishell.is_executing)

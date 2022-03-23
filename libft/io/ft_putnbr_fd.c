@@ -57,3 +57,8 @@ int	ft_putnbr_fd(long n, int fd)
 	}
 	return (printed);
 }
+
+int	ft_putnbr(long n)
+{
+	return (ft_putnbr_fd(n, 1));
+}

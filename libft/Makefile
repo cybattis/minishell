@@ -25,8 +25,7 @@ IO					=		ft_putchar_fd.c ft_putendl_fd.c ft_putnbr_fd.c ft_putstr_fd.c ft_get_n
 
 #Printf
 PRINTFDIR			=		io/printf/
-PRINTF				=		ft_print_char.c ft_print_hex.c ft_print_hex_big.c ft_print_integer.c ft_print_ptr.c			\
-							ft_print_str.c ft_print_uinteger.c ft_printf.c
+PRINTF				=		ft_printf.c conv_func.c conv_func2.c get_flags.c print_flags.c print_flags2.c utils.c
 
 #Memory Management
 MEMORYDIR			=		memory/
@@ -39,7 +38,8 @@ CSTRINGS			=		ft_atoi.c ft_isalnum.c ft_isalpha.c ft_isascii.c ft_isdigit.c ft_i
  							ft_split.c ft_strchr.c ft_strdup.c ft_striteri.c ft_strjoin.c ft_strlcat.c ft_strlcpy.c 	\
  							ft_strlen.c ft_strmapi.c ft_strncmp.c ft_strnstr.c ft_strrchr.c ft_strtrim.c ft_substr.c 	\
  							ft_tolower.c ft_toupper.c ft_split_size.c ft_split_free.c ft_atol_base.c ft_trim.c 			\
- 							ft_isspace.c ft_str_count.c ft_word_size.c ft_strcmp.c ft_strappend.c
+ 							ft_isspace.c ft_str_count.c ft_word_size.c ft_strcmp.c ft_strappend.c ft_strichr.c			\
+ 							ft_nbrlen.c
 
 #Stringviews
 STRINGVIEWDIR		=		strings/string_view/

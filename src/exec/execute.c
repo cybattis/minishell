@@ -6,7 +6,7 @@
 /*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 17:10:07 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/23 14:09:43 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/23 18:26:22 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,7 @@ static int	execute(t_command *command)
 	g_minishell.is_executing = 1;
 	pid = fork();
 	if (!pid)
-	{
-		signal(SIGINT, SIG_DFL);
 		execute_bin(command);
-	}
 	else if (pid > 0)
 	{
 		waitpid(pid, &wstatus, 0);
@@ -77,7 +74,7 @@ void	execute_bin(t_command *command)
 	j = 0;
 	if (execve(command->name, command->args, environ) < 0 && errno != ENOENT)
 	{
-		printf("minishell: %s\n", strerror(errno));
+		ft_dprintf(STDERR_FILENO, "minishell: %s\n", strerror(errno));
 		exit(126);
 	}
 	while (path[j])
@@ -86,12 +83,13 @@ void	execute_bin(t_command *command)
 		cmd_path = gc_strjoin(&g_minishell.gc, cmd_path, command->name, 1);
 		if (execve(cmd_path, command->args, environ) < 0 && errno != ENOENT)
 		{
-			printf("minishell: %s\n", strerror(errno));
+			ft_dprintf(STDERR_FILENO, "minishell: %s\n", strerror(errno));
 			exit(126);
 		}
 		j++;
 	}
-	ft_error_command(command->args[0]);
+
+	ft_error_command(command->name);
 }
 
 int	clean_fds(int save_fd[2])
