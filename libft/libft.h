@@ -279,6 +279,7 @@ typedef struct s_gc
 
 void		gc_clean(t_gc *gc);
 void		gc_free(t_gc *gc, void *ptr);
+void		gc_destroy(t_gc *gc, void **ptr);
 void		gc_init(t_gc *gc, int (*callback)(), void *param);
 void		*gc_calloc(t_gc *gc, size_t count, size_t size);
 char		*gc_strdup(t_gc *gc, const char *s1);

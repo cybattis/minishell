@@ -14,6 +14,7 @@
 # define PARSING_H
 
 # include <stddef.h>
+# include "libft.h"
 
 # define TOKEN_UNKNOWN -2
 # define TOKEN_EMPTY -1
@@ -26,6 +27,9 @@
 # define TOKEN_REDIR_OUT_APPEND 6
 # define TOKEN_REDIR_HEREDOC 7
 # define TOKEN_FILE 8
+
+# define PATH_FILE 1
+# define PATH_DIRECTORY 2
 
 typedef struct s_redir
 {
@@ -68,47 +72,56 @@ typedef struct s_lexer
 	size_t		count;
 }				t_lexer;
 
-//parsing.c
-t_command_batch	parse_input(char *input);
+typedef struct s_err_or_charptr
+{
+	char		*error;
+	char		*result;
+}				t_err_or_charptr;
 
-//get_token.c
-t_token			consume_single_quotes(t_parser *parser, t_lexer *lexer);
-t_token			consume_double_quotes(t_parser *parser, t_lexer *lexer);
-t_token			consume_word(t_parser *parser, t_lexer *lexer);
+t_gc				*get_gc();
 
-//token_type.c
-int				is_operator(char c);
-int				is_redir_token(int token);
-int				get_token_type(char *token, t_lexer *lexer, int handle_op);
+char				*token_to_str(int token);
+t_command_batch		parse_input(char *input);
 
-//tokenizer.c
-t_lexer			tokenize_input(char *input);
-int				skip_spaces(t_parser *parser);
+int					error_return(char *msg, int code);
+int					split_input_into_commands(char *input, t_command_batch *batch);
+int					get_redirections(char *input, t_command_batch *batch);
 
-//lexer.c
-int				get_last_token_type(t_lexer *lexer);
-void			lexer_add_token(t_token token, t_lexer *lexer);
-void			lexer_add_end(t_lexer *lexer);
-void			lexer_destroy(t_lexer *lexer);
+int					is_operator_char(char c);
+int					is_envchar(char c);
+int					is_redirection_char(char c);
+char				*skip_spaces(char *str);
+size_t				skip_quotes(char *str);
+int					contains_open_spaces(char *str);
 
-//handle_env.c
-int				is_envchar(char c);
-void			handle_dollar_sign(t_parser *parser, t_lexer *lexer,
-					int chop_tokens, t_token *current);
+t_err_or_charptr	get_next_word(char *str, int expand_vars);
+t_err_or_charptr	get_next_word_parser(t_parser *parser, int expand_vars);
 
-//parsing_error.c
-int				check_parsing_errors(t_lexer lexer);
+t_err_or_charptr	get_double_quotes(t_parser *parser);
+t_err_or_charptr	get_single_quotes(t_parser *parser);
 
-//command_batch.c
-void			create_command_batch(t_lexer lexer, t_command_batch *batch);
+char				*get_env_var_first_word(t_parser *parser);
+char				*get_env_var_raw(t_parser *parser);
+char				*get_env_var_name(t_parser *parser);
 
-//command_batch_helper.c
-size_t			get_redirs_count(t_token *tokens);
-size_t			get_arg_count(t_token *tokens);
-int				is_builtin_command(char *str);
+char				*error_ambiguous_redirection(char *str);
+char				*parsing_error(char *str);
+char				*file_error(char *str, char *file);
 
-//Debug
-void			lexer_print(t_lexer *lexer);
-char			*token_type_to_str(int token_type);
+int					is_valid_path(char *str);
+int					contains_file(char *str);
+int					is_absolute_path(char *str);
+void				make_absolute_path(char **str);
+
+t_parser			*strip_out_operators(char *input, t_command_batch *batch);
+
+void				tokenize_all(t_lexer **lexers, t_parser *parsers, size_t count);
+
+int					get_token_type(char *token, t_lexer *lexer);
+
+void				lexer_add_token(t_lexer *lexer, t_token token);
+void				lexer_add_end(t_lexer *lexer);
+
+void				populate_command_batch(t_command_batch *batch, t_lexer *lexers, size_t count);
 
 #endif

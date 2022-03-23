@@ -31,6 +31,14 @@ void	gc_free(t_gc *gc, void *ptr)
 	free(ptr);
 }
 
+void	gc_destroy(t_gc *gc, void **ptr)
+{
+	if (!ptr)
+		return ;
+	gc_free(gc, *ptr);
+	*ptr = NULL;
+}
+
 void	gc_clean(t_gc *gc)
 {
 	size_t	i;
