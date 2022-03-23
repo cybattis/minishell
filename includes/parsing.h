@@ -94,6 +94,7 @@ char				*skip_spaces(char *str);
 size_t				skip_quotes(char *str);
 int					contains_open_spaces(char *str);
 
+char				*get_next_word_raw(char *str);
 t_err_or_charptr	get_next_word(char *str, int expand_vars);
 t_err_or_charptr	get_next_word_parser(t_parser *parser, int expand_vars);
 

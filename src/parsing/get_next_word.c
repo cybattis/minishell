@@ -48,7 +48,22 @@ t_err_or_charptr	get_next_word_parser(t_parser *parser, int expand_vars)
 	return ((t_err_or_charptr){NULL, word});
 }
 
-//TODO: handle spaces inside of env vars
+char	*get_next_word_raw(char *str)
+{
+	char	*word;
+	size_t	i;
+
+	word = gc_strdup(get_gc(), "");
+	i = 0;
+	while (str[i] && !ft_isspace(str[i]) && !is_operator_char(str[i]))
+	{
+		word = gc_strappend(get_gc(), word, str[i]);
+		i++;
+	}
+	return (word);
+}
+
+//TODO: check: handle spaces inside of env vars
 static t_err_or_charptr	get_next_chars(t_parser *parser, int expand_vars)
 {
 	t_err_or_charptr	result;
