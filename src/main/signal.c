@@ -6,7 +6,7 @@
 /*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 12:55:27 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/10 14:46:44 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/23 16:50:39 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ void	sig_handler(int signum)
 {
 	if (signum == SIGINT)
 	{
-		printf("\n");
+		if (!g_minishell.is_executing)
+			printf("\n");
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		if (!g_minishell.is_executing)

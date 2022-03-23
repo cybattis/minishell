@@ -21,6 +21,7 @@ int	redir_heredoc(t_redir redirections)
 	char	*buff;
 	char	c;
 
+	g_minishell.is_executing = 1;
 	str_out = gc_strdup(get_gc(), "");
 	buff = gc_strdup(get_gc(), "");
 	ft_printf("> ");
@@ -78,5 +79,6 @@ static int	generate_temp_file(char *str_out)
 	gc_free(get_gc(), str_out);
 	fd_temp = open(temp_file, O_RDONLY);
 	unlink(temp_file);
+	g_minishell.is_executing = 0;
 	return (fd_temp);
 }
