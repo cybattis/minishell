@@ -4,6 +4,7 @@
 static int		setup_redirections(char *str, t_command *command);
 static size_t	get_redir_count(char *str);
 static char		*get_redir_file(char *str);
+static char		*get_heredoc_delimiter(char *str);
 
 int				get_redir_type(char *str);
 int				is_redirection(char *str);
@@ -41,7 +42,10 @@ static int	setup_redirections(char *str, t_command *command)
 			command->redirections[j].type = get_redir_type(&str[i]);
 			while (str[i] == '>' || str[i] == '<')
 				i++;
-			command->redirections[j].file = get_redir_file(&str[i]);
+			if (command->redirections[j].type == TOKEN_REDIR_HEREDOC)
+				command->redirections[j].file = get_heredoc_delimiter(&str[i]);
+			else
+				command->redirections[j].file = get_redir_file(&str[i]);
 			j++;
 		}
 		while (str[i] == '>' || str[i] == '<')
@@ -75,6 +79,15 @@ static char	*get_redir_file(char *str)
 		return (file_error("No such file or directory", file.result));
 	filename[-1] = '/';
 	return (file.result);
+}
+
+static char		*get_heredoc_delimiter(char *str)
+{
+	char	*delimiter;
+
+	str = skip_spaces(str);
+	delimiter = get_next_word_raw(str);
+	return (delimiter);
 }
 
 static size_t	get_redir_count(char *str)
