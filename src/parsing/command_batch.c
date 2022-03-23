@@ -55,7 +55,8 @@ static char	**get_args(t_lexer lexer)
 	j = 0;
 	while (i < lexer.count)
 	{
-		if (lexer.tokens[i].type == TOKEN_ARG)
+		if (lexer.tokens[i].type == TOKEN_ARG
+			|| lexer.tokens[i].type == TOKEN_COMMAND)
 		{
 			args[j] = lexer.tokens[i].str;
 			j++;
@@ -74,7 +75,8 @@ static size_t get_arg_count(t_lexer *lexer)
 	i = 0;
 	while (i < lexer->count)
 	{
-		if (lexer->tokens[i].type == TOKEN_ARG)
+		if (lexer->tokens[i].type == TOKEN_ARG
+			|| lexer->tokens[i].type == TOKEN_COMMAND)
 			count++;
 		i++;
 	}
