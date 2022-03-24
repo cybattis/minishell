@@ -21,3 +21,23 @@ char	*file_error(char *str, char *file)
 	ft_dprintf(STDERR_FILENO, "minishell: %s: %s\n", file, str);
 	return (NULL);
 }
+
+int	syntax_error(t_err error)
+{
+	char	*next_token;
+
+	next_token = skip_spaces(error.error);
+	if (*next_token)
+	{
+		ft_dprintf(STDERR_FILENO,
+				"minishell: syntax error near unexpected token `%c'\n",
+				*next_token);
+	}
+	else
+	{
+		ft_dprintf(STDERR_FILENO,
+				"minishell: syntax error near unexpected token `%s'\n",
+				"newline");
+	}
+	return (error.code);
+}

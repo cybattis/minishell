@@ -2,7 +2,7 @@
 #include "parsing.h"
 #include "core.h"
 
-static int		setup_redirections(char *str, t_command *command);
+static t_err	setup_redirections(char *str, t_command *command);
 static size_t	get_redir_count(char *str);
 static char		*get_redir_file(char *str);
 static char		*get_heredoc_delimiter(char *str);
@@ -13,18 +13,24 @@ int				is_redirection(char *str);
 int	get_redirections(char *input, t_command_batch *batch)
 {
 	size_t	command_index;
+	t_err	result;
 
 	command_index = 0;
 	while (command_index < batch->count)
 	{
-		setup_redirections(input, &batch->commands[command_index]);
+		result = setup_redirections(input, &batch->commands[command_index]);
+		if (result.error)
+		{
+			batch->count = 0;
+			return (syntax_error(result));
+		}
 		input = ft_strchr(input, '|') + 1;
 		command_index++;
 	}
 	return (1);
 }
 
-static int	setup_redirections(char *str, t_command *command)
+static t_err	setup_redirections(char *str, t_command *command)
 {
 	size_t	i;
 	size_t	j;
@@ -33,6 +39,8 @@ static int	setup_redirections(char *str, t_command *command)
 	redir_count = get_redir_count(str);
 	if (redir_count)
 		command->is_redirecting = 1;
+	else
+		return ((t_err){1, NULL});
 	command->redirections = gc_calloc(get_gc(), redir_count + 1, sizeof (t_redir));
 	i = 0;
 	j = 0;
@@ -43,6 +51,8 @@ static int	setup_redirections(char *str, t_command *command)
 			command->redirections[j].type = get_redir_type(&str[i]);
 			while (str[i] == '>' || str[i] == '<')
 				i++;
+			if (!has_next_char(&str[i]) || next_char_is_operator(&str[i]))
+				return ((t_err){0, &str[i]});
 			if (command->redirections[j].type == TOKEN_REDIR_HEREDOC)
 				command->redirections[j].file = get_heredoc_delimiter(&str[i]);
 			else
@@ -54,7 +64,7 @@ static int	setup_redirections(char *str, t_command *command)
 		if (str[i])
 			i++;
 	}
-	return (1);
+	return ((t_err){1, NULL});
 }
 
 static char	*get_redir_file(char *str)

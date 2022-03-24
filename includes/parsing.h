@@ -76,6 +76,12 @@ typedef struct s_err_or_charptr
 	char		*result;
 }				t_err_or_charptr;
 
+typedef struct s_err
+{
+	int			code;
+	char		*error;
+}				t_err;
+
 char				*token_to_str(int token);
 t_command_batch		parse_input(char *input);
 
@@ -86,6 +92,8 @@ int					get_redirections(char *input, t_command_batch *batch);
 int					is_operator_char(char c);
 int					is_envchar(char c);
 int					is_redirection_char(char c);
+int					next_char_is_operator(char *str);
+int					has_next_char(char *str);
 char				*skip_spaces(char *str);
 size_t				skip_quotes(char *str);
 int					contains_open_spaces(char *str);
@@ -104,6 +112,7 @@ char				*get_env_var_name(t_parser *parser);
 char				*error_ambiguous_redirection(char *str);
 char				*parsing_error(char *str);
 char				*file_error(char *str, char *file);
+int					syntax_error(t_err error);
 
 int					is_valid_path(char *str);
 int					contains_file(char *str);

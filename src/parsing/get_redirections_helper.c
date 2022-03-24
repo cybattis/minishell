@@ -40,3 +40,19 @@ int	is_redirection_char(char c)
 		return (1);
 	return (0);
 }
+
+int	next_char_is_operator(char *str)
+{
+	str = skip_spaces(str);
+	if (is_operator_char(*str))
+		return (1);
+	return (0);
+}
+
+int	has_next_char(char *str)
+{
+	str = skip_spaces(str);
+	if (*str)
+		return (1);
+	return (0);
+}
