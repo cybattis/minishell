@@ -296,6 +296,7 @@ char		*gc_get_next_line(t_gc *gc, int fd);
 void		gc_split_free(t_gc *gc, char **t);
 char		**gc_strarray_init(t_gc *gc);
 char		**gc_strarray_from(t_gc *gc, char **other, size_t size);
+char		**gc_strarray_fromstr(t_gc *gc, char *str);
 void		gc_strarray_free(t_gc *gc, char **array);
 char		**gc_strarray_append(t_gc *gc, char **array, char *str);
 char		*gc_strarray_asstr(t_gc *gc, char **array);
