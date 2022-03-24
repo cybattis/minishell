@@ -6,7 +6,7 @@
 /*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 17:10:07 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/24 12:00:32 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/24 15:36:31 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,24 +70,23 @@ static int	fork_pipe(t_command_batch *batch, t_pipe *pipes)
 
 static int	pipe_redirection(size_t i, t_command_batch *batch, t_pipe *pipes)
 {
-	if (redirection(batch->commands[i].redirections) < 1)
+	int status;
+
+	status = redirection(batch->commands[i].redirections);
+	if (status > 0)
 	{
-		if (i > 0)
+		if (i > 0 && (status == OUT || status == NONE))
 		{
 			if (dup2(pipes[i - 1].fd[0], STDIN_FILENO) == -1)
 				ft_print_errno();
-			close(pipes[i - 1].fd[1]);
 		}
-		if (i < batch->count - 1)
+		if (i < batch->count - 1 && (status == IN || status == NONE))
 		{
 			if (dup2(pipes[i].fd[1], STDOUT_FILENO) == -1)
 				ft_print_errno();
-			close(pipes[i].fd[0]);
 		}
-		close_pipe(i, pipes);
 	}
-	else
-		close_pipe(batch->count, pipes);
+	close_pipe(i, pipes);
 	return (0);
 }
 

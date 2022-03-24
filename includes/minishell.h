@@ -6,7 +6,7 @@
 /*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 21:46:20 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/21 16:01:38 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/24 15:42:54 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,11 @@
 # include "parsing.h"
 # include "libft.h"
 # include <termios.h>
+
+# define BOTH 0
+# define OUT 1
+# define IN 2
+# define NONE 3
 
 typedef struct s_mini
 {
@@ -28,7 +33,6 @@ typedef struct s_mini
 
 typedef struct s_pipe
 {
-	pid_t	pid;
 	int		fd[2];
 }	t_pipe;
 
@@ -55,9 +59,10 @@ int			redir_heredoc(t_redir redirections);
 
 int			ft_print_errno(void);
 void		ft_error_command(char *command);
-void		ft_errno_exit(int errnum);
+void		ft_errno_exit(void);
 size_t		ft_arglen(char const **args);
 int			gc_callback(void *ptr);
+int			ft_error_dup(int fd);
 
 int			execute_builtin(t_command *command);
 int			bt_echo(t_command *cmd);

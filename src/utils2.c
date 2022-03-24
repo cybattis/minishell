@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include "minishell.h"
 
 size_t	ft_arglen(char const **args)
 {
@@ -20,4 +20,14 @@ size_t	ft_arglen(char const **args)
 	while (args[i])
 		i++;
 	return (i);
+}
+
+int	ft_error_dup(int fd)
+{
+	if (fd == -1)
+	{
+		ft_print_errno();
+		close(fd);
+	}
+	return (-1);
 }

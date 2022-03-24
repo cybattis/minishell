@@ -6,7 +6,7 @@
 /*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 14:55:35 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/10 14:36:16 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/24 14:06:11 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include "core.h"
 #include <stdlib.h>
 #include <string.h>
-#include <stdio.h>
 #include <errno.h>
 
 t_gc	*get_gc(void)
@@ -22,9 +21,9 @@ t_gc	*get_gc(void)
 	return (&g_minishell.gc);
 }
 
-void	ft_errno_exit(int errnum)
+void	ft_errno_exit(void)
 {
-	ft_dprintf(STDERR_FILENO, "minishell: %s\n", strerror(errnum));
+	ft_dprintf(STDERR_FILENO, "minishell: %s\n", strerror(errno));
 	exit(EXIT_FAILURE);
 }
 
@@ -44,6 +43,6 @@ int	gc_callback(void *ptr)
 {
 	(void)ptr;
 	gc_clean(&g_minishell.gc);
-	ft_errno_exit(errno);
+	ft_errno_exit();
 	return (1);
 }

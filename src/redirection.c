@@ -6,7 +6,7 @@
 /*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 14:54:11 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/24 12:07:17 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/24 15:35:48 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,36 +40,36 @@ int	redirection(t_redir *redirections)
 			return (-1);
 		i++;
 	}
+	if (!fds[0] && !fds[1])
+		return (NONE);
 	return (set_redirection(fds));
 }
 
 static int	set_redirection(int fds[2])
 {
+	int	status[2];
 
+	ft_memset(status, 0, sizeof(int) * 2);
 	if (fds[0])
 	{
-		ft_dprintf(STDERR_FILENO, "fds[0] %d\n", fds[0]);
 		if (dup2(fds[0], STDIN_FILENO) < 0)
-		{
-			ft_print_errno();
-			return (-1);
-		}
+			return (ft_error_dup(fds[0]));
+		status[0] = 1;
 		close(fds[0]);
 	}
 	if (fds[1])
 	{
-		ft_dprintf(STDERR_FILENO, "fds[1] %d\n", fds[1]);
 		if (dup2(fds[1], STDOUT_FILENO) < 0)
-		{
-			ft_print_errno();
-			return (-1);
-		}
+			return (ft_error_dup(fds[0]));
+		status[1] = 1;
 		close(fds[1]);
 	}
-	if (fds[1] && !fds[0])
-		return (0);
-	if (!fds[1] && !fds[0])
-		return (1);
+	if (status[1] && status[0])
+		return (BOTH);
+	if (status[1] && !status[0])
+		return (OUT);
+	if (!status[1] && status[0])
+		return (IN);
 	return (-1);
 }
 
