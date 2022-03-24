@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   buildins_env.c                                     :+:      :+:    :+:   */
+/*   builtins_env.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 13:48:19 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/05 15:48:07 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/24 16:01:14 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ int	bt_export(char **arg)
 	{
 		if (!check_var(arg[i]))
 		{
-			ft_dprintf(STDERR_FILENO, "minishell: export: `%s': not a valid identifier\n", arg[i]);
+			ft_dprintf(STDERR_FILENO, "minishell: export: `%s':"
+				"not a valid identifier\n", arg[i]);
 			i++;
 			continue ;
 		}
@@ -92,7 +93,8 @@ int	bt_unset(char **args)
 		}
 		if (args[i][j])
 		{
-			ft_dprintf(STDERR_FILENO, "minishell: unset: `%s': not a valid identifier\n", args[i]);
+			ft_dprintf(STDERR_FILENO, "minishell: unset: `%s':"
+				"not a valid identifier\n", args[i]);
 			i++;
 			continue ;
 		}

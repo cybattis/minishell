@@ -84,7 +84,6 @@ void	execute_bin(t_command *command)
 		}
 		j++;
 	}
-
 	ft_error_command(command->name);
 }
 
