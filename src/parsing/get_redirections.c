@@ -39,9 +39,9 @@ static t_err	setup_redirections(char *str, t_command *command)
 	redir_count = get_redir_count(str);
 	if (redir_count)
 		command->is_redirecting = 1;
-	else
-		return ((t_err){1, NULL});
 	command->redirections = gc_calloc(get_gc(), redir_count + 1, sizeof (t_redir));
+	if (!redir_count)
+		return ((t_err){1, NULL});
 	i = 0;
 	j = 0;
 	while (str[i] && str[i] != '|')
