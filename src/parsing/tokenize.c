@@ -5,7 +5,7 @@
 int		get_last_token_type(t_lexer *lexer);
 static t_lexer	tokenize(t_parser parser);
 static void		add_next_token(t_lexer *lexer, t_parser *parser);
-static t_token	get_next_token(t_lexer *lexer, t_parser *parser);
+static t_token	get_next_token(t_lexer *lexer, t_parser *parser, int *finished);
 
 void	tokenize_all(t_lexer **lexers, t_parser *parsers, size_t count)
 {
@@ -33,27 +33,38 @@ static t_lexer	tokenize(t_parser parser)
 
 static void	add_next_token(t_lexer *lexer, t_parser *parser)
 {
+	int	has_more_tokens;
+
+	has_more_tokens = 1;
 	parser->i = skip_spaces(&parser->str[parser->i]) - parser->str;
 	if (parser->str[parser->i])
-		lexer_add_token(lexer, get_next_token(lexer, parser));
+		while (has_more_tokens)
+			lexer_add_token(lexer, get_next_token(lexer, parser, &has_more_tokens));
 	else
 		lexer_add_end(lexer);
 }
 
-static t_token	get_next_token(t_lexer *lexer, t_parser *parser)
+static t_token	get_next_token(t_lexer *lexer, t_parser *parser, int *finished)
 {
-	t_err_or_charptr	result;
-	t_token				token;
+	static t_err_or_char2ptr	result;
+	static int					index;
+	t_token						token;
 
-	result = get_next_word_parser(parser, 1);
+	if (index == 0)
+		result = get_next_word_splitted(parser);
 	if (result.error)
 	{
-		printf("%s\n", result.error);
+		ft_dprintf(STDERR_FILENO, "%s\n", result.error);
 		token.str = NULL;
 		token.type = TOKEN_EMPTY;
 		return (token);
 	}
-	token.str = result.result;
+	token.str = result.result[index];
+	if (index < (int)gc_strarray_size(result.result) - 1)
+		index++;
+	else
+		index = 0;
 	token.type = get_token_type(token.str, lexer);
+	*finished = index;
 	return (token);
 }

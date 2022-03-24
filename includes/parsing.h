@@ -76,6 +76,12 @@ typedef struct s_err_or_charptr
 	char		*result;
 }				t_err_or_charptr;
 
+typedef struct s_err_or_char2ptr
+{
+	char		*error;
+	char		**result;
+}				t_err_or_char2ptr;
+
 typedef struct s_err
 {
 	int			code;
@@ -101,11 +107,12 @@ int					contains_open_spaces(char *str);
 char				*get_next_word_raw(char *str);
 t_err_or_charptr	get_next_word(char *str, int expand_vars);
 t_err_or_charptr	get_next_word_parser(t_parser *parser, int expand_vars);
+t_err_or_char2ptr	get_next_word_splitted(t_parser *parser);
 
 t_err_or_charptr	get_double_quotes(t_parser *parser);
 t_err_or_charptr	get_single_quotes(t_parser *parser);
 
-char				*get_env_var_first_word(t_parser *parser);
+char				**get_env_var_split(t_parser *parser);
 char				*get_env_var_raw(t_parser *parser);
 char				*get_env_var_name(t_parser *parser);
 
