@@ -25,6 +25,6 @@ int	main(int argc, char **argv, char **envp)
 		line_read = ft_get_line();
 		command_batch = parse_input(line_read);
 		execute_command(command_batch);
+		destroy_command_batch(command_batch);
 	}
-	return (0);
 }

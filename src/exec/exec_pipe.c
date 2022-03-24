@@ -6,7 +6,7 @@
 /*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 17:10:07 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/23 17:59:23 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/24 12:00:32 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 extern char	**environ;
 
 static int	pipe_redirection(size_t i, t_command_batch *batch, t_pipe *pipes);
-static void	close_pipe(t_command_batch *batch, t_pipe *pipes);
+static void	close_pipe(size_t max, t_pipe *pipes);
 static int	fork_pipe(t_command_batch *batch, t_pipe *pipes);
 
 int	execute_pipe(t_command_batch *batch, t_pipe *pipes)
@@ -32,7 +32,7 @@ int	execute_pipe(t_command_batch *batch, t_pipe *pipes)
 	if (fork_pipe(batch, pipes))
 		return (1);
 	wstatus = 0;
-	close_pipe(batch, pipes);
+	close_pipe(batch->count, pipes);
 	while (i < batch->count)
 	{
 		waitpid(-1, &wstatus, 0);
@@ -74,19 +74,20 @@ static int	pipe_redirection(size_t i, t_command_batch *batch, t_pipe *pipes)
 	{
 		if (i > 0)
 		{
-			if (dup2(pipes[i - 1].fd[0], STDIN_FILENO))
+			if (dup2(pipes[i - 1].fd[0], STDIN_FILENO) == -1)
 				ft_print_errno();
 			close(pipes[i - 1].fd[1]);
 		}
 		if (i < batch->count - 1)
 		{
-			if (dup2(pipes[i].fd[1], STDOUT_FILENO))
+			if (dup2(pipes[i].fd[1], STDOUT_FILENO) == -1)
 				ft_print_errno();
 			close(pipes[i].fd[0]);
 		}
+		close_pipe(i, pipes);
 	}
 	else
-		close_pipe(batch, pipes);
+		close_pipe(batch->count, pipes);
 	return (0);
 }
 
@@ -100,12 +101,12 @@ t_pipe	*init_pipe(size_t nbr)
 	return (pipes);
 }
 
-static void	close_pipe(t_command_batch *batch, t_pipe *pipes)
+static void	close_pipe(size_t max, t_pipe *pipes)
 {
 	size_t	i;
 
 	i = 0;
-	while (i < batch->count)
+	while (i < max)
 	{
 		close(pipes[i].fd[0]);
 		close(pipes[i].fd[1]);
