@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_line.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 12:36:16 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/05 16:36:53 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/24 17:07:07 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include <fcntl.h>
-#include <errno.h>
 #include "readline.h"
 #include "minishell.h"
 #include "core.h"
@@ -45,5 +43,4 @@ static int	write_to_prompt(char *msg)
 	write(fd, msg, ft_strlen(msg));
 	gc_clean(get_gc());
 	exit(EXIT_SUCCESS);
-	return (0);
 }

@@ -16,9 +16,6 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-# ifndef __linux__
-
 void	rl_replace_line(const char *str, int integer);
-# endif
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   terminal.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cybattis <cybattis@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 16:48:07 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/09 10:11:40 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/24 17:14:44 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,23 @@
 
 void	enable_alt_termmode(void)
 {
-	struct termios	raw;
+	struct termios	new;
 
-	tcgetattr(STDOUT_FILENO, &raw);
-	g_minishell.termios = raw;
-	raw.c_cflag = ~ISIG;
-	tcsetattr(STDOUT_FILENO, TCSANOW, &raw);
+	if (!isatty(STDIN_FILENO)) {
+		perror("Input is not a TTY");
+		return ;
+	}
+	tcgetattr(STDIN_FILENO, &g_minishell.old);
+	g_minishell.old = new;
+	new.c_iflag |= ~ISIG;
+	new.c_lflag |= ~ECHO;
+	new.c_cc[VINTR] = 1;
+	new.c_cc[VMIN] = 0;
+	new.c_cc[VTIME] = 1;
+	tcsetattr(STDIN_FILENO, TCSANOW, &new);
 }
 
 void	disable_alt_termmode(void)
 {
-	tcsetattr(STDOUT_FILENO, TCSANOW, &g_minishell.termios);
+	tcsetattr(STDIN_FILENO, TCSANOW, &g_minishell.old);
 }

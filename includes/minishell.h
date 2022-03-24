@@ -6,7 +6,7 @@
 /*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 21:46:20 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/24 15:42:54 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/24 15:44:21 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ typedef struct s_mini
 	int				last_return;
 	int				is_executing;
 	char			**base_env;
-	struct termios	termios;
+	struct termios	old;
 }	t_mini;
 
 typedef struct s_pipe
