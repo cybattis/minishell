@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "core.h"
 #include <sys/wait.h>
 #include <stdlib.h>
 #include <unistd.h>

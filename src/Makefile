@@ -26,8 +26,6 @@ OBJS		=	$(addprefix $(OBJS_DIR)/, $(SRCS:.c=.o))				\
 				$(addprefix $(OBJS_DIR)/, $(EXEC:.c=.o))				\
 				$(addprefix $(OBJS_DIR)/, $(MAIN:.c=.o))
 
-HEADERS		=	$(MAKE_DIR)/includes/minishell.h
-
 DEPENDS		=	$(addprefix $(OBJS_DIR)/, $(OBJS:.o=.d))
 
 # Recipe
@@ -36,7 +34,15 @@ DEPENDS		=	$(addprefix $(OBJS_DIR)/, $(OBJS:.o=.d))
 .PHONY: all
 all:	$(NAME)
 
-$(OBJS_DIR)/%.o:	$(SRCS_DIR)/*/%.c | $(OBJS_DIR)
+$(OBJS_DIR)/%.o:	$(SRCS_DIR)/exec/%.c | $(OBJS_DIR)
+	@$(BIN_CC) $(BIN_CFLAGS) -c $< -o $@
+	@printf "$(_GREEN)█$(_END)"
+
+$(OBJS_DIR)/%.o:	$(SRCS_DIR)/main/%.c | $(OBJS_DIR)
+	@$(BIN_CC) $(BIN_CFLAGS) -c $< -o $@
+	@printf "$(_GREEN)█$(_END)"
+
+$(OBJS_DIR)/%.o:	$(SRCS_DIR)/parsing/%.c | $(OBJS_DIR)
 	@$(BIN_CC) $(BIN_CFLAGS) -c $< -o $@
 	@printf "$(_GREEN)█$(_END)"
 
@@ -54,7 +60,7 @@ bonus: all
 
 .PHONY: clean
 clean:
-	rm -rf $(OBJS_DIR)
+	rm -f $(OBJS)
 
 .PHONY: fclean
 fclean: clean

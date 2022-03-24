@@ -32,10 +32,6 @@ typedef struct s_pipe
 	int		fd[2];
 }	t_pipe;
 
-extern t_mini	g_minishell;
-
-t_gc		*get_gc(void);
-
 char		*ft_get_line(void);
 char		*get_prompt(void);
 char		*get_git_prompt(char *path_to_git, char *current_path);

@@ -2,6 +2,6 @@
 
 int	error_return(char *msg, int code)
 {
-	printf("%s\n", msg);
+	ft_dprintf(STDERR_FILENO, "%s\n", msg);
 	return (code);
 }

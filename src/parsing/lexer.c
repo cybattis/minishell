@@ -1,4 +1,6 @@
 #include "parsing.h"
+#include "libft.h"
+#include "core.h"
 
 void	lexer_add_token(t_lexer *lexer, t_token token)
 {

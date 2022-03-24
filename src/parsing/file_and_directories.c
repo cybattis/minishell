@@ -1,6 +1,8 @@
 #include <sys/stat.h>
 #include <sys/param.h>
 #include "parsing.h"
+#include "core.h"
+#include "libft.h"
 
 int	is_valid_path(char *str)
 {

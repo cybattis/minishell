@@ -1,9 +1,11 @@
 #include "parsing.h"
+#include "core.h"
+#include "libft.h"
 
 int				is_redirection(char *str);
 
-static t_parser	populate_parser(char *str, t_redir *redirs);
-static char		*skip_redir_file(char *str, t_redir *redirs);
+static t_parser	populate_parser(char *str);
+static char		*skip_redir_file(char *str);
 static char		*append_quotes(char *str, char **parser_str);
 
 t_parser	*strip_out_operators(char *input, t_command_batch *batch)
@@ -15,7 +17,7 @@ t_parser	*strip_out_operators(char *input, t_command_batch *batch)
 	i = 0;
 	while (input)
 	{
-		parsers[i] = populate_parser(input, batch->commands[i].redirections);
+		parsers[i] = populate_parser(input);
 		input = ft_strchr(input, '|');
 		if (input)
 			input ++;
@@ -24,7 +26,7 @@ t_parser	*strip_out_operators(char *input, t_command_batch *batch)
 	return (parsers);
 }
 
-static t_parser	populate_parser(char *str, t_redir *redirs)
+static t_parser	populate_parser(char *str)
 {
 	t_parser	parser;
 
@@ -45,7 +47,7 @@ static t_parser	populate_parser(char *str, t_redir *redirs)
 					str++;
 				while (ft_isspace(*str))
 					str++;
-				str = skip_redir_file(str, redirs);
+				str = skip_redir_file(str);
 			}
 		}
 		else
@@ -59,7 +61,7 @@ static t_parser	populate_parser(char *str, t_redir *redirs)
 	return (parser);
 }
 
-static char	*skip_redir_file(char *str, t_redir *redirs)
+static char	*skip_redir_file(char *str)
 {
 	t_err_or_charptr	result;
 

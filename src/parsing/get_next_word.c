@@ -1,5 +1,6 @@
 #include "libft.h"
 #include "parsing.h"
+#include "core.h"
 
 static t_err_or_charptr	get_next_chars(t_parser *parser, int expand_vars);
 
@@ -63,7 +64,6 @@ char	*get_next_word_raw(char *str)
 	return (word);
 }
 
-//TODO: check: handle spaces inside of env vars
 static t_err_or_charptr	get_next_chars(t_parser *parser, int expand_vars)
 {
 	t_err_or_charptr	result;

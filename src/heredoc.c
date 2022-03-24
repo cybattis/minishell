@@ -12,6 +12,7 @@
 
 #include <fcntl.h>
 #include "minishell.h"
+#include "core.h"
 
 static int	generate_temp_file(char *str_out);
 

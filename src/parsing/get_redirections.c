@@ -1,5 +1,6 @@
 #include "libft.h"
 #include "parsing.h"
+#include "core.h"
 
 static int		setup_redirections(char *str, t_command *command);
 static size_t	get_redir_count(char *str);

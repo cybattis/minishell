@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "core.h"
 #include <string.h>
 #include <errno.h>
 #include <sys/param.h>
@@ -62,7 +63,7 @@ int	bt_exit(char **args)
 	printf("exit\n");
 	if (gc_strarray_size(args) > 2)
 	{
-		printf("minishell: exit: too many arguments\n");
+		ft_dprintf(STDERR_FILENO, "minishell: exit: too many arguments\n");
 		return (1);
 	}
 	if (args[1])

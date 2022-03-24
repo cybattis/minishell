@@ -1,4 +1,6 @@
 #include "parsing.h"
+#include "libft.h"
+#include "core.h"
 
 static void		populate_command(t_command *command, t_lexer lexer);
 static int		is_builtin(char *command);

@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "core.h"
 #include <unistd.h>
 #include <termios.h>
 

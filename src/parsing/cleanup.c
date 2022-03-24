@@ -1,6 +1,6 @@
 #include "parsing.h"
 #include "libft.h"
-#include "minishell.h"
+#include "core.h"
 
 static void	destroy_args(char **args);
 static void	destroy_redirs(t_redir *redirs);

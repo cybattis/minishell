@@ -12,6 +12,7 @@
 
 #include "minishell.h"
 #include "readline.h"
+#include "core.h"
 #include <signal.h>
 
 int	init_signal(void)

@@ -1,4 +1,5 @@
 #include "parsing.h"
+#include "libft.h"
 
 int	get_last_token_type(t_lexer *lexer)
 {

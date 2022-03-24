@@ -1,5 +1,6 @@
 #include "libft.h"
 #include "parsing.h"
+#include "core.h"
 
 static void	check_for_error(t_parser *parser, t_err_or_charptr *result);
 
@@ -25,6 +26,6 @@ static void	check_for_error(t_parser *parser, t_err_or_charptr *result)
 	else
 	{
 		result->error = gc_strdup(get_gc(), "minishell: syntax error: expected `\'\' but got `newline\'");
-		gc_destroy(get_gc(), &result->result);
+		gc_destroy(get_gc(), (void **)&result->result);
 	}
 }

@@ -1,4 +1,5 @@
 #include "parsing.h"
+#include "libft.h"
 
 int	is_operator_char(char c)
 {

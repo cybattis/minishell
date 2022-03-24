@@ -1,6 +1,6 @@
-#include "libft.h"
 #include "parsing.h"
 #include "minishell.h"
+#include "core.h"
 
 char	*get_env_var_raw(t_parser *parser)
 {

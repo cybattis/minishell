@@ -10,8 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft/libft.h"
-#include "../includes/minishell.h"
+#include "libft.h"
+#include "core.h"
+#include "minishell.h"
 #include <unistd.h>
 
 extern char	**environ;

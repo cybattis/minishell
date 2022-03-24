@@ -1,5 +1,6 @@
 #include "libft.h"
 #include "parsing.h"
+#include "core.h"
 
 static char *handle_question_mark(t_parser *parser);
 

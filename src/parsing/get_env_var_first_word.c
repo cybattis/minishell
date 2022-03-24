@@ -1,5 +1,6 @@
 #include "libft.h"
 #include "parsing.h"
+#include "core.h"
 
 static char	*extract_first_word(char *str);
 

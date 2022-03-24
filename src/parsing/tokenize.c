@@ -1,4 +1,6 @@
 #include "parsing.h"
+#include "libft.h"
+#include "core.h"
 
 int		get_last_token_type(t_lexer *lexer);
 static t_lexer	tokenize(t_parser parser);

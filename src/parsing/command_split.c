@@ -1,5 +1,6 @@
 #include "parsing.h"
 #include "libft.h"
+#include "core.h"
 
 static size_t	get_pipe_count(char *str);
 static int		ends_with_pipe(char *str);

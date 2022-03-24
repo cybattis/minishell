@@ -1,5 +1,6 @@
 #include "libft.h"
 #include "parsing.h"
+#include "core.h"
 
 static void	check_for_error(t_parser *parser, t_err_or_charptr *result);
 

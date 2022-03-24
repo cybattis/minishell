@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "core.h"
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
@@ -23,19 +24,19 @@ t_gc	*get_gc(void)
 
 void	ft_errno_exit(int errnum)
 {
-	printf("minishell: %s\n", strerror(errnum));
+	ft_dprintf(STDERR_FILENO, "minishell: %s\n", strerror(errnum));
 	exit(EXIT_FAILURE);
 }
 
 int	ft_print_errno(void)
 {
-	printf("minishell: %s\n", strerror(errno));
+	ft_dprintf(STDERR_FILENO, "minishell: %s\n", strerror(errno));
 	return (1);
 }
 
 void	ft_error_command(char *command)
 {
-	printf("minishell: %s : command not found\n", command);
+	ft_dprintf(STDERR_FILENO, "minishell: %s : command not found\n", command);
 	exit(127);
 }
 

@@ -15,6 +15,7 @@
 #include <errno.h>
 #include "readline.h"
 #include "minishell.h"
+#include "core.h"
 
 static int	write_to_prompt(char *msg);
 

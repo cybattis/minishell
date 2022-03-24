@@ -12,6 +12,7 @@
 
 #include "minishell.h"
 #include "parsing.h"
+#include "core.h"
 #include <stdio.h>
 
 extern char	**environ;
@@ -56,7 +57,7 @@ int	bt_export(char **arg)
 	{
 		if (!check_var(arg[i]))
 		{
-			printf("minishell: export: `%s': not a valid identifier\n", arg[i]);
+			ft_dprintf(STDERR_FILENO, "minishell: export: `%s': not a valid identifier\n", arg[i]);
 			i++;
 			continue ;
 		}
@@ -91,7 +92,7 @@ int	bt_unset(char **args)
 		}
 		if (args[i][j])
 		{
-			printf("minishell: unset: `%s': not a valid identifier\n", args[i]);
+			ft_dprintf(STDERR_FILENO, "minishell: unset: `%s': not a valid identifier\n", args[i]);
 			i++;
 			continue ;
 		}

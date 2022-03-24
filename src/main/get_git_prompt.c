@@ -10,8 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft/libft.h"
-#include "../includes/minishell.h"
+#include "libft.h"
+#include "minishell.h"
+#include "core.h"
 #include <sys/param.h>
 #include <sys/stat.h>
 #include <fcntl.h>
