@@ -6,7 +6,7 @@
 /*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 14:54:11 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/21 16:40:59 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/24 12:07:17 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,10 @@ int	redirection(t_redir *redirections)
 
 static int	set_redirection(int fds[2])
 {
+
 	if (fds[0])
 	{
+		ft_dprintf(STDERR_FILENO, "fds[0] %d\n", fds[0]);
 		if (dup2(fds[0], STDIN_FILENO) < 0)
 		{
 			ft_print_errno();
@@ -56,6 +58,7 @@ static int	set_redirection(int fds[2])
 	}
 	if (fds[1])
 	{
+		ft_dprintf(STDERR_FILENO, "fds[1] %d\n", fds[1]);
 		if (dup2(fds[1], STDOUT_FILENO) < 0)
 		{
 			ft_print_errno();
@@ -63,8 +66,10 @@ static int	set_redirection(int fds[2])
 		}
 		close(fds[1]);
 	}
-	if (fds[1])
-		return (fds[1]);
+	if (fds[1] && !fds[0])
+		return (0);
+	if (!fds[1] && !fds[0])
+		return (1);
 	return (-1);
 }
 

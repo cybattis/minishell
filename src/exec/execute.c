@@ -6,7 +6,7 @@
 /*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 17:10:07 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/23 18:26:22 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/24 11:27:36 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,6 @@ void	execute_bin(t_command *command)
 
 	path = get_path();
 	j = 0;
-	if (execve(command->name, command->args, environ) < 0 && errno != ENOENT)
-	{
-		ft_dprintf(STDERR_FILENO, "minishell: %s\n", strerror(errno));
-		exit(126);
-	}
 	while (path[j])
 	{
 		cmd_path = gc_strappend(&g_minishell.gc, path[j], '/');
