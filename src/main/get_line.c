@@ -15,23 +15,21 @@
 #include "minishell.h"
 #include "core.h"
 
-static int	write_to_prompt(char *msg);
-
 char	*ft_get_line(void)
 {
 	static char	*line_read;
 
 	if (line_read)
-		gc_free(get_gc(), line_read);
+		free(line_read);
 	line_read = readline(get_prompt());
 	if (!line_read)
 		write_to_prompt("exit\n");
-	if (line_read && *line_read)
+	if (line_read && *line_read && !contains_unfinished_quotes(line_read))
 		add_history(line_read);
-	return (line_read);
+	return (gc_strdup(get_gc(), line_read));
 }
 
-static int	write_to_prompt(char *msg)
+int	write_to_prompt(char *msg)
 {
 	int		fd;
 	char	*tty_name;

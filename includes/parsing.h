@@ -103,6 +103,8 @@ int					has_next_char(char *str);
 char				*skip_spaces(char *str);
 size_t				skip_quotes(char *str);
 int					contains_open_spaces(char *str);
+int					contains_unfinished_quotes(char *str);
+char				*ask_for_quote(char *input);
 
 char				*get_next_word_raw(char *str);
 t_err_or_charptr	get_next_word(char *str, int expand_vars);
