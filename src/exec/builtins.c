@@ -21,17 +21,17 @@ int	execute_builtin(t_command *command)
 	if (!command->name)
 		return (0);
 	if (!ft_strcmp(command->name, "cd"))
-		bt_cd(command->args[1]);
+		g_minishell.last_return = bt_cd(command->args[1]);
 	else if (!ft_strcmp(command->name, "echo"))
-		bt_echo(command);
+		g_minishell.last_return = bt_echo(command);
 	else if (!ft_strcmp(command->name, "pwd"))
-		bt_pwd();
+		g_minishell.last_return = bt_pwd();
 	else if (!ft_strcmp(command->name, "unset"))
-		bt_unset(&command->args[1]);
+		g_minishell.last_return = bt_unset(&command->args[1]);
 	else if (!ft_strcmp(command->name, "env"))
-		bt_env();
+		g_minishell.last_return = bt_env();
 	else if (!ft_strcmp(command->name, "export"))
-		bt_export(&command->args[1]);
+		g_minishell.last_return = bt_export(&command->args[1]);
 	else if (!ft_strcmp(command->name, "exit"))
 		bt_exit(command->args);
 	return (0);

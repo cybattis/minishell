@@ -6,7 +6,7 @@
 /*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 21:46:20 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/24 15:44:21 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/25 15:05:14 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ typedef struct s_mini
 	t_gc			gc;
 	int				last_return;
 	int				is_executing;
+	int				has_child;
 	char			**base_env;
-	struct termios	old;
 }	t_mini;
 
 typedef struct s_pipe
@@ -44,8 +44,6 @@ int			is_git_repo(char *path);
 void		init_minishell(char **envp);
 int			init_signal(void);
 void		sig_handler(int signum);
-int			init_signal_child(void);
-void		sig_handler_child(int signum);
 
 int			execute_command(t_command_batch cmd_batch);
 void		execute_bin(t_command *commands);
@@ -79,5 +77,7 @@ void		set_env_var(char *name, char *value);
 void		unset_env_var(char *name);
 void		update_shell_env_vars(void);
 int			get_empty_var_index(void);
+
+void		get_child_return(int wstatus);
 
 #endif

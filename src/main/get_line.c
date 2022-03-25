@@ -6,7 +6,7 @@
 /*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 12:36:16 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/24 17:07:07 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/25 14:22:18 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ char	*ft_get_line(void)
 	line_read = readline(get_prompt());
 	if (!line_read)
 		write_to_prompt("exit\n");
+	if (!ft_strlen(line_read))
+		g_minishell.last_return = 0;
 	if (line_read && *line_read && !contains_unfinished_quotes(line_read))
 		add_history(line_read);
 	return (gc_strdup(get_gc(), line_read));

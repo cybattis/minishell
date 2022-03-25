@@ -6,7 +6,7 @@
 /*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 21:48:09 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/24 16:41:43 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/25 15:00:58 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	main(int argc, char **argv, char **envp)
 	init_minishell(envp);
 	while (FT_TRUE)
 	{
+		init_signal();
 		line_read = ft_get_line();
 		command_batch = parse_input(line_read);
 		print_command_batch(command_batch);

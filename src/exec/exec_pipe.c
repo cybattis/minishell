@@ -36,7 +36,7 @@ int	execute_pipe(t_command_batch *batch, t_pipe *pipes)
 	while (i < batch->count)
 	{
 		waitpid(-1, &wstatus, 0);
-		g_minishell.last_return = WEXITSTATUS(wstatus);
+		get_child_return(wstatus);
 		i++;
 	}
 	g_minishell.is_executing = 0;
