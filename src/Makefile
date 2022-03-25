@@ -1,7 +1,7 @@
 
 NAME		=	minishell
 
-SRCS		=	utils.c env.c redirection.c terminal.c heredoc.c		\
+SRCS		=	utils.c env.c redirection.c heredoc.c		\
 				utils2.c env_utils.c
 
 PARS_DIR	=	parsing

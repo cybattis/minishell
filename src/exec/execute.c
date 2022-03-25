@@ -6,7 +6,7 @@
 /*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 17:10:07 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/25 11:29:05 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/25 15:06:52 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,25 +48,45 @@ static int	execute(t_command *command)
 
 	if (command->is_redirecting)
 		redirection(command->redirections);
+	if (!command[0].name)
+		return (0);
 	if (command->is_builtin == 1)
 		return (execute_builtin(command));
 	wstatus = 0;
 	g_minishell.is_executing = 1;
+	signal(SIGQUIT, sig_handler);
 	pid = fork();
 	if (!pid)
 	{
+		g_minishell.has_child = 1;
 		execute_bin(command);
 	}
 	else if (pid > 0)
 	{
+		g_minishell.has_child = 0;
 		waitpid(pid, &wstatus, 0);
-		g_minishell.last_return = WEXITSTATUS(wstatus);
+		get_child_return(wstatus);
 		g_minishell.is_executing = 0;
-		printf("last return: %d\n", g_minishell.last_return);
 		return (0);
 	}
 	g_minishell.is_executing = 0;
 	return (ft_print_errno());
+}
+
+void	get_child_return(int wstatus)
+{
+	int 	sig;
+
+	if (WIFEXITED(wstatus))
+		g_minishell.last_return = WEXITSTATUS(wstatus);
+	else
+	{
+		sig = WTERMSIG(wstatus);
+		if (sig == SIGINT)
+			g_minishell.last_return = 130;
+		else if (sig == SIGQUIT)
+			g_minishell.last_return = 131;
+	}
 }
 
 void	execute_bin(t_command *command)
