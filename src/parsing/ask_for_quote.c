@@ -13,6 +13,8 @@ char	*ask_for_quote(char *input)
 	while (contains_unfinished_quotes(input))
 	{
 		line = get_line(input);
+		if (!line)
+			return (gc_strdup(get_gc(), ""));
 		input = gc_strappend(get_gc(), input, '\n');
 		input = gc_strjoin(get_gc(), input, line, FREE_FIRST);
 		free(line);
@@ -32,8 +34,8 @@ static char	*get_line(char *input)
 								  "minishell: syntax error: unexpected end of file\n",
 				contains_unfinished_quotes(input));
 		add_history(input);
-		input[0] = 0;
-		return (input);
+		gc_free(get_gc(), input);
+		return (NULL);
 	}
 	return (line);
 }
