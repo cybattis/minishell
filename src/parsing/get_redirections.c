@@ -9,6 +9,7 @@ static char		*get_heredoc_delimiter(char *str);
 
 int				get_redir_type(char *str);
 int				is_redirection(char *str);
+int				check_for_ambiguous_redirection(char *str);
 
 int	get_redirections(char *input, t_command_batch *batch)
 {
@@ -76,7 +77,7 @@ static char	*get_redir_file(char *str)
 	file = get_next_word(str, 1);
 	if (file.error)
 		return (parsing_error(file.error));
-	if (contains_open_spaces(file.result))
+	if (check_for_ambiguous_redirection(str))
 		return (error_ambiguous_redirection(str));
 	if (ft_strlen(file.result) == 0)
 		return (parsing_error("minishell: :No such file or directory"));

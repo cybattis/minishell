@@ -2,6 +2,8 @@
 #include "parsing.h"
 #include "core.h"
 
+static void	destroy_parsers(t_parser *parsers, size_t count);
+
 t_command_batch	parse_input(char *input)
 {
 	t_command_batch	command_batch;
@@ -20,6 +22,20 @@ t_command_batch	parse_input(char *input)
 	parsers = strip_out_operators(input, &command_batch);
 	gc_free(get_gc(), input);
 	tokenize_all(&lexers, parsers, command_batch.count);
+	destroy_parsers(parsers, command_batch.count);
 	populate_command_batch(&command_batch, lexers, command_batch.count);
 	return (command_batch);
+}
+
+static void	destroy_parsers(t_parser *parsers, size_t count)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < count)
+	{
+		gc_free(get_gc(), parsers[i].str);
+		i++;
+	}
+	gc_free(get_gc(), parsers);
 }

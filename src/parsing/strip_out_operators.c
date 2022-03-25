@@ -65,7 +65,7 @@ static char	*skip_redir_file(char *str)
 {
 	t_err_or_charptr	result;
 
-	result = get_next_word(str, 1);
+	result = get_next_word(str, 0);
 	str += ft_strlen(result.result);
 	gc_free(get_gc(), result.result);
 	return (str);

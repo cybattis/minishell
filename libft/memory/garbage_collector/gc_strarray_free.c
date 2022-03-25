@@ -20,7 +20,6 @@ void	gc_strarray_free(t_gc *gc, char **array)
 	if (!array)
 		return ;
 	size = gc_strarray_size(array);
-	printf("Freeing size of %lu\n", size);
 	i = 0;
 	while (i < size)
 	{

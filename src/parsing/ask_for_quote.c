@@ -25,7 +25,7 @@ static char	*get_line(char *input)
 {
 	char	*line;
 
-	line = readline(">");
+	line = readline("> ");
 	if (!line)
 	{
 		ft_dprintf(STDERR_FILENO, "minishell: unexpected EOF while looking for matching `%c'\n"
