@@ -6,7 +6,7 @@
 /*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 12:55:27 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/24 16:42:13 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/25 11:52:01 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,9 @@ void	sig_handler(int signum)
 		if (!g_minishell.is_executing)
 		{
 			rl_redisplay();
-			exit(130);
+			g_minishell.last_return = 130;
 		}
 	}
 }
 
-// TODO: make ^C invisible
-// 		SIGINT child return = 130
-// TODO: add error check and retrun for builtins
+// TODO: add error check and return for builtins
