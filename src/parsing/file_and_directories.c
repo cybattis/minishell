@@ -24,7 +24,6 @@ int	is_absolute_path(char *str)
 	return (0);
 }
 
-//TODO: Handle tilde
 void	make_absolute_path(char **str)
 {
 	char	pwd[MAXPATHLEN];
