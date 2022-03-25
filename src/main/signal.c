@@ -6,7 +6,7 @@
 /*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 12:55:27 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/25 15:06:52 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/25 15:07:39 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,6 @@ void	sig_handler(int signum)
 	}
 }
 
-// TODO: add error check and return for builtins
+// TODO: add error check
+// TODO: export + export VALUE --> env == no VALUE
+// TODO: export VALUE= --> env == VALUE=

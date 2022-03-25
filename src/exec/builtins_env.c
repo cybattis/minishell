@@ -6,7 +6,7 @@
 /*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 13:48:19 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/24 16:01:14 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/25 17:14:24 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ extern char	**environ;
 
 int	bt_env(void)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
 	while (environ[i])
@@ -36,7 +36,7 @@ static int	check_var(char *var)
 	size_t	i;
 
 	i = 0;
-	if (ft_isdigit(var[0]))
+	if (var[0] == '=' || ft_isdigit(var[0]))
 		return (0);
 	while (var[i] && var[i] != '=')
 	{
@@ -47,18 +47,40 @@ static int	check_var(char *var)
 	return (1);
 }
 
+int noarg_export(void)
+{
+	char	**var_env;
+	size_t	i;
+
+	i = 0;
+	while (environ[i])
+	{
+		if (environ[i][0] != 0)
+			var_env[i] = environ[i];
+		i++;
+	}
+	i = 0;
+	while ()
+	{
+
+	}
+	return (0);
+}
+
 int	bt_export(char **arg)
 {
 	size_t	value_offset;
 	size_t	i;
 
 	i = 0;
+	if (!arg[0])
+		return (noarg_export());
 	while (arg[i])
 	{
 		if (!check_var(arg[i]))
 		{
 			ft_dprintf(STDERR_FILENO, "minishell: export: `%s':"
-				"not a valid identifier\n", arg[i]);
+				" not a valid identifier\n", arg[i]);
 			i++;
 			continue ;
 		}
@@ -69,6 +91,11 @@ int	bt_export(char **arg)
 		{
 			arg[i][value_offset] = 0;
 			value_offset++;
+		}
+		else
+		{
+			i++;
+			continue ;
 		}
 		set_env_var(arg[i], &arg[i][value_offset]);
 		i++;
@@ -94,7 +121,7 @@ int	bt_unset(char **args)
 		if (args[i][j])
 		{
 			ft_dprintf(STDERR_FILENO, "minishell: unset: `%s':"
-				"not a valid identifier\n", args[i]);
+				" not a valid identifier\n", args[i]);
 			i++;
 			continue ;
 		}

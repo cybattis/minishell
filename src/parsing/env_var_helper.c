@@ -24,7 +24,7 @@ char	*get_env_var_name(t_parser *parser)
 
 int	is_envchar(char c)
 {
-	if (ft_isalpha(c) || c == '_')
+	if (ft_isalnum(c) || c == '_')
 		return (1);
 	return (0);
 }
