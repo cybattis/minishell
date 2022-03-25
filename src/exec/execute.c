@@ -6,7 +6,7 @@
 /*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 17:10:07 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/24 16:02:17 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/25 11:29:05 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,18 @@ static int	execute(t_command *command)
 	g_minishell.is_executing = 1;
 	pid = fork();
 	if (!pid)
+	{
 		execute_bin(command);
+	}
 	else if (pid > 0)
 	{
 		waitpid(pid, &wstatus, 0);
 		g_minishell.last_return = WEXITSTATUS(wstatus);
 		g_minishell.is_executing = 0;
+		printf("last return: %d\n", g_minishell.last_return);
 		return (0);
 	}
+	g_minishell.is_executing = 0;
 	return (ft_print_errno());
 }
 
