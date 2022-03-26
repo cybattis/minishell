@@ -35,7 +35,7 @@ int	ft_print_errno(void)
 
 void	ft_error_command(char *command)
 {
-	ft_dprintf(STDERR_FILENO, "minishell: %s : command not found\n", command);
+	ft_dprintf(STDERR_FILENO, "minishell: %s: command not found\n", command);
 	exit(127);
 }
 

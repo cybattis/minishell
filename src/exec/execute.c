@@ -95,17 +95,19 @@ void	execute_bin(t_command *command)
 	char	*cmd_path;
 	int		j;
 
+	if (ft_strlen(command->name) == 0)
+		ft_error_command("");
 	path = get_path();
 	j = 0;
 	if (execve(command->name, command->args, environ) < 0 && errno != ENOENT)
 	{
-		printf("minishell: %s\n", strerror(errno));
+		ft_dprintf(STDERR_FILENO, "minishell: %s\n", strerror(errno));
 		exit(126);
 	}
 	while (path[j])
 	{
-		cmd_path = gc_strappend(&g_minishell.gc, path[j], '/');
-		cmd_path = gc_strjoin(&g_minishell.gc, cmd_path, command->name, 1);
+		cmd_path = gc_strappend(get_gc(), path[j], '/');
+		cmd_path = gc_strjoin(get_gc(), cmd_path, command->name, FREE_FIRST);
 		if (execve(cmd_path, command->args, environ) < 0 && errno != ENOENT)
 		{
 			ft_dprintf(STDERR_FILENO, "minishell: %s\n", strerror(errno));
