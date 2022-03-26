@@ -49,7 +49,9 @@ static t_token	get_next_token(t_lexer *lexer, t_parser *parser, int *finished)
 	static t_err_or_char2ptr	result;
 	static int					index;
 	t_token						token;
+	t_parser					parser_copy;
 
+	parser_copy = *parser;
 	if (index == 0)
 		result = get_next_word_splitted(parser);
 	if (result.error)
@@ -64,7 +66,7 @@ static t_token	get_next_token(t_lexer *lexer, t_parser *parser, int *finished)
 		index++;
 	else
 		index = 0;
-	token.type = get_token_type(token.str, lexer);
+	token.type = get_token_type(token.str, lexer, parser_copy);
 	*finished = index;
 	return (token);
 }

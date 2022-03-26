@@ -20,6 +20,10 @@ char *token_to_str(int token)
 			return ("COMMAND");
 		case TOKEN_ARG:
 			return ("ARG");
+		case TOKEN_END:
+			return ("END");
+		case TOKEN_EMPTY:
+			return ("EMPTY");
 		default:
 			return ("UNKNOWN");
 	}

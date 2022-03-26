@@ -132,7 +132,7 @@ t_parser			*strip_out_operators(char *input, t_command_batch *batch);
 
 void				tokenize_all(t_lexer **lexers, t_parser *parsers, size_t count);
 
-int					get_token_type(char *token, t_lexer *lexer);
+int					get_token_type(char *token, t_lexer *lexer, t_parser parser);
 
 void				lexer_add_token(t_lexer *lexer, t_token token);
 void				lexer_add_end(t_lexer *lexer);

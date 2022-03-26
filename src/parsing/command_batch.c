@@ -63,5 +63,12 @@ static char	*get_command_name(t_command *command, t_lexer *lexer)
 			return (NULL);
 		i++;
 	}
-	return (lexer->tokens[0].str);
+	i = 0;
+	while (i < lexer->count)
+	{
+		if (lexer->tokens[i].type == TOKEN_COMMAND)
+			return (lexer->tokens[i].str);
+		i++;
+	}
+	return (NULL);
 }
