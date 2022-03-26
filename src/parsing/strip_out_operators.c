@@ -7,6 +7,7 @@ int				is_redirection(char *str);
 static t_parser	populate_parser(char *str);
 static char		*skip_redir_file(char *str);
 static char		*append_quotes(char *str, char **parser_str);
+static char		*get_next_command(char *input);
 
 t_parser	*strip_out_operators(char *input, t_command_batch *batch)
 {
@@ -15,12 +16,10 @@ t_parser	*strip_out_operators(char *input, t_command_batch *batch)
 
 	parsers = gc_calloc(get_gc(), batch->count, sizeof (t_parser));
 	i = 0;
-	while (input)
+	while (*input)
 	{
 		parsers[i] = populate_parser(input);
-		input = ft_strchr(input, '|');
-		if (input)
-			input ++;
+		input = get_next_command(input);
 		i++;
 	}
 	return (parsers);
@@ -80,4 +79,21 @@ static char	*append_quotes(char *str, char **parser_str)
 	sub_str = gc_substr(get_gc(), str, 0, i);
 	*parser_str = gc_strjoin(get_gc(), *parser_str, sub_str, FREE_BOTH);
 	return (str + i);
+}
+
+static char	*get_next_command(char *input)
+{
+	size_t	i;
+
+	i = 0;
+	while (input[i] && input[i] != '|')
+	{
+		if (input[i] == '"' || input[i] == '\'')
+			i += skip_quotes(&input[i]);
+		else
+			i++;
+	}
+	if (input[i] == '|')
+		i++;
+	return (&input[i]);
 }

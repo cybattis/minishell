@@ -14,11 +14,11 @@ int	split_input_into_commands(char *input, t_command_batch *batch)
 	if (ends_with_pipe(input))
 		return (error_return("minishell: syntax error near unexpected token '|'", 0));
 	pipe_count = get_pipe_count(input);
-	if (pipe_count < ft_str_count(input, '|', FT_UNIQUE))
-		return (0);
+	printf("Parsing found %zu pipes\n", pipe_count);
 	batch->count = pipe_count;
 	if (contains_char(input))
 		batch->count++;
+	printf("Parsing created %zu commands\n", batch->count);
 	batch->commands = gc_calloc(get_gc(), batch->count + 1, sizeof (t_command));
 	if (batch->count)
 		setup_piping_commands(batch);
@@ -36,7 +36,9 @@ static size_t	get_pipe_count(char *str)
 	encountered_char = 0;
 	while (str[i])
 	{
-		if (str[i] == '|')
+		if (str[i] == '"' || str[i] == '\'')
+			i += skip_quotes(&str[i]);
+		else if (str[i] == '|')
 		{
 			if (i > 0 && str[i - 1] == '|')
 			{
@@ -53,7 +55,8 @@ static size_t	get_pipe_count(char *str)
 		}
 		else if (ft_isprint(str[i]) && !ft_isspace(str[i]))
 			encountered_char = 1;
-		i++;
+		if (str[i])
+			i++;
 	}
 	return (count);
 }

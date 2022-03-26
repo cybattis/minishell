@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include "parsing.h"
 #include <stdio.h>
+#include "parsing.h"
+#include "minishell.h"
 
 extern char	**environ;
 
@@ -55,12 +55,13 @@ int is_env_sort(char *best_env, char *sort_env, size_t i, size_t j)
 	k = 0;
 	while (k < j)
 	{
-		if (ft_strcmp(sort_env[k], environ[i]) == 0)
+		if (ft_strcmp(&sort_env[k], environ[i]) == 0)
 			break;
 		k++;
 	}
-	if (k == j && ft_strcmp(sort_env[k], environ[i]) != 0)
+	if (k == j && ft_strcmp(&sort_env[k], environ[i]) != 0)
 		best_env = environ[i];
+	return (1);
 }
 
 int noarg_export(void)

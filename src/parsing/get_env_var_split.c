@@ -13,6 +13,12 @@ char	**get_env_var_split(t_parser *parser)
 	var_value.str = get_env_var_raw(parser);
 	var_value.i = 0;
 	array = gc_strarray_init(get_gc());
+	if (!var_value.str)
+	{
+		array = gc_strarray_append(get_gc(), array, "");
+		gc_free(get_gc(), var_value.str);
+		return (array);
+	}
 	next_word = extract_next_word(&var_value);
 	while (next_word)
 	{
@@ -20,6 +26,7 @@ char	**get_env_var_split(t_parser *parser)
 		gc_free(get_gc(), next_word);
 		next_word = extract_next_word(&var_value);
 	}
+	gc_free(get_gc(), var_value.str);
 	return (array);
 }
 
