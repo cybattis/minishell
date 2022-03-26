@@ -2,19 +2,21 @@
 #include "libft.h"
 #include "core.h"
 
-static size_t	get_pipe_count(char *str);
-static int		ends_with_pipe(char *str);
-static int		contains_char(char *str);
-static void		setup_piping_commands(t_command_batch *batch);
+static int	get_pipe_count(char *str);
+static int	ends_with_pipe(char *str);
+static int	contains_char(char *str);
+static void	setup_piping_commands(t_command_batch *batch);
 
 int	split_input_into_commands(char *input, t_command_batch *batch)
 {
-	size_t	pipe_count;
+	int	pipe_count;
 
 	if (ends_with_pipe(input))
 		return (error_return("minishell: syntax error near unexpected token '|'", 0));
 	pipe_count = get_pipe_count(input);
-	printf("Parsing found %zu pipes\n", pipe_count);
+	if (pipe_count < 0)
+		return (0);
+	printf("Parsing found %d pipes\n", pipe_count);
 	batch->count = pipe_count;
 	if (contains_char(input))
 		batch->count++;
@@ -25,10 +27,10 @@ int	split_input_into_commands(char *input, t_command_batch *batch)
 	return (1);
 }
 
-static size_t	get_pipe_count(char *str)
+static int	get_pipe_count(char *str)
 {
 	size_t	i;
-	size_t	count;
+	int	count;
 	int		encountered_char;
 
 	i = 0;
@@ -37,7 +39,11 @@ static size_t	get_pipe_count(char *str)
 	while (str[i])
 	{
 		if (str[i] == '"' || str[i] == '\'')
+		{
+			encountered_char = 1;
 			i += skip_quotes(&str[i]);
+			continue ;
+		}
 		else if (str[i] == '|')
 		{
 			if (i > 0 && str[i - 1] == '|')
@@ -51,12 +57,11 @@ static size_t	get_pipe_count(char *str)
 				encountered_char = 0;
 			}
 			else
-				return (error_return("minishell: syntax error near unexpected token '|'", 0));
+				return (error_return("minishell: syntax error near unexpected token '|'", -1));
 		}
 		else if (ft_isprint(str[i]) && !ft_isspace(str[i]))
 			encountered_char = 1;
-		if (str[i])
-			i++;
+		i++;
 	}
 	return (count);
 }

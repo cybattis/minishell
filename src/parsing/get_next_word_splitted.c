@@ -26,7 +26,6 @@ t_err_or_char2ptr	get_next_word_splitted(t_parser *parser)
 			break ;
 		i = append_words(&result, &words, i);
 	}
-	printf("Current word: [%s]\n", gc_strarray_asstr(get_gc(), words));
 	return ((t_err_or_char2ptr){NULL, words});
 }
 
