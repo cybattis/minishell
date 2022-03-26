@@ -47,7 +47,7 @@ STRINGVIEW			=		sv_create.c
 
 #Basic Maths
 BASICMATHDIR		=		maths/basics/
-BASICMATH			=		ft_factorial.c ft_pow2.c ft_sqrt.c ft_trig.c ft_modf.c ft_lerp.c
+BASICMATH			=		ft_factorial.c ft_pow2.c ft_sqrt.c ft_trig.c ft_modf.c ft_lerp.c ft_max.c
 
 #Vectors
 VECTORSDIR			=		maths/vectors/

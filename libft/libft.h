@@ -205,6 +205,9 @@ double		ft_sin(double x);
 double		ft_modf(double x, double y);
 double		ft_lerpf(double base, double high, double value);
 double		ft_ilerpf(double base, double high, double value);
+size_t		ft_maxui(size_t a, size_t b);
+uint64_t	ft_maxi(uint64_t a, uint64_t b);
+double		ft_maxf(double a, double b);
 
 //Vectors
 t_vec2		vec2(float x, float y);
