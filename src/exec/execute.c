@@ -136,5 +136,5 @@ char	**get_path(void)
 	path = getenv("PATH");
 	if (!path)
 		return (NULL);
-	return (gc_split(&g_minishell.gc, path, ':'));
+	return (gc_split(get_gc(), path, ':'));
 }
