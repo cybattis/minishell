@@ -78,6 +78,4 @@ void		unset_env_var(char *name);
 void		update_shell_env_vars(void);
 int			get_empty_var_index(void);
 
-void		get_child_return(int wstatus);
-
 #endif

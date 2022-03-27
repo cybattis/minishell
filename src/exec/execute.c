@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 17:10:07 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/25 15:06:52 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/27 14:23:07 by njennes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 extern char	**environ;
 
 static int	execute(t_command *command);
+int			wait_for_child(pid_t pid);
 
 int	execute_command(t_command_batch batch)
 {
@@ -44,7 +45,6 @@ int	execute_command(t_command_batch batch)
 static int	execute(t_command *command)
 {
 	pid_t	pid;
-	int		wstatus;
 
 	if (command->is_redirecting)
 		redirection(command->redirections);
@@ -52,7 +52,6 @@ static int	execute(t_command *command)
 		return (0);
 	if (command->is_builtin == 1)
 		return (execute_builtin(command));
-	wstatus = 0;
 	g_minishell.is_executing = 1;
 	signal(SIGQUIT, sig_handler);
 	pid = fork();
@@ -62,31 +61,9 @@ static int	execute(t_command *command)
 		execute_bin(command);
 	}
 	else if (pid > 0)
-	{
-		g_minishell.has_child = 0;
-		waitpid(pid, &wstatus, 0);
-		get_child_return(wstatus);
-		g_minishell.is_executing = 0;
-		return (0);
-	}
+		return (wait_for_child(pid));
 	g_minishell.is_executing = 0;
 	return (ft_print_errno());
-}
-
-void	get_child_return(int wstatus)
-{
-	int 	sig;
-
-	if (WIFEXITED(wstatus))
-		g_minishell.last_return = WEXITSTATUS(wstatus);
-	else
-	{
-		sig = WTERMSIG(wstatus);
-		if (sig == SIGINT)
-			g_minishell.last_return = 130;
-		else if (sig == SIGQUIT)
-			g_minishell.last_return = 131;
-	}
 }
 
 void	execute_bin(t_command *command)

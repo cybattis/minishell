@@ -13,7 +13,7 @@ PARSING		=	parsing.c command_split.c minishell_error.c get_redirections.c get_re
 				command_split_helper.c
 
 EXEC_DIR	=	exec
-EXEC		=	execute.c exec_pipe.c builtins.c builtins_env.c export.c
+EXEC		=	execute.c exec_pipe.c builtins.c builtins_env.c export.c execute_child.c
 
 MAIN_DIR	=	main
 MAIN		=	main.c get_line.c get_git_prompt.c get_prompt.c init.c	\
