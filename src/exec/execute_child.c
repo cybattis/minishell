@@ -12,6 +12,7 @@
 
 #include "minishell.h"
 #include "core.h"
+#include <sys/wait.h>
 
 int	wait_for_child(pid_t pid)
 {
