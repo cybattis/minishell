@@ -20,6 +20,7 @@ int	execute_builtin(t_command *command)
 {
 	if (!command->name)
 		return (0);
+	g_minishell.is_executing = 1;
 	if (!ft_strcmp(command->name, "cd"))
 		g_minishell.last_return = bt_cd(command->args[1]);
 	else if (!ft_strcmp(command->name, "echo"))
@@ -34,6 +35,7 @@ int	execute_builtin(t_command *command)
 		g_minishell.last_return = bt_export(&command->args[1]);
 	else if (!ft_strcmp(command->name, "exit"))
 		bt_exit(command->args);
+	g_minishell.is_executing = 0;
 	return (0);
 }
 
