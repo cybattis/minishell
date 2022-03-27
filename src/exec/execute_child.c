@@ -13,8 +13,6 @@
 #include "minishell.h"
 #include "core.h"
 
-static void	get_child_return(int wstatus);
-
 int	wait_for_child(pid_t pid)
 {
 	int	wstatus;
@@ -26,7 +24,7 @@ int	wait_for_child(pid_t pid)
 	return (0);
 }
 
-static void	get_child_return(int wstatus)
+void	get_child_return(int wstatus)
 {
 	int	sig;
 

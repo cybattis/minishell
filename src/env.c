@@ -70,7 +70,7 @@ static void	update_env_var(char *name, char *value)
 	gc_free(get_gc(), environ[i]);
 	environ[i] = gc_strdup(get_gc(), name);
 	environ[i] = gc_strappend(get_gc(), environ[i], '=');
-	environ[i] = gc_strjoin(get_gc(), environ[i], value, 1);
+	environ[i] = gc_strjoin(get_gc(), environ[i], value, FREE_FIRST);
 }
 
 static void	create_env_var(char *name, char *value)

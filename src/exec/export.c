@@ -13,6 +13,7 @@
 #include <stdio.h>
 #include "parsing.h"
 #include "minishell.h"
+#include "core.h"
 
 extern char	**environ;
 
@@ -32,65 +33,31 @@ static int	check_var(char *var)
 	return (1);
 }
 
-char	**init_sort_env(size_t *max)
+int	noarg_export(void)
 {
-	size_t	i;
-	char	**sort_env;
-
-	i = 0;
-	while (environ[i])
-		i++;
-	*max = i;
-	sort_env = malloc(sizeof(char *) * (*max + 1));
-	if (!sort_env)
-		return (NULL);
-	sort_env[0] = 0;
-	return (sort_env);
-}
-
-int is_env_sort(char *best_env, char *sort_env, size_t i, size_t j)
-{
-	size_t	k;
-
-	k = 0;
-	while (k < j)
-	{
-		if (ft_strcmp(&sort_env[k], environ[i]) == 0)
-			break;
-		k++;
-	}
-	if (k == j && ft_strcmp(&sort_env[k], environ[i]) != 0)
-		best_env = environ[i];
-	return (1);
-	//TODO: finish that
-}
-
-int noarg_export(void)
-{
-	char	**sort_env;
+	char	*last_best;
 	char	*best_env;
 	size_t	i;
 	size_t	j;
-	size_t	max;
 
-	sort_env = init_sort_env(&max);
 	j = 0;
-	while (j < max)
+	best_env = environ[j];
+	while (environ[j])
 	{
 		i = 0;
-		best_env = environ[i];
+		last_best = best_env;
 		while (environ[i])
 		{
-			if (ft_strcmp(best_env, environ[i]) > 0)
-				is_env_sort(best_env, environ[i], i, j);
+			if (ft_strcmp(environ[i], best_env) < 0
+				&& (j == 0 || ft_strcmp(environ[i], last_best) > 0))
+				best_env = environ[i];
+			else if (j > 0 && ft_strcmp(best_env, last_best) <= 0)
+				best_env = environ[i];
 			i++;
 		}
-		sort_env[j] = ft_strdup(best_env);
-		sort_env[j + 1] = 0;
-		printf("declare -x %s\n", sort_env[j]);
+		printf("declare -x %s\n", best_env);
 		j++;
 	}
-	// print_sort_env();
 	return (0);
 }
 
@@ -107,8 +74,7 @@ int	bt_export(char **arg)
 		if (!check_var(arg[i]))
 		{
 			ft_dprintf(STDERR_FILENO, "minishell: export: `%s':"
-									  " not a valid identifier\n", arg[i]);
-			i++;
+				" not a valid identifier\n", arg[i++]);
 			continue ;
 		}
 		value_offset = 0;
@@ -116,15 +82,9 @@ int	bt_export(char **arg)
 			value_offset++;
 		if (arg[i][value_offset])
 		{
-			arg[i][value_offset] = 0;
-			value_offset++;
+			arg[i][value_offset++] = 0;
+			set_env_var(arg[i], &arg[i][value_offset]);
 		}
-		else
-		{
-			i++;
-			continue ;
-		}
-		set_env_var(arg[i], &arg[i][value_offset]);
 		i++;
 	}
 	return (0);
