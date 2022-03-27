@@ -33,6 +33,20 @@ static int	check_var(char *var)
 	return (1);
 }
 
+static void	print_best_env(char *env)
+{
+	char	*value;
+	char	*equals;
+
+	env = gc_strdup(get_gc(), env);
+	equals = ft_strchr(env, '=');
+	*equals = 0;
+	value = gc_strdup(get_gc(), equals + 1);
+	printf("declare -x %s=\"%s\"\n", env, value);
+	gc_free(get_gc(), env);
+	gc_free(get_gc(), value);
+}
+
 int	noarg_export(void)
 {
 	char	*last_best;
@@ -55,7 +69,7 @@ int	noarg_export(void)
 				best_env = environ[i];
 			i++;
 		}
-		printf("declare -x %s\n", best_env);
+		print_best_env(best_env);
 		j++;
 	}
 	return (0);

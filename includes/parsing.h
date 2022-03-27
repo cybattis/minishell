@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 21:46:20 by njennes           #+#    #+#             */
-/*   Updated: 2022/03/07 11:37:17 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/27 15:21:23 by njennes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,8 @@ char				*token_to_str(int token);
 t_command_batch		parse_input(char *input);
 
 int					error_return(char *msg, int code);
-int					split_input_into_commands(char *input, t_command_batch *batch);
+int					split_input_into_commands(char *input,
+						t_command_batch *batch);
 int					get_redirections(char *input, t_command_batch *batch);
 
 int					is_operator_char(char c);
@@ -130,14 +131,17 @@ void				make_absolute_path(char **str);
 
 t_parser			*strip_out_operators(char *input, t_command_batch *batch);
 
-void				tokenize_all(t_lexer **lexers, t_parser *parsers, size_t count);
+void				tokenize_all(t_lexer **lexers,
+						t_parser *parsers, size_t count);
 
-int					get_token_type(char *token, t_lexer *lexer, t_parser parser);
+int					get_token_type(char *token,
+						t_lexer *lexer, t_parser parser);
 
 void				lexer_add_token(t_lexer *lexer, t_token token);
 void				lexer_add_end(t_lexer *lexer);
 
-void				populate_command_batch(t_command_batch *batch, t_lexer *lexers, size_t count);
+void				populate_command_batch(t_command_batch *batch,
+						t_lexer *lexers, size_t count);
 void				destroy_command_batch(t_command_batch batch);
 
 #endif
