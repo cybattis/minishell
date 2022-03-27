@@ -1,9 +1,6 @@
 
 NAME		=	minishell
 
-SRCS		=	utils.c env.c redirection.c heredoc.c		\
-				utils2.c env_utils.c
-
 PARS_DIR	=	parsing
 PARSING		=	parsing.c command_split.c minishell_error.c get_redirections.c get_redirections_helper.c				\
 				parsing_helper.c get_next_word.c get_single_quotes.c get_double_quotes.c get_env_var_split.c			\
@@ -13,18 +10,18 @@ PARSING		=	parsing.c command_split.c minishell_error.c get_redirections.c get_re
 				command_split_helper.c
 
 EXEC_DIR	=	exec
-EXEC		=	execute.c exec_pipe.c builtins.c builtins_env.c export.c execute_child.c
+EXEC		=	execute.c exec_pipe.c builtins.c builtins_env.c export.c execute_child.c env.c env_utils.c heredoc.c	\
+				redirection.c
 
 MAIN_DIR	=	main
 MAIN		=	main.c get_line.c get_git_prompt.c get_prompt.c init.c	\
-				signal.c
+				signal.c utils.c utils2.c
 
 SRC_PARSING	=	$(addprefix $(PARS_DIR)/, $(PARSING))
 SRC_EXEC	=	$(addprefix $(EXEC_DIR)/, $(EXEC))
 SRC_MAIN	=	$(addprefix $(MAIN_DIR)/, $(MAIN))
 
-OBJS		=	$(addprefix $(OBJS_DIR)/, $(SRCS:.c=.o))				\
-				$(addprefix $(OBJS_DIR)/, $(PARSING:.c=.o))				\
+OBJS		=	$(addprefix $(OBJS_DIR)/, $(PARSING:.c=.o))				\
 				$(addprefix $(OBJS_DIR)/, $(EXEC:.c=.o))				\
 				$(addprefix $(OBJS_DIR)/, $(MAIN:.c=.o))
 
@@ -45,10 +42,6 @@ $(OBJS_DIR)/%.o:	$(SRCS_DIR)/main/%.c | $(OBJS_DIR)
 	@printf "$(_GREEN)█$(_END)"
 
 $(OBJS_DIR)/%.o:	$(SRCS_DIR)/parsing/%.c | $(OBJS_DIR)
-	@$(BIN_CC) $(BIN_CFLAGS) -c $< -o $@
-	@printf "$(_GREEN)█$(_END)"
-
-$(OBJS_DIR)/%.o:	$(SRCS_DIR)/%.c | $(OBJS_DIR)
 	@$(BIN_CC) $(BIN_CFLAGS) -c $< -o $@
 	@printf "$(_GREEN)█$(_END)"
 
