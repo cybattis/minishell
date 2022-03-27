@@ -48,18 +48,10 @@ static t_parser	populate_parser(char *str)
 		if (is_redirection_char(*str))
 		{
 			if (!is_redirection(str))
-			{
 				while (is_redirection_char(*str))
 					parser.str = gc_strappend(get_gc(), parser.str, *str++);
-			}
 			else
-			{
-				while (is_redirection_char(*str))
-					str++;
-				while (ft_isspace(*str))
-					str++;
 				str = skip_redir_file(str);
-			}
 		}
 		else
 		{
@@ -76,6 +68,9 @@ static char	*skip_redir_file(char *str)
 {
 	t_err_or_charptr	result;
 
+	while (is_redirection_char(*str))
+		str++;
+	str = skip_spaces(str);
 	result = get_next_word(str, 0);
 	str += ft_strlen(result.result);
 	gc_free(get_gc(), result.result);

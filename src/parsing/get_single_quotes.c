@@ -37,7 +37,8 @@ static void	check_for_error(t_parser *parser, t_err_or_charptr *result)
 		parser->i++;
 	else
 	{
-		result->error = gc_strdup(get_gc(), "minishell: syntax error: expected `\'\' but got `newline\'");
+		result->error = gc_strdup(get_gc(),
+				"minishell: syntax error: expected `\'\' but got `newline\'");
 		gc_destroy(get_gc(), (void **)&result->result);
 	}
 }

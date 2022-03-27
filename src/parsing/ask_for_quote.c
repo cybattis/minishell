@@ -42,9 +42,10 @@ static char	*get_line(char *input)
 	line = readline("> ");
 	if (!line)
 	{
-		ft_dprintf(STDERR_FILENO, "minishell: unexpected EOF while looking for matching `%c'\n"
-								  "minishell: syntax error: unexpected end of file\n",
-				contains_unfinished_quotes(input));
+		ft_dprintf(STDERR_FILENO,
+			"minishell: unexpected EOF while looking for matching `%c'\n"
+			"minishell: syntax error: unexpected end of file\n",
+			contains_unfinished_quotes(input));
 		add_history(input);
 		gc_free(get_gc(), input);
 		return (NULL);

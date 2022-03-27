@@ -13,7 +13,7 @@
 #include "libft.h"
 #include "parsing.h"
 
- size_t get_arg_count(t_lexer *lexer)
+size_t	get_arg_count(t_lexer *lexer)
 {
 	size_t	i;
 	size_t	count;

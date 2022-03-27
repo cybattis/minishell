@@ -12,16 +12,17 @@
 
 #include "libft.h"
 #include "parsing.h"
-#include "core.h"
 
 static t_err	setup_redirections(char *str, t_command *command);
-static size_t	get_redir_count(char *str);
 static char		*get_redir_file(char *str);
 static char		*get_heredoc_delimiter(char *str);
 
 int				get_redir_type(char *str);
 int				is_redirection(char *str);
 int				check_for_ambiguous_redirection(char *str);
+int				allocate_redirs(t_command *command, char *str);
+size_t			skip_redir_chars(char *str, size_t i);
+size_t			get_to_next_char(char *str, size_t i);
 
 int	get_redirections(char *input, t_command_batch *batch)
 {
@@ -47,14 +48,9 @@ static t_err	setup_redirections(char *str, t_command *command)
 {
 	size_t	i;
 	size_t	j;
-	size_t	redir_count;
 
-	redir_count = get_redir_count(str);
-	if (redir_count)
-		command->is_redirecting = 1;
-	command->redirections = gc_calloc(get_gc(), redir_count + 1, sizeof (t_redir));
-	if (!redir_count)
-		return ((t_err){1, NULL});
+	if (!allocate_redirs(command, str))
+		return ((t_err){.code = 1, .error = NULL});
 	i = 0;
 	j = 0;
 	while (str[i] && str[i] != '|')
@@ -62,8 +58,7 @@ static t_err	setup_redirections(char *str, t_command *command)
 		if (is_redirection(&str[i]))
 		{
 			command->redirections[j].type = get_redir_type(&str[i]);
-			while (str[i] == '>' || str[i] == '<')
-				i++;
+			i = skip_redir_chars(str, i);
 			if (!has_next_char(&str[i]) || next_char_is_operator(&str[i]))
 				return ((t_err){0, &str[i]});
 			if (command->redirections[j].type == TOKEN_REDIR_HEREDOC)
@@ -72,10 +67,8 @@ static t_err	setup_redirections(char *str, t_command *command)
 				command->redirections[j].file = get_redir_file(&str[i]);
 			j++;
 		}
-		while (str[i] == '>' || str[i] == '<')
-			i++;
-		if (str[i])
-			i++;
+		i = skip_redir_chars(str, i);
+		i = get_to_next_char(str, i);
 	}
 	return ((t_err){1, NULL});
 }
@@ -105,32 +98,11 @@ static char	*get_redir_file(char *str)
 	return (file.result);
 }
 
-static char		*get_heredoc_delimiter(char *str)
+static char	*get_heredoc_delimiter(char *str)
 {
 	char	*delimiter;
 
 	str = skip_spaces(str);
 	delimiter = get_next_word_raw(str);
 	return (delimiter);
-}
-
-static size_t	get_redir_count(char *str)
-{
-	size_t	i;
-	size_t	count;
-
-	i = 0;
-	count = 0;
-	while (str[i] && str[i] != '|')
-	{
-		if (is_redirection(&str[i]))
-			count++;
-		while (str[i] == '>' || str[i] == '<')
-			i++;
-		if (str[i] == '\'' || str[i] == '"')
-			i += skip_quotes(&str[i]);
-		if (str[i])
-			i++;
-	}
-	return (count);
 }

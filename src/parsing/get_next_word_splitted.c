@@ -15,7 +15,8 @@
 #include "core.h"
 
 static t_err_or_char2ptr	get_next_chars(t_parser *parser);
-static size_t				append_words(t_err_or_char2ptr *result, char ***words, size_t i);
+static size_t				append_words(t_err_or_char2ptr *result,
+								char ***words, size_t i);
 
 t_err_or_char2ptr	get_next_word_splitted(t_parser *parser)
 {
@@ -45,7 +46,8 @@ static size_t	append_words(t_err_or_char2ptr *result, char ***words, size_t i)
 {
 	size_t	j;
 
-	(*words)[i] = gc_strjoin(get_gc(), (*words)[i], result->result[0], FREE_BOTH);
+	(*words)[i] = gc_strjoin(get_gc(),
+			(*words)[i], result->result[0], FREE_BOTH);
 	gc_free(get_gc(), result->result[0]);
 	j = 1;
 	while (gc_strarray_size(result->result) && result->result[j])
@@ -71,7 +73,7 @@ static t_err_or_char2ptr	get_next_chars(t_parser *parser)
 	else if (parser->str[parser->i] == '$')
 		result.result = get_env_var_split(parser);
 	else if (ft_isspace(parser->str[parser->i])
-			 || is_operator_char(parser->str[parser->i]))
+		|| is_operator_char(parser->str[parser->i]))
 		result.result = NULL;
 	else
 	{

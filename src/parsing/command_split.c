@@ -19,21 +19,26 @@ static int	ends_with_pipe(char *str);
 static int	contains_char(char *str);
 static void	setup_piping_commands(t_command_batch *batch);
 
+int			skip_quotes_command_split(char *str,
+				size_t *i, int *encountered_char);
+int			last_char_is_pipe(char *str, size_t *i);
+int			is_legal_pipe(int *encountered_char, int *count);
+
 int	split_input_into_commands(char *input, t_command_batch *batch)
 {
 	int	pipe_count;
 
 	if (ends_with_pipe(input))
-		return (error_return("minishell: syntax error near unexpected token '|'", 0));
+		return (error_return(
+				"minishell: syntax error near unexpected token '|'", 0));
 	pipe_count = get_pipe_count(input);
 	if (pipe_count < 0)
 		return (0);
-	printf("Parsing found %d pipes\n", pipe_count);
 	batch->count = pipe_count;
 	if (contains_char(input))
 		batch->count++;
-	printf("Parsing created %zu commands\n", batch->count);
-	batch->commands = gc_calloc(get_gc(), batch->count + 1, sizeof (t_command));
+	batch->commands = gc_calloc(get_gc(),
+			batch->count + 1, sizeof (t_command));
 	if (batch->count)
 		setup_piping_commands(batch);
 	return (1);
@@ -42,7 +47,7 @@ int	split_input_into_commands(char *input, t_command_batch *batch)
 static int	get_pipe_count(char *str)
 {
 	size_t	i;
-	int	count;
+	int		count;
 	int		encountered_char;
 
 	i = 0;
@@ -50,26 +55,16 @@ static int	get_pipe_count(char *str)
 	encountered_char = 0;
 	while (str[i])
 	{
-		if (str[i] == '"' || str[i] == '\'')
-		{
-			encountered_char = 1;
-			i += skip_quotes(&str[i]);
+		if (skip_quotes_command_split(str, &i, &encountered_char))
 			continue ;
-		}
 		else if (str[i] == '|')
 		{
-			if (i > 0 && str[i - 1] == '|')
-			{
-				i++;
-				continue;
-			}
-			if (encountered_char)
-			{
-				count++;
-				encountered_char = 0;
-			}
-			else
-				return (error_return("minishell: syntax error near unexpected token '|'", -1));
+			if (last_char_is_pipe(str, &i))
+				continue ;
+			if (!is_legal_pipe(&encountered_char, &count))
+				return (error_return(
+						"minishell: syntax error near unexpected token '|'",
+						-1));
 		}
 		else if (ft_isprint(str[i]) && !ft_isspace(str[i]))
 			encountered_char = 1;
@@ -80,7 +75,7 @@ static int	get_pipe_count(char *str)
 
 static int	contains_char(char *str)
 {
-	size_t i;
+	size_t	i;
 
 	i = 0;
 	while (str[i])
@@ -94,7 +89,7 @@ static int	contains_char(char *str)
 
 static int	ends_with_pipe(char *str)
 {
-	char *last_pipe;
+	char	*last_pipe;
 
 	last_pipe = ft_strrchr(str, '|');
 	if (last_pipe)

@@ -14,7 +14,7 @@
 #include "libft.h"
 #include "core.h"
 
-int		get_last_token_type(t_lexer *lexer);
+int				get_last_token_type(t_lexer *lexer);
 static t_lexer	tokenize(t_parser parser);
 static void		add_next_token(t_lexer *lexer, t_parser *parser);
 static t_token	get_next_token(t_lexer *lexer, t_parser *parser, int *finished);
@@ -51,7 +51,8 @@ static void	add_next_token(t_lexer *lexer, t_parser *parser)
 	parser->i = skip_spaces(&parser->str[parser->i]) - parser->str;
 	if (parser->str[parser->i])
 		while (has_more_tokens)
-			lexer_add_token(lexer, get_next_token(lexer, parser, &has_more_tokens));
+			lexer_add_token(lexer,
+				get_next_token(lexer, parser, &has_more_tokens));
 	else
 		lexer_add_end(lexer);
 }

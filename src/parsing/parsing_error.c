@@ -18,7 +18,8 @@ char	*error_ambiguous_redirection(char *str)
 	t_err_or_charptr	redir;
 
 	redir = get_next_word(str, 0);
-	ft_dprintf(STDERR_FILENO, "minishell: %s: ambiguous redirect\n", redir.result);
+	ft_dprintf(STDERR_FILENO,
+		"minishell: %s: ambiguous redirect\n", redir.result);
 	return (NULL);
 }
 
@@ -42,14 +43,14 @@ int	syntax_error(t_err error)
 	if (*next_token)
 	{
 		ft_dprintf(STDERR_FILENO,
-				"minishell: syntax error near unexpected token `%c'\n",
-				*next_token);
+			"minishell: syntax error near unexpected token `%c'\n",
+			*next_token);
 	}
 	else
 	{
 		ft_dprintf(STDERR_FILENO,
-				"minishell: syntax error near unexpected token `%s'\n",
-				"newline");
+			"minishell: syntax error near unexpected token `%s'\n",
+			"newline");
 	}
 	return (error.code);
 }
