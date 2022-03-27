@@ -62,6 +62,7 @@ int is_env_sort(char *best_env, char *sort_env, size_t i, size_t j)
 	if (k == j && ft_strcmp(&sort_env[k], environ[i]) != 0)
 		best_env = environ[i];
 	return (1);
+	//TODO: finish that
 }
 
 int noarg_export(void)
