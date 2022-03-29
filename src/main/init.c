@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: cybattis <cybattis@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 21:46:20 by njennes           #+#    #+#             */
-/*   Updated: 2022/03/27 14:23:14 by njennes          ###   ########.fr       */
+/*   Updated: 2022/03/29 13:14:43 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "core.h"
 #include <sys/param.h>
 #include <unistd.h>
+#include <fcntl.h>
 
 t_mini		g_minishell;
 extern char	**environ;
@@ -53,6 +54,25 @@ void	update_shell_env_vars(void)
 	update_shell_level();
 }
 
+int	init_inputrc(void)
+{
+	char	*path;
+	char	*inputrc;
+	int		fd;
+
+	path = gc_strjoin(get_gc(), getenv("HOME"), "/.inputrc", BOTH);
+	if (!access(path, F_OK))
+		return (0);
+	fd = open(path, O_WRONLY | O_CREAT | O_TRUNC, 0666);
+	if (fd == -1)
+		return (ft_print_errno());
+	inputrc = "set colored-stats on\nset echo-control-characters off\n";
+	write(fd, inputrc, ft_strlen(inputrc));
+	gc_free(get_gc(), path);
+	close(fd);
+	return (0);
+}
+
 void	init_minishell(char **envp)
 {
 	gc_init(&g_minishell.gc, gc_callback, NULL);
@@ -60,5 +80,6 @@ void	init_minishell(char **envp)
 	g_minishell.is_executing = 0;
 	g_minishell.has_child = 0;
 	g_minishell.base_env = envp;
+	init_inputrc();
 	update_shell_env_vars();
 }
