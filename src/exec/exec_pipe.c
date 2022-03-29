@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: cybattis <cybattis@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 17:10:07 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/27 14:23:09 by njennes          ###   ########.fr       */
+/*   Updated: 2022/03/29 11:30:40 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,13 @@ int	execute_pipe(t_command_batch *batch, t_pipe *pipes)
 
 	i = 0;
 	g_minishell.is_executing = 1;
+	while (i < batch->count - 1)
+		pipe(pipes[i++].fd);
+	i = 0;
 	if (fork_pipe(batch, pipes))
 		return (1);
 	wstatus = 0;
-	close_pipe(batch->count, pipes);
+	close_pipe(batch->count - 1, pipes);
 	while (i < batch->count)
 	{
 		waitpid(-1, &wstatus, 0);
@@ -51,8 +54,6 @@ static int	fork_pipe(t_command_batch *batch, t_pipe *pipes)
 	i = 0;
 	while (i < batch->count)
 	{
-		if (i < batch->count - 1)
-			pipe(pipes[i].fd);
 		g_minishell.is_executing = 1;
 		pid = fork();
 		if (!pid)
@@ -89,9 +90,11 @@ static int	pipe_redirection(size_t i, t_command_batch *batch, t_pipe *pipes)
 			if (dup2(pipes[i].fd[1], STDOUT_FILENO) == -1)
 				ft_print_errno();
 		}
+		close_pipe(batch->count - 1, pipes);
+		return (0);
 	}
-	close_pipe(i, pipes);
-	return (0);
+	close_pipe(batch->count - 1, pipes);
+	return (-1);
 }
 
 t_pipe	*init_pipe(size_t nbr)
