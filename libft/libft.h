@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: cybattis <cybattis@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 14:34:44 by njennes           #+#    #+#             */
-/*   Updated: 2022/03/23 18:25:32 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/29 15:31:57 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 
 # ifdef __linux__
 #  include <stdint.h>
-#  define OPEN_MAX FOPEN_MAX
+#  define OPEN_MAX 1024
 # endif
 
 # define BUFFER_SIZE 1024

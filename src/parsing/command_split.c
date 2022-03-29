@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   command_split.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: cybattis <cybattis@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 13:35:57 by njennes           #+#    #+#             */
-/*   Updated: 2022/03/27 13:35:58 by njennes          ###   ########.fr       */
+/*   Updated: 2022/03/29 22:54:20 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
+#include "minishell.h"
 #include "libft.h"
 #include "core.h"
 
@@ -29,11 +30,17 @@ int	split_input_into_commands(char *input, t_command_batch *batch)
 	int	pipe_count;
 
 	if (ends_with_pipe(input))
+	{
+		g_minishell.last_return = 2;
 		return (error_return(
 				"minishell: syntax error near unexpected token '|'", 0));
+	}
 	pipe_count = get_pipe_count(input);
 	if (pipe_count < 0)
+	{
+		g_minishell.last_return = 2;
 		return (0);
+	}
 	batch->count = pipe_count;
 	if (contains_char(input))
 		batch->count++;
