@@ -53,7 +53,7 @@ static char	*handle_special_var(t_parser *parser, int in_quotes)
 		parser->i++;
 	}
 	else if (ft_isspace(parser->str[parser->i]) || !parser->str[parser->i]
-				|| (in_quotes && parser->str[parser->i] == '"'))
+		|| (in_quotes && parser->str[parser->i] == '"'))
 		name = gc_strdup(get_gc(), "$");
 	else
 		name = gc_strdup(get_gc(), "");
