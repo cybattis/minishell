@@ -86,6 +86,8 @@ static char	*get_git_branch(char *path)
 	branch = gc_get_next_line(get_gc(), fd);
 	gc_free(get_gc(), full_path);
 	close(fd);
+	if (!branch)
+		return ("unknown");
 	branch = trim_branch(branch);
 	return (branch);
 }
