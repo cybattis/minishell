@@ -42,5 +42,6 @@ int	write_to_prompt(char *msg)
 		return (ft_print_errno());
 	write(fd, msg, ft_strlen(msg));
 	gc_clean(get_gc());
+	close(fd);
 	exit(EXIT_SUCCESS);
 }

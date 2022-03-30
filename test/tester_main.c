@@ -19,5 +19,6 @@ int main(int argc, char **argv)
 		free(line);
 	}
 	dprintf(STDERR_FILENO, "FINISH !\n");
+	close(fd);
 	return (0);
 }
