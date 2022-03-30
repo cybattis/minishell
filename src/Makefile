@@ -54,11 +54,13 @@ bonus: all
 
 .PHONY: clean
 clean:
-	rm -f $(OBJS)
+	@printf "$(_YELLOW)Removing object files ...$(_END)\n"
+	@rm -f $(OBJS) $(DEPENDS)
 
 .PHONY: fclean
 fclean: clean
-	rm -f ../$(NAME)
+	@printf "$(_RED)Removing Executable ...$(_END)\n"
+	@rm -f ../$(NAME)
 
 re: fclean all
 
