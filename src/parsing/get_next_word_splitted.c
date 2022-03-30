@@ -35,7 +35,7 @@ t_err_or_char2ptr	get_next_word_splitted(t_parser *parser)
 			gc_strarray_free(get_gc(), words);
 			return (result);
 		}
-		if (!result.result || !gc_strarray_size(result.result))
+		if (!result.result)
 			break ;
 		i = append_words(&result, &words, i);
 	}
@@ -48,7 +48,6 @@ static size_t	append_words(t_err_or_char2ptr *result, char ***words, size_t i)
 
 	(*words)[i] = gc_strjoin(get_gc(),
 			(*words)[i], result->result[0], FREE_BOTH);
-	gc_free(get_gc(), result->result[0]);
 	j = 1;
 	while (gc_strarray_size(result->result) && result->result[j])
 	{
