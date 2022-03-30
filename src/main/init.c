@@ -73,13 +73,15 @@ int	init_inputrc(void)
 	return (0);
 }
 
-void	init_minishell(char **envp)
+void	init_minishell(int argc, char **argv, char **envp)
 {
 	gc_init(&g_minishell.gc, gc_callback, NULL);
 	g_minishell.last_return = 0;
 	g_minishell.is_executing = 0;
 	g_minishell.has_child = 0;
 	g_minishell.base_env = envp;
+	g_minishell.argv = argv;
+	g_minishell.argc = argc;
 	init_inputrc();
 	update_shell_env_vars();
 }

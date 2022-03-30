@@ -26,6 +26,8 @@ char	*get_env_var_raw(t_parser *parser)
 		var_value = gc_strdup(get_gc(), "$");
 	else if (ft_strcmp(var_name, "?") == 0)
 		var_value = gc_itoa(get_gc(), g_minishell.last_return);
+	else if (ft_isdigit(*var_name))
+		var_value = g_minishell.argv[(int)(*var_name - '0')];
 	else
 		var_value = gc_strdup(get_gc(), getenv(var_name));
 	gc_free(get_gc(), var_name);

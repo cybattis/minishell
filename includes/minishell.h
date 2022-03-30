@@ -28,7 +28,9 @@ typedef struct s_mini
 	int				last_return;
 	int				is_executing;
 	int				has_child;
+	int				argc;
 	char			**base_env;
+	char			**argv;
 }	t_mini;
 
 typedef struct s_pipe
@@ -41,7 +43,7 @@ char		*get_prompt(void);
 char		*get_git_prompt(char *path_to_git, char *current_path);
 int			is_git_repo(char *path);
 
-void		init_minishell(char **envp);
+void		init_minishell(int argc, char **argv, char **envp);
 int			init_signal(void);
 void		sig_handler(int signum);
 
