@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 11:35:17 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/27 14:23:22 by njennes          ###   ########.fr       */
+/*   Updated: 2022/03/30 17:38:22 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
+#include "readline.h"
 #include "minishell.h"
 #include "core.h"
 
@@ -20,28 +21,23 @@ int	redir_heredoc(t_redir redirections)
 {
 	char	*str_out;
 	char	*buff;
-	char	c;
 
-	g_minishell.is_executing = 1;
+	g_minishell.is_heredoc = 1;
 	str_out = gc_strdup(get_gc(), "");
-	buff = gc_strdup(get_gc(), "");
-	ft_printf("> ");
-	while (read(STDIN_FILENO, &c, 1) > 0)
+	buff = readline("> ");
+	while (buff)
 	{
-		if (c == '\n')
-		{
-			if (ft_strlen(buff) == ft_strlen(redirections.file)
-				&& !ft_strcmp(redirections.file, buff))
-				break ;
-			buff = gc_strappend(get_gc(), buff, c);
-			str_out = gc_strjoin(get_gc(), str_out, buff, FREE_BOTH);
-			buff = gc_strdup(get_gc(), "");
-			ft_printf("> ");
-		}
-		else
-			buff = gc_strappend(get_gc(), buff, c);
+		if (ft_strlen(buff) == ft_strlen(redirections.file)
+		&& !ft_strncmp(redirections.file, buff, ft_strlen(buff) - 1))
+			break ;
+		str_out = gc_strjoin(get_gc(), str_out, buff, FREE_BOTH);
+		str_out = gc_strappend(get_gc(), str_out, '\n');
+		free(buff);
+		buff = readline("> ");
 	}
-	gc_free(get_gc(), buff);
+	g_minishell.is_heredoc = 0;
+	if (buff)
+		free(buff);
 	return (generate_temp_file(str_out));
 }
 

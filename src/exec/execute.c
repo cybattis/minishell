@@ -6,7 +6,7 @@
 /*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 17:10:07 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/30 13:10:49 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/30 15:41:27 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ static int	execute(t_command *command)
 {
 	pid_t	pid;
 
-	if (command->is_redirecting)
-		redirection(command->redirections);
+	if (command->is_redirecting && redirection(command->redirections) == -1)
+		return (-1);
 	if (!command[0].name)
 		return (0);
 	if (command->is_builtin == 1)
@@ -76,11 +76,6 @@ void	execute_bin(t_command *command)
 		ft_error_command("");
 	path = get_path();
 	j = 0;
-	if (execve(command->name, command->args, environ) < 0 && errno != ENOENT)
-	{
-		ft_dprintf(STDERR_FILENO, "minishell: %s\n", strerror(errno));
-		exit(126);
-	}
 	while (path[j])
 	{
 		cmd_path = gc_strappend(get_gc(), path[j], '/');

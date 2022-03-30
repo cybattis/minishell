@@ -46,6 +46,8 @@ int	bt_echo(t_command *cmd)
 
 	i = 1;
 	size = ft_arglen((char const **)cmd->args);
+	if (!ft_strcmp(cmd->args[1], "-n"))
+		i = 2;
 	while (cmd->args[i])
 	{
 		printf("%s", cmd->args[i]);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 21:46:20 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/27 15:21:21 by njennes          ###   ########.fr       */
+/*   Updated: 2022/03/30 17:01:24 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ typedef struct s_mini
 	t_gc			gc;
 	int				last_return;
 	int				is_executing;
+	int 			is_heredoc;
 	int				has_child;
 	char			**base_env;
 }	t_mini;
