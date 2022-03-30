@@ -98,6 +98,7 @@ header:
 
 _GREY	= \033[30m
 _RED	= \033[31m
+_ORANGE	= \033[38;5;209m
 _GREEN	= \033[32m
 _YELLOW	= \033[33m
 _BLUE	= \033[34m
@@ -107,6 +108,8 @@ _WHITE	= \033[37m
 _END	= \033[0m
 
 export _GREY
+export _RED
+export _ORANGE
 export _GREEN
 export _YELLOW
 export _BLUE

@@ -1,4 +1,3 @@
-
 NAME		=	minishell
 
 PARS_DIR	=	parsing
@@ -31,7 +30,7 @@ DEPENDS		=	$(addprefix $(OBJS_DIR)/, $(OBJS:.o=.d))
 # ****************************************************************************
 
 .PHONY: all
-all:	$(NAME)
+all:	../$(NAME)
 
 $(OBJS_DIR)/%.o:	$(SRCS_DIR)/exec/%.c | $(OBJS_DIR)
 	@$(BIN_CC) $(BIN_CFLAGS) -c $< -o $@
@@ -45,7 +44,7 @@ $(OBJS_DIR)/%.o:	$(SRCS_DIR)/parsing/%.c | $(OBJS_DIR)
 	@$(BIN_CC) $(BIN_CFLAGS) -c $< -o $@
 	@printf "$(_GREEN)█$(_END)"
 
-$(NAME):	$(OBJS) $(MASTER_MAKE) $(LIBFT_LIB)
+../$(NAME):	$(OBJS) $(MASTER_MAKE) $(LIBFT_LIB)
 	@printf "$(_BLUE)\nCompiled source files\n$(_END)"
 	@$(BIN_CC) $(BIN_LDFLAGS) $(OBJS) -o ../$(NAME) $(LIBS)
 	@printf "$(_GREEN)Finish compiling $(NAME)!$(_END)\n"

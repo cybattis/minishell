@@ -94,101 +94,101 @@ OBJSD				=		$(addprefix $(OBJSDIRD), $(notdir $(SRCS:.c=d.o)))
 
 #RELEASE
 $(OBJSDIR)%.o:		$(LINKLISTDIR)%.c $(DEPS)
-					@echo "Compiling $<"
+					@echo "$(_ORANGE)Compiling $<$(_END)"
 					@mkdir -p $(OBJSDIR)
 					@$(CC) -c $< $(CFLAGS) -o $@
 $(OBJSDIR)%.o:		$(DARRAYDIR)%.c $(DEPS)
-					@echo "Compiling $<"
+					@echo "$(_ORANGE)Compiling $<$(_END)"
 					@mkdir -p $(OBJSDIR)
 					@$(CC) -c $< $(CFLAGS) -o $@
 $(OBJSDIR)%.o:		$(IODIR)%.c $(DEPS)
-					@echo "Compiling $<"
+					@echo "$(_ORANGE)Compiling $<$(_END)"
 					@mkdir -p $(OBJSDIR)
 					@$(CC) -c $< $(CFLAGS) -o $@
 $(OBJSDIR)%.o:		$(PRINTFDIR)%.c $(DEPS)
-					@echo "Compiling $<"
+					@echo "$(_ORANGE)Compiling $<$(_END)"
 					@mkdir -p $(OBJSDIR)
 					@$(CC) -c $< $(CFLAGS) -o $@
 $(OBJSDIR)%.o:		$(MEMORYDIR)%.c $(DEPS)
-					@echo "Compiling $<"
+					@echo "$(_ORANGE)Compiling $<$(_END)"
 					@mkdir -p $(OBJSDIR)
 					@$(CC) -c $< $(CFLAGS) -o $@
 $(OBJSDIR)%.o:		$(CSTRINGSDIR)%.c $(DEPS)
-					@echo "Compiling $<"
+					@echo "$(_ORANGE)Compiling $<$(_END)"
 					@mkdir -p $(OBJSDIR)
 					@$(CC) -c $< $(CFLAGS) -o $@
 $(OBJSDIR)%.o:		$(STRINGVIEWDIR)%.c $(DEPS)
-					@echo "Compiling $<"
+					@echo "$(_ORANGE)Compiling $<$(_END)"
 					@mkdir -p $(OBJSDIR)
 					@$(CC) -c $< $(CFLAGS) -o $@
 $(OBJSDIR)%.o:		$(BASICMATHDIR)%.c $(DEPS)
-					@echo "Compiling $<"
+					@echo "$(_ORANGE)Compiling $<$(_END)"
 					@mkdir -p $(OBJSDIR)
 					@$(CC) -c $< $(CFLAGS) -o $@
 $(OBJSDIR)%.o:		$(VECTORSDIR)%.c $(DEPS)
-					@echo "Compiling $<"
+					@echo "$(_ORANGE)Compiling $<$(_END)"
 					@mkdir -p $(OBJSDIR)
 					@$(CC) -c $< $(CFLAGS) -o $@
 $(OBJSDIR)%.o:		$(MATRIXDIR)%.c $(DEPS)
-					@echo "Compiling $<"
+					@echo "$(_ORANGE)Compiling $<$(_END)"
 					@mkdir -p $(OBJSDIR)
 					@$(CC) -c $< $(CFLAGS) -o $@
 $(OBJSDIR)%.o:		$(STANDARDDIR)%.c $(DEPS)
-					@echo "Compiling $<"
+					@echo "$(_ORANGE)Compiling $<$(_END)"
 					@mkdir -p $(OBJSDIR)
 					@$(CC) -c $< $(CFLAGS) -o $@
 $(OBJSDIR)%.o:		$(GCDIR)%.c $(DEPS)
-					@echo "Compiling $<"
+					@echo "$(_ORANGE)Compiling $<$(_END)"
 					@mkdir -p $(OBJSDIR)
 					@$(CC) -c $< $(CFLAGS) -o $@
 
 #DEBUG
 $(OBJSDIRD)%d.o:	$(LINKLISTDIR)%.c $(DEPS)
-					@echo "Compiling $<"
+					@echo "$(_ORANGE)Compiling $<$(_END)"
 					@mkdir -p $(OBJSDIRD)
 					@$(CC) -c $< $(CFLAGSD) -o $@
 $(OBJSDIRD)%d.o:	$(DARRAYDIR)%.c $(DEPS)
-					@echo "Compiling $<"
+					@echo "$(_ORANGE)Compiling $<$(_END)"
 					@mkdir -p $(OBJSDIRD)
 					@$(CC) -c $< $(CFLAGSD) -o $@
 $(OBJSDIRD)%d.o:	$(IODIR)%.c $(DEPS)
-					@echo "Compiling $<"
+					@echo "$(_ORANGE)Compiling $<$(_END)"
 					@mkdir -p $(OBJSDIRD)
 					@$(CC) -c $< $(CFLAGSD) -o $@
 $(OBJSDIRD)%d.o:	$(PRINTFDIR)%.c $(DEPS)
-					@echo "Compiling $<"
+					@echo "$(_ORANGE)Compiling $<$(_END)"
 					@mkdir -p $(OBJSDIRD)
 					@$(CC) -c $< $(CFLAGSD) -o $@
 $(OBJSDIRD)%d.o:	$(MEMORYDIR)%.c $(DEPS)
-					@echo "Compiling $<"
+					@echo "$(_ORANGE)Compiling $<$(_END)"
 					@mkdir -p $(OBJSDIRD)
 					@$(CC) -c $< $(CFLAGSD) -o $@
 $(OBJSDIRD)%d.o:	$(CSTRINGSDIR)%.c $(DEPS)
-					@echo "Compiling $<"
+					@echo "$(_ORANGE)Compiling $<$(_END)"
 					@mkdir -p $(OBJSDIRD)
 					@$(CC) -c $< $(CFLAGSD) -o $@
 $(OBJSDIRD)%d.o:	$(STRINGVIEWDIR)%.c $(DEPS)
-					@echo "Compiling $<"
+					@echo "$(_ORANGE)Compiling $<$(_END)"
 					@mkdir -p $(OBJSDIRD)
 					@$(CC) -c $< $(CFLAGSD) -o $@
 $(OBJSDIRD)%d.o:	$(BASICMATHDIR)%.c $(DEPS)
-					@echo "Compiling $<"
+					@echo "$(_ORANGE)Compiling $<$(_END)"
 					@mkdir -p $(OBJSDIRD)
 					@$(CC) -c $< $(CFLAGSD) -o $@
 $(OBJSDIRD)%d.o:	$(VECTORSDIR)%.c $(DEPS)
-					@echo "Compiling $<"
+					@echo "$(_ORANGE)Compiling $<$(_END)"
 					@mkdir -p $(OBJSDIRD)
 					@$(CC) -c $< $(CFLAGSD) -o $@
 $(OBJSDIRD)%d.o:	$(MATRIXDIR)%.c $(DEPS)
-					@echo "Compiling $<"
+					@echo "$(_ORANGE)Compiling $<$(_END)"
 					@mkdir -p $(OBJSDIRD)
 					@$(CC) -c $< $(CFLAGSD) -o $@
 $(OBJSDIRD)%d.o:	$(STANDARDDIR)%.c $(DEPS)
-					@echo "Compiling $<"
+					@echo "$(_ORANGE)Compiling $<$(_END)"
 					@mkdir -p $(OBJSDIRD)
 					@$(CC) -c $< $(CFLAGSD) -o $@
 $(OBJSDIRD)%d.o:	$(GCDIR)%.c $(DEPS)
-					@echo "Compiling $<"
+					@echo "$(_ORANGE)Compiling $<$(_END)"
 					@mkdir -p $(OBJSDIRD)
 					@$(CC) -c $< $(CFLAGSD) -o $@
 
@@ -200,6 +200,7 @@ debug:				$(OBJSD) Makefile
 
 $(NAME):			$(OBJS) Makefile
 					@ar -rcs $(NAME) $(OBJS)
+					@printf "$(_RED)Compiled libft\n$(_END)"
 
 clean:
 					@rm -f $(OBJSDIR)*.o
