@@ -6,7 +6,7 @@
 /*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 14:54:11 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/30 17:50:11 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/30 17:51:03 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,8 @@ int	redirection(t_redir *redirections)
 			fds[1] = redir_out(fds[1], redirections[i]);
 		else if (redirections[i].type == TOKEN_REDIR_OUT_APPEND)
 			fds[1] = redir_out_append(fds[1], redirections[i]);
-		if (fds[0] == -1 || fds[1] == -1)
-		{
-			close(fds[0]);
-			close(fds[1]);
+		if (clean_redirection(fds))
 			return (-1);
-		}
 		i++;
 	}
 	if (!fds[0] && !fds[1])

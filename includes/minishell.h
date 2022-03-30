@@ -15,7 +15,6 @@
 
 # include "parsing.h"
 # include "libft.h"
-# include <termios.h>
 
 # define BOTH 0
 # define OUT 1
@@ -82,5 +81,6 @@ void		update_shell_env_vars(void);
 int			get_empty_var_index(void);
 
 void		get_child_return(int wstatus);
+int			clean_redirection(int *fds);
 
 #endif
