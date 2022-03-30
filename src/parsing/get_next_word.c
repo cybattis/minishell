@@ -86,7 +86,7 @@ static t_err_or_charptr	get_next_chars(t_parser *parser, int expand_vars)
 	else if (parser->str[parser->i] == '"')
 		result = get_double_quotes(parser);
 	else if (expand_vars && parser->str[parser->i] == '$')
-		result.result = get_env_var_raw(parser);
+		result.result = get_env_var_raw(parser, 0);
 	else if (ft_isspace(parser->str[parser->i])
 		|| is_operator_char(parser->str[parser->i]))
 		result.result = NULL;

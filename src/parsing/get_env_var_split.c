@@ -22,7 +22,7 @@ char	**get_env_var_split(t_parser *parser)
 	char		*next_word;
 	char		**array;
 
-	var_value.str = get_env_var_raw(parser);
+	var_value.str = get_env_var_raw(parser, 0);
 	var_value.i = 0;
 	array = gc_strarray_init(get_gc());
 	if (!var_value.str)
