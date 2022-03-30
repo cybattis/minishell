@@ -6,7 +6,7 @@
 /*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 11:35:17 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/30 17:38:22 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/30 17:39:11 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	redir_heredoc(t_redir redirections)
 	while (buff)
 	{
 		if (ft_strlen(buff) == ft_strlen(redirections.file)
-		&& !ft_strncmp(redirections.file, buff, ft_strlen(buff) - 1))
+			&& !ft_strncmp(redirections.file, buff, ft_strlen(buff) - 1))
 			break ;
 		str_out = gc_strjoin(get_gc(), str_out, buff, FREE_BOTH);
 		str_out = gc_strappend(get_gc(), str_out, '\n');
