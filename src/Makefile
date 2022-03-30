@@ -34,20 +34,20 @@ all:	../$(NAME)
 
 $(OBJS_DIR)/%.o:	$(SRCS_DIR)/exec/%.c | $(OBJS_DIR)
 	@$(BIN_CC) $(BIN_CFLAGS) -c $< -o $@
-	@printf "$(_GREEN)█$(_END)"
+	@printf "$(_YELLOW)█$(_END)"
 
 $(OBJS_DIR)/%.o:	$(SRCS_DIR)/main/%.c | $(OBJS_DIR)
 	@$(BIN_CC) $(BIN_CFLAGS) -c $< -o $@
-	@printf "$(_GREEN)█$(_END)"
+	@printf "$(_YELLOW)█$(_END)"
 
 $(OBJS_DIR)/%.o:	$(SRCS_DIR)/parsing/%.c | $(OBJS_DIR)
 	@$(BIN_CC) $(BIN_CFLAGS) -c $< -o $@
-	@printf "$(_GREEN)█$(_END)"
+	@printf "$(_YELLOW)█$(_END)"
 
 ../$(NAME):	$(OBJS) $(MASTER_MAKE) $(LIBFT_LIB)
 	@printf "$(_BLUE)\nCompiled source files\n$(_END)"
 	@$(BIN_CC) $(BIN_LDFLAGS) $(OBJS) -o ../$(NAME) $(LIBS)
-	@printf "$(_GREEN)Finish compiling $(NAME)!$(_END)\n"
+	@printf "$(_YELLOW)Finish compiling $(NAME)!$(_END)\n"
 
 .PHONY: bonus
 bonus: all
