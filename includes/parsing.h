@@ -116,8 +116,8 @@ t_err_or_charptr	get_double_quotes(t_parser *parser);
 t_err_or_charptr	get_single_quotes(t_parser *parser);
 
 char				**get_env_var_split(t_parser *parser);
-char				*get_env_var_raw(t_parser *parser);
-char				*get_env_var_name(t_parser *parser);
+char				*get_env_var_raw(t_parser *parser, int in_quotes);
+char				*get_env_var_name(t_parser *parser, int in_quotes);
 
 char				*error_ambiguous_redirection(char *str);
 char				*parsing_error(char *str);

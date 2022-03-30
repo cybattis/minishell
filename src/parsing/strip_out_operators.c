@@ -71,7 +71,10 @@ static char	*skip_redir_file(char *str)
 	while (is_redirection_char(*str))
 		str++;
 	str = skip_spaces(str);
-	result = get_next_word(str, 0);
+	if (*str == '"' || *str == '\'')
+		str += skip_quotes(str);
+	else
+		result = get_next_word(str, 0);
 	str += ft_strlen(result.result);
 	gc_free(get_gc(), result.result);
 	return (str);

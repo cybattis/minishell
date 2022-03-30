@@ -27,7 +27,7 @@ t_err_or_charptr	get_double_quotes(t_parser *parser)
 	{
 		if (parser->str[parser->i] == '$')
 			result.result = gc_strjoin(get_gc(),
-					result.result, get_env_var_raw(parser), FREE_BOTH);
+					result.result, get_env_var_raw(parser, 1), FREE_BOTH);
 		else
 			result.result = gc_strappend(get_gc(),
 					result.result, parser->str[parser->i++]);

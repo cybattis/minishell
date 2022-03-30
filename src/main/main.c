@@ -17,9 +17,7 @@ int	main(int argc, char **argv, char **envp)
 	char			*line_read;
 	t_command_batch	command_batch;
 
-	(void)argc;
-	(void)argv;
-	init_minishell(envp);
+	init_minishell(argc, argv, envp);
 	while (FT_TRUE)
 	{
 		init_signal();
