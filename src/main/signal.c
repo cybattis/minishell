@@ -18,8 +18,9 @@
 int	init_signal(void)
 {
 	signal(SIGINT, sig_handler);
-	signal(SIGTSTP, SIG_IGN);
+	signal(SIGPIPE, sig_handler);
 	signal(SIGQUIT, SIG_IGN);
+	signal(SIGTSTP, SIG_IGN);
 	return (0);
 }
 
@@ -44,5 +45,8 @@ void	sig_handler(int signum)
 	if (signum == SIGQUIT)
 		printf("Quit: 3\n");
 	if (signum == SIGPIPE)
+	{
+		gc_clean(get_gc());
 		exit(141);
+	}
 }
