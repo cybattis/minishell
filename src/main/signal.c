@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: cybattis <cybattis@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 12:55:27 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/30 17:35:29 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/03/31 14:29:05 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	sig_handler(int signum)
 		}
 		rl_on_new_line();
 		rl_replace_line("", 0);
-		if (!g_minishell.is_executing || !g_minishell.is_heredoc)
+		if (!g_minishell.is_executing)
 			rl_redisplay();
 		if (!g_minishell.has_child)
 			g_minishell.last_return = 1;
