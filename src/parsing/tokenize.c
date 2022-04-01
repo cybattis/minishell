@@ -70,9 +70,7 @@ static t_token	get_next_token(t_lexer *lexer, t_parser *parser, int *finished)
 	if (result.error)
 	{
 		ft_dprintf(STDERR_FILENO, "%s\n", result.error);
-		token.str = NULL;
-		token.type = TOKEN_EMPTY;
-		return (token);
+		return ((t_token){TOKEN_EMPTY, NULL});
 	}
 	token.str = result.result[index];
 	if (index < (int)gc_strarray_size(result.result) - 1)

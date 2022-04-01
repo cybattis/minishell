@@ -88,7 +88,7 @@ static char	*get_command_name(t_command *command, t_lexer *lexer)
 	return (NULL);
 }
 
-static void		decimate_lexers(t_lexer *lexers, size_t count)
+static void	decimate_lexers(t_lexer *lexers, size_t count)
 {
 	size_t	i;
 

@@ -86,7 +86,8 @@ static char	*get_redir_file(char *str)
 	if (check_for_ambiguous_redirection(str))
 		return (error_ambiguous_redirection(str, file.result));
 	if (ft_strlen(file.result) == 0)
-		return (parsing_error("minishell: :No such file or directory", file.result));
+		return (parsing_error("minishell: :No such file or directory",
+				file.result));
 	if (!is_absolute_path(file.result))
 		make_absolute_path(&file.result);
 	if (is_valid_path(file.result) == PATH_DIRECTORY)

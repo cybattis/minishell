@@ -17,6 +17,8 @@
 static t_err_or_char2ptr	get_next_chars(t_parser *parser);
 static size_t				append_words(t_err_or_char2ptr *result,
 								char ***words, size_t i);
+static void					merge_results(t_err_or_char2ptr *result,
+								t_err_or_charptr *intermediate);
 
 t_err_or_char2ptr	get_next_word_splitted(t_parser *parser)
 {
@@ -79,15 +81,21 @@ static t_err_or_char2ptr	get_next_chars(t_parser *parser)
 		intermediate.result = gc_substr(get_gc(), parser->str, parser->i, 1);
 		parser->i++;
 	}
-	if (intermediate.result)
-	{
-		result.result = gc_strarray_fromstr(get_gc(), intermediate.result);
-		gc_free(get_gc(), intermediate.result);
-	}
-	if (intermediate.error)
-	{
-		result.error = intermediate.error;
-		gc_free(get_gc(), intermediate.result);
-	}
+	merge_results(&result, &intermediate);
 	return (result);
+}
+
+static void	merge_results(t_err_or_char2ptr *result,
+		t_err_or_charptr *intermediate)
+{
+	if (intermediate->result)
+	{
+		result->result = gc_strarray_fromstr(get_gc(), intermediate->result);
+		gc_free(get_gc(), intermediate->result);
+	}
+	if (intermediate->error)
+	{
+		result->error = intermediate->error;
+		gc_free(get_gc(), intermediate->result);
+	}
 }
