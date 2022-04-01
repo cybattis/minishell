@@ -17,6 +17,8 @@
 static void		populate_command(t_command *command, t_lexer lexer);
 static char		**get_args(t_lexer lexer);
 static char		*get_command_name(t_command *command, t_lexer *lexer);
+static void		decimate_lexers(t_lexer *lexers, size_t count);
+
 int				is_builtin(char *command);
 size_t			get_arg_count(t_lexer *lexer);
 
@@ -31,7 +33,7 @@ void	populate_command_batch(t_command_batch *batch,
 		populate_command(&batch->commands[i], lexers[i]);
 		i++;
 	}
-	gc_free(get_gc(), lexers);
+	decimate_lexers(lexers, count);
 }
 
 static void	populate_command(t_command *command, t_lexer lexer)
@@ -84,4 +86,17 @@ static char	*get_command_name(t_command *command, t_lexer *lexer)
 		i++;
 	}
 	return (NULL);
+}
+
+static void		decimate_lexers(t_lexer *lexers, size_t count)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < count)
+	{
+		gc_free(get_gc(), lexers[i].tokens);
+		i++;
+	}
+	gc_free(get_gc(), lexers);
 }

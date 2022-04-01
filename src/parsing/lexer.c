@@ -20,10 +20,8 @@ void	lexer_add_token(t_lexer *lexer, t_token token)
 
 	new_ptr = gc_calloc(get_gc(), lexer->count + 1, sizeof (t_token));
 	if (lexer->tokens)
-	{
 		ft_memmove(new_ptr, lexer->tokens, lexer->count * sizeof (t_token));
-		gc_free(get_gc(), lexer->tokens);
-	}
+	gc_free(get_gc(), lexer->tokens);
 	lexer->tokens = new_ptr;
 	lexer->tokens[lexer->count] = token;
 	lexer->count++;

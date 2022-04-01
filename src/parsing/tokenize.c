@@ -60,16 +60,13 @@ static void	add_next_token(t_lexer *lexer, t_parser *parser)
 static t_token	get_next_token(t_lexer *lexer, t_parser *parser, int *finished)
 {
 	static t_err_or_char2ptr	result;
-	static int					index;
+	static int					index = 0;
 	t_token						token;
 	t_parser					parser_copy;
 
 	parser_copy = *parser;
-	printf("before get_next_word_splitted foorprint %d\n", gc_getfootprint(get_gc()));
 	if (index == 0)
 		result = get_next_word_splitted(parser);
-	printf("after get_next_word_splitted foorprint %d\n", gc_getfootprint(get_gc()));
-	printf("array size got is %d\n", (int)gc_strarray_size(result.result));
 	if (result.error)
 	{
 		ft_dprintf(STDERR_FILENO, "%s\n", result.error);
