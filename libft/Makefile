@@ -39,7 +39,7 @@ CSTRINGS			=		ft_atoi.c ft_isalnum.c ft_isalpha.c ft_isascii.c ft_isdigit.c ft_i
  							ft_strlen.c ft_strmapi.c ft_strncmp.c ft_strnstr.c ft_strrchr.c ft_strtrim.c ft_substr.c 	\
  							ft_tolower.c ft_toupper.c ft_split_size.c ft_split_free.c ft_atol_base.c ft_trim.c 			\
  							ft_isspace.c ft_str_count.c ft_word_size.c ft_strcmp.c ft_strappend.c ft_strichr.c			\
- 							ft_nbrlen.c
+ 							ft_nbrlen.c ft_strisalpha.c ft_strisdigit.c
 
 #Stringviews
 STRINGVIEWDIR		=		strings/string_view/

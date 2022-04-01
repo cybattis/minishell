@@ -65,6 +65,11 @@ int	bt_exit(char **args)
 	int	ret_value;
 
 	printf("exit\n");
+	if (args[1] && !ft_strisdigit(args[1]))
+	{
+		ft_dprintf(STDERR_FILENO, "minishell: exit: %s: numeric argument required\n", args[1]);
+		exit(255);
+	}
 	if (gc_strarray_size(args) > 2)
 	{
 		ft_dprintf(STDERR_FILENO, "minishell: exit: too many arguments\n");
@@ -73,7 +78,7 @@ int	bt_exit(char **args)
 	if (args[1])
 		ret_value = ft_atoi(args[1]);
 	else
-		ret_value = EXIT_SUCCESS;
+		ret_value = g_minishell.last_return;
 	gc_clean(get_gc());
 	exit(ret_value);
 }

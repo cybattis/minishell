@@ -109,6 +109,8 @@ int			ft_isascii(int c);
 int			ft_isprint(int c);
 int			ft_isspace(int c);
 int			ft_valid_args(size_t argc, char **argv, char *format);
+int			ft_strisalpha(char *str);
+int			ft_strisdigit(char *str);
 
 //C style Strings Manipulation
 int			ft_strcmp(const char *s1, const char *s2);
