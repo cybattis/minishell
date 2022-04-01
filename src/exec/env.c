@@ -80,7 +80,7 @@ static void	create_env_var(char *name, char *value)
 
 	new_entry = gc_strdup(get_gc(), name);
 	new_entry = gc_strappend(get_gc(), new_entry, '=');
-	new_entry = gc_strjoin(get_gc(), new_entry, value, 1);
+	new_entry = gc_strjoin(get_gc(), new_entry, value, FREE_FIRST);
 	empty_index = get_empty_var_index();
 	if (empty_index == -1)
 		environ = gc_strarray_append(get_gc(), environ, new_entry);
