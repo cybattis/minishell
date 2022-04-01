@@ -85,6 +85,6 @@ void	init_minishell(int argc, char **argv, char **envp)
 	g_minishell.base_env = envp;
 	g_minishell.argv = argv;
 	g_minishell.argc = argc;
-	init_inputrc();
+	//init_inputrc();
 	update_shell_env_vars();
 }

@@ -119,8 +119,8 @@ char				**get_env_var_split(t_parser *parser);
 char				*get_env_var_raw(t_parser *parser, int in_quotes);
 char				*get_env_var_name(t_parser *parser, int in_quotes);
 
-char				*error_ambiguous_redirection(char *str);
-char				*parsing_error(char *str);
+char				*error_ambiguous_redirection(char *str, char *file);
+char				*parsing_error(char *str, char *file);
 char				*file_error(char *str, char *file);
 int					syntax_error(t_err error);
 

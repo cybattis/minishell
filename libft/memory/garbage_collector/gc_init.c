@@ -25,3 +25,19 @@ void	gc_init(t_gc *gc, int (*callback)(void *), void *param)
 	if (!gc->pointers)
 		gc->capacity = 0;
 }
+
+int	gc_getfootprint(t_gc *gc)
+{
+	int		footprint;
+	size_t	i;
+
+	i = 0;
+	footprint = 0;
+	while (i < gc->capacity)
+	{
+		if (gc->pointers[i])
+			footprint++;
+		i++;
+	}
+	return (footprint);
+}

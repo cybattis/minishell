@@ -47,14 +47,15 @@ static size_t	append_words(t_err_or_char2ptr *result, char ***words, size_t i)
 	size_t	j;
 
 	(*words)[i] = gc_strjoin(get_gc(),
-			(*words)[i], result->result[0], FREE_BOTH);
+			(*words)[i], result->result[0], FREE_FIRST);
 	j = 1;
-	while (gc_strarray_size(result->result) && result->result[j])
+	while (gc_strarray_size(result->result) > 1 && result->result[j])
 	{
 		(*words) = gc_strarray_append(get_gc(), *words, result->result[j]);
-		gc_free(get_gc(), result->result[j++]);
+		j++;
 		i++;
 	}
+	gc_strarray_free(get_gc(), result->result);
 	return (i);
 }
 
@@ -79,8 +80,14 @@ static t_err_or_char2ptr	get_next_chars(t_parser *parser)
 		parser->i++;
 	}
 	if (intermediate.result)
+	{
 		result.result = gc_strarray_fromstr(get_gc(), intermediate.result);
+		gc_free(get_gc(), intermediate.result);
+	}
 	if (intermediate.error)
+	{
 		result.error = intermediate.error;
+		gc_free(get_gc(), intermediate.result);
+	}
 	return (result);
 }

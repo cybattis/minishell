@@ -12,6 +12,7 @@
 
 #include "libft.h"
 #include "parsing.h"
+#include "core.h"
 
 static t_err	setup_redirections(char *str, t_command *command);
 static char		*get_redir_file(char *str);
@@ -81,11 +82,11 @@ static char	*get_redir_file(char *str)
 	str = skip_spaces(str);
 	file = get_next_word(str, 1);
 	if (file.error)
-		return (parsing_error(file.error));
+		return (parsing_error(file.error, NULL));
 	if (check_for_ambiguous_redirection(str))
-		return (error_ambiguous_redirection(str));
+		return (error_ambiguous_redirection(str, file.result));
 	if (ft_strlen(file.result) == 0)
-		return (parsing_error("minishell: :No such file or directory"));
+		return (parsing_error("minishell: :No such file or directory", file.result));
 	if (!is_absolute_path(file.result))
 		make_absolute_path(&file.result);
 	if (is_valid_path(file.result) == PATH_DIRECTORY)

@@ -15,7 +15,7 @@
 #include "parsing.h"
 #include "libft.h"
 
-char	*error_ambiguous_redirection(char *str)
+char	*error_ambiguous_redirection(char *str, char *file)
 {
 	t_err_or_charptr	redir;
 
@@ -23,18 +23,25 @@ char	*error_ambiguous_redirection(char *str)
 	ft_dprintf(STDERR_FILENO,
 		"minishell: %s: ambiguous redirect\n", redir.result);
 	g_minishell.last_return = 1;
+	if (redir.error)
+		gc_free(get_gc(), redir.error);
+	if (redir.result)
+		gc_free(get_gc(), redir.result);
+	gc_free(get_gc(), file);
 	return (NULL);
 }
 
-char	*parsing_error(char *str)
+char	*parsing_error(char *str, char *file)
 {
 	ft_dprintf(STDERR_FILENO, "%s\n", str);
+	gc_free(get_gc(), file);
 	return (NULL);
 }
 
 char	*file_error(char *str, char *file)
 {
 	ft_dprintf(STDERR_FILENO, "minishell: %s: %s\n", file, str);
+	gc_free(get_gc(), file);
 	return (NULL);
 }
 

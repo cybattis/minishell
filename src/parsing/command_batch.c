@@ -31,6 +31,7 @@ void	populate_command_batch(t_command_batch *batch,
 		populate_command(&batch->commands[i], lexers[i]);
 		i++;
 	}
+	gc_free(get_gc(), lexers);
 }
 
 static void	populate_command(t_command *command, t_lexer lexer)

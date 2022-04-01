@@ -30,6 +30,7 @@ t_err_or_charptr	get_next_word(char *str, int expand_vars)
 		result = get_next_chars(&parser, expand_vars);
 		if (result.error)
 		{
+			gc_destroy(get_gc(), (void **) &result.result);
 			gc_free(get_gc(), word);
 			return (result);
 		}

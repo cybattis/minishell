@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "core.h"
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -18,13 +19,17 @@ int	main(int argc, char **argv, char **envp)
 	t_command_batch	command_batch;
 
 	init_minishell(argc, argv, envp);
-	while (FT_TRUE)
+	line_read = argv[1];
+	while (line_read)
 	{
-		init_signal();
-		line_read = ft_get_line();
+		printf("footprint: %d\n", gc_getfootprint(get_gc()));
+		//init_signal();
+		//line_read = ft_get_line();
 		command_batch = parse_input(line_read);
-		execute_command(command_batch);
+		//execute_command(command_batch);
 		destroy_command_batch(command_batch);
+		printf("footprint: %d\n", gc_getfootprint(get_gc()));
+		getchar();
 	}
 	return (0);
 }

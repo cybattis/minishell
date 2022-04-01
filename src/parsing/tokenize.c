@@ -81,5 +81,6 @@ static t_token	get_next_token(t_lexer *lexer, t_parser *parser, int *finished)
 		index = 0;
 	token.type = get_token_type(token.str, lexer, parser_copy);
 	*finished = index;
+	gc_strarray_free(get_gc(), result.result);
 	return (token);
 }
