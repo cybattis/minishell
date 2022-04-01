@@ -52,6 +52,9 @@ static char	*find_git_repo(char *current_path)
 		path_to_repo[i] = 0;
 	}
 	if (ft_strlen(path_to_repo) == 0)
+	{
+		gc_free(get_gc(), path_to_repo);
 		return (NULL);
+	}
 	return (path_to_repo);
 }

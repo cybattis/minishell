@@ -13,7 +13,6 @@
 #include "libft.h"
 #include "minishell.h"
 #include "core.h"
-#include <sys/param.h>
 #include <sys/stat.h>
 #include <fcntl.h>
 
@@ -32,7 +31,7 @@ char	*get_git_prompt(char *path_to_git, char *current_path)
 	prompt = gc_strjoin(get_gc(), "\e[1;93mMinishell\e[0m: \e[1;94m",
 			folder, 0);
 	prompt = gc_strjoin(get_gc(), prompt, " \e[1;92mgit:(\e[1;91m", 1);
-	prompt = gc_strjoin(get_gc(), prompt, git_branch, 3);
+	prompt = gc_strjoin(get_gc(), prompt, git_branch, FREE_BOTH);
 	prompt = gc_strjoin(get_gc(), prompt, "\e[1;92m)\e[0;m", 1);
 	prompt = gc_strappend(get_gc(), prompt, '$');
 	prompt = gc_strappend(get_gc(), prompt, ' ');
@@ -82,7 +81,10 @@ static char	*get_git_branch(char *path)
 	full_path = gc_strjoin(get_gc(), path, "/.git/HEAD", 0);
 	fd = open(full_path, O_RDONLY);
 	if (!fd)
+	{
+		gc_free(get_gc(), full_path);
 		return (gc_strdup(get_gc(), "Unknown"));
+	}
 	branch = gc_get_next_line(get_gc(), fd);
 	gc_free(get_gc(), full_path);
 	close(fd);

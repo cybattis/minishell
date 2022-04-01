@@ -17,11 +17,15 @@
 
 char	*ft_get_line(void)
 {
-	static char	*line_read;
+	static char	*line_read = NULL;
+	static char	*prompt = NULL;
 
 	if (line_read)
 		free(line_read);
-	line_read = readline(get_prompt());
+	if (prompt)
+		gc_free(get_gc(), prompt);
+	prompt = get_prompt();
+	line_read = readline(prompt);
 	if (!line_read)
 		write_to_prompt("exit\n");
 	if (!ft_strlen(line_read))
