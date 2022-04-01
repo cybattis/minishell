@@ -65,8 +65,11 @@ static t_token	get_next_token(t_lexer *lexer, t_parser *parser, int *finished)
 	t_parser					parser_copy;
 
 	parser_copy = *parser;
+	printf("before get_next_word_splitted foorprint %d\n", gc_getfootprint(get_gc()));
 	if (index == 0)
 		result = get_next_word_splitted(parser);
+	printf("after get_next_word_splitted foorprint %d\n", gc_getfootprint(get_gc()));
+	printf("array size got is %d\n", (int)gc_strarray_size(result.result));
 	if (result.error)
 	{
 		ft_dprintf(STDERR_FILENO, "%s\n", result.error);
@@ -78,9 +81,11 @@ static t_token	get_next_token(t_lexer *lexer, t_parser *parser, int *finished)
 	if (index < (int)gc_strarray_size(result.result) - 1)
 		index++;
 	else
+	{
+		gc_free(get_gc(), result.result);
 		index = 0;
+	}
 	token.type = get_token_type(token.str, lexer, parser_copy);
 	*finished = index;
-	gc_strarray_free(get_gc(), result.result);
 	return (token);
 }

@@ -38,6 +38,12 @@ t_command_batch	parse_input(char *input)
 	gc_free(get_gc(), input);
 	printf("before tokenize foorprint %d\n", gc_getfootprint(get_gc()));
 	tokenize_all(&lexers, parsers, command_batch.count);
+	//for (int i = 0; i < command_batch.count; i++)
+	//{
+	//	printf("lexer[%d]: \n", i);
+	//	for (int j = 0; j < (int)lexers[i].count; j++)
+	//		printf("tokens[%d]: [%s]\n", i, lexers[i].tokens[j].str);
+	//}
 	printf("after tokenize foorprint %d\n", gc_getfootprint(get_gc()));
 	destroy_parsers(parsers, command_batch.count);
 	printf("after destroy parsers foorprint %d\n", gc_getfootprint(get_gc()));
