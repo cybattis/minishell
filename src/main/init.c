@@ -60,12 +60,15 @@ int	init_inputrc(void)
 	char	*inputrc;
 	int		fd;
 
-	path = gc_strjoin(get_gc(), getenv("HOME"), "/.inputrc", BOTH);
+	path = gc_strjoin(get_gc(), getenv("HOME"), "/.inputrc", FREE_NONE);
 	if (!access(path, F_OK))
 		return (0);
 	fd = open(path, O_WRONLY | O_CREAT | O_TRUNC, 0666);
 	if (fd == -1)
+	{
+		gc_free(get_gc(), path);
 		return (ft_print_errno());
+	}
 	inputrc = "set colored-stats on\nset echo-control-characters off\n";
 	write(fd, inputrc, ft_strlen(inputrc));
 	gc_free(get_gc(), path);

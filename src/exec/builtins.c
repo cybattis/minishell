@@ -68,6 +68,7 @@ int	bt_exit(char **args)
 	if (args[1] && !ft_strisdigit(args[1]))
 	{
 		ft_dprintf(STDERR_FILENO, "minishell: exit: %s: numeric argument required\n", args[1]);
+		gc_clean(get_gc());
 		exit(255);
 	}
 	if (gc_strarray_size(args) > 2)
