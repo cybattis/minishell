@@ -6,7 +6,7 @@
 /*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 17:10:07 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/30 17:54:07 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/04/01 15:28:11 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	execute_bin(t_command *command)
 		exit(126);
 	}
 	j = 0;
-	while (path[j])
+	while (path != NULL && path[j])
 	{
 		cmd_path = gc_strappend(get_gc(), path[j], '/');
 		cmd_path = gc_strjoin(get_gc(), cmd_path, command->name, FREE_FIRST);

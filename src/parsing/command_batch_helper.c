@@ -44,5 +44,7 @@ int	is_builtin(char *command)
 		return (1);
 	if (ft_strcmp(command, "unset") == 0)
 		return (1);
+	if (ft_strcmp(command, "env") == 0)
+		return (1);
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 15:04:11 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/27 14:23:10 by njennes          ###   ########.fr       */
+/*   Updated: 2022/04/01 15:46:01 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,8 @@ int	bt_exit(char **args)
 	printf("exit\n");
 	if (args[1] && !ft_strisdigit(args[1]))
 	{
-		ft_dprintf(STDERR_FILENO, "minishell: exit: %s: numeric argument required\n", args[1]);
+		ft_dprintf(STDERR_FILENO,
+			"minishell: exit: %s: numeric argument required\n", args[1]);
 		gc_clean(get_gc());
 		exit(255);
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 13:48:19 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/27 14:23:09 by njennes          ###   ########.fr       */
+/*   Updated: 2022/04/01 15:46:01 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 #include "core.h"
 
 extern char	**environ;
+
+static void	check_env(char **best_env, char *last_best, size_t i, size_t j);
 
 static int	check_var(char *var)
 {
@@ -59,20 +61,30 @@ int	noarg_export(void)
 	while (environ[j])
 	{
 		i = 0;
+		if (!ft_strlen(environ[j]))
+		{
+			j++;
+			continue ;
+		}
 		last_best = best_env;
 		while (environ[i])
 		{
-			if (ft_strcmp(environ[i], best_env) < 0
-				&& (j == 0 || ft_strcmp(environ[i], last_best) > 0))
-				best_env = environ[i];
-			else if (j > 0 && ft_strcmp(best_env, last_best) <= 0)
-				best_env = environ[i];
+			check_env(&best_env, last_best, i, j);
 			i++;
 		}
 		print_best_env(best_env);
 		j++;
 	}
 	return (0);
+}
+
+static void	check_env(char **best_env, char *last_best, size_t i, size_t j)
+{
+	if (ft_strcmp(environ[i], *best_env) < 0
+		&& (j == 0 || ft_strcmp(environ[i], last_best) > 0))
+		*best_env = environ[i];
+	else if (j > 0 && ft_strcmp(*best_env, last_best) <= 0)
+		*best_env = environ[i];
 }
 
 int	bt_export(char **arg)
