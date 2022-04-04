@@ -46,7 +46,8 @@ int	bt_echo(t_command *cmd)
 
 	i = 1;
 	size = ft_arglen((char const **)cmd->args);
-	if (cmd->args[i] && cmd->args[1][0] == '-' && ft_strichr(cmd->args[1], 'n') >= 0)
+	if (cmd->args[i] && cmd->args[1][0] == '-'
+		&& ft_strichr(cmd->args[1], 'n') >= 0)
 		i = 2;
 	while (cmd->args[i])
 	{
@@ -55,7 +56,8 @@ int	bt_echo(t_command *cmd)
 			printf(" ");
 		i++;
 	}
-	if (!cmd->args[1] || (cmd->args[1][0] != '-' || ft_strichr(cmd->args[1], 'n') == -1))
+	if (!cmd->args[1]
+		|| (cmd->args[1][0] != '-' || ft_strichr(cmd->args[1], 'n') == -1))
 		printf("\n");
 	return (0);
 }
