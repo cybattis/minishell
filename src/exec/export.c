@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: cybattis <cybattis@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 13:48:19 by cybattis          #+#    #+#             */
-/*   Updated: 2022/04/01 15:46:01 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/04/04 16:46:41 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,17 @@ static void	print_best_env(char *env)
 
 	env = gc_strdup(get_gc(), env);
 	equals = ft_strchr(env, '=');
-	*equals = 0;
-	value = gc_strdup(get_gc(), equals + 1);
-	printf("declare -x %s=\"%s\"\n", env, value);
+	ft_dprintf(STDERR_FILENO, "var: %s, equal: %p\n", env, equals);
+	if (!equals)
+		;//printf("declare -x %s\n", env);
+	else
+	{
+		*equals = 0;
+		value = gc_strdup(get_gc(), equals + 1);
+		//printf("declare -x %s=\"%s\"\n", env, value);
+		gc_free(get_gc(), value);
+	}
 	gc_free(get_gc(), env);
-	gc_free(get_gc(), value);
 }
 
 int	noarg_export(void)
@@ -104,11 +110,13 @@ int	bt_export(char **arg)
 		value_offset = 0;
 		while (arg[i][value_offset] && arg[i][value_offset] != '=')
 			value_offset++;
-		if (arg[i][value_offset])
+		if (arg[i][value_offset] == '=')
 		{
 			arg[i][value_offset++] = 0;
 			set_env_var(arg[i], &arg[i][value_offset]);
 		}
+		else
+			set_env_var(arg[i], NULL);
 		i++;
 	}
 	return (0);

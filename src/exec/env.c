@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: cybattis <cybattis@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 21:46:20 by njennes           #+#    #+#             */
-/*   Updated: 2022/04/04 15:50:55 by njennes          ###   ########.fr       */
+/*   Updated: 2022/04/04 16:22:44 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,8 @@ static void	create_env_var(char *name, char *value)
 	int		empty_index;
 
 	new_entry = gc_strdup(get_gc(), name);
-	new_entry = gc_strappend(get_gc(), new_entry, '=');
+	if (value)
+		new_entry = gc_strappend(get_gc(), new_entry, '=');
 	new_entry = gc_strjoin(get_gc(), new_entry, value, FREE_FIRST);
 	empty_index = get_empty_var_index();
 	if (empty_index == -1)
