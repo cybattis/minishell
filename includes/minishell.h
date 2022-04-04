@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 21:46:20 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/30 17:01:24 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/04/04 15:53:35 by njennes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ typedef struct s_mini
 	t_gc			gc;
 	int				last_return;
 	int				is_executing;
-	int 			is_heredoc;
+	int				is_heredoc;
 	int				has_child;
 	int				argc;
 	char			**argv;
@@ -42,7 +42,7 @@ char		*ft_get_line(void);
 char		*get_prompt(void);
 char		*get_git_prompt(char *path_to_git, char *current_path);
 int			is_git_repo(char *path);
-int			write_to_prompt();
+int			write_to_prompt(void);
 
 void		init_minishell(int argc, char **argv, char **envp);
 int			init_signal(void);

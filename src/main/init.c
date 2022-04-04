@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cybattis <cybattis@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 21:46:20 by njennes           #+#    #+#             */
-/*   Updated: 2022/03/29 13:14:43 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/04/04 15:50:20 by njennes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ void	update_shell_level(void)
 
 	old_shlvl = get_env("SHLVL");
 	if (!old_shlvl)
-		g_minishell.env = gc_strarray_append(get_gc(), g_minishell.env, "SHLVL=0");
+		g_minishell.env = gc_strarray_append(get_gc(),
+				g_minishell.env, "SHLVL=0");
 	old_shlvl = get_env("SHLVL");
 	old_shell_level = ft_atoi(old_shlvl);
 	new_shell_level = gc_itoa(get_gc(), old_shell_level + 1);

@@ -6,7 +6,7 @@
 /*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 12:36:16 by cybattis          #+#    #+#             */
-/*   Updated: 2022/04/04 15:24:03 by njennes          ###   ########.fr       */
+/*   Updated: 2022/04/04 15:24:06 by njennes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*ft_get_line(void)
 	return (gc_strdup(get_gc(), line_read));
 }
 
-int	write_to_prompt()
+int	write_to_prompt(void)
 {
 	ft_dprintf(STDERR_FILENO, "exit\n");
 	gc_clean(get_gc());
