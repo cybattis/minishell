@@ -31,8 +31,8 @@ char	*get_prompt(void)
 		return (get_git_prompt(git_repo, buf));
 	else
 		gc_free(get_gc(), git_repo);
-	prompt = gc_strjoin(get_gc(), "\e[1;93mMinishell\e[0m: \e[1;94m", buf, 0);
-	prompt = gc_strjoin(get_gc(), prompt, "\e[0m", 1);
+	prompt = gc_strjoin(get_gc(), "\1\e[1;93m\2Minishell\1\e[0m\2: \1\e[1;94m\2", buf, 0);
+	prompt = gc_strjoin(get_gc(), prompt, "\1\e[0m\2", 1);
 	prompt = gc_strappend(get_gc(), prompt, '$');
 	prompt = gc_strappend(get_gc(), prompt, ' ');
 	return (prompt);

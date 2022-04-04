@@ -28,11 +28,11 @@ char	*get_git_prompt(char *path_to_git, char *current_path)
 
 	folder = get_last_folders(path_to_git, current_path);
 	git_branch = get_git_branch(path_to_git);
-	prompt = gc_strjoin(get_gc(), "\e[1;93mMinishell\e[0m: \e[1;94m",
+	prompt = gc_strjoin(get_gc(), "\1\e[1;93m\2Minishell\1\e[0m\2: \1\e[1;94m\2",
 			folder, 0);
-	prompt = gc_strjoin(get_gc(), prompt, " \e[1;92mgit:(\e[1;91m", 1);
+	prompt = gc_strjoin(get_gc(), prompt, " \1\e[1;92m\2git:(\1\e[1;91m\2", 1);
 	prompt = gc_strjoin(get_gc(), prompt, git_branch, FREE_BOTH);
-	prompt = gc_strjoin(get_gc(), prompt, "\e[1;92m)\e[0;m", 1);
+	prompt = gc_strjoin(get_gc(), prompt, "\1\e[1;92m\2)\1\e[0;m\2", 1);
 	prompt = gc_strappend(get_gc(), prompt, '$');
 	prompt = gc_strappend(get_gc(), prompt, ' ');
 	gc_free(get_gc(), path_to_git);
