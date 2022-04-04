@@ -11,6 +11,14 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <errno.h>
+#include <string.h>
+
+void	ft_errno_exit_msg(char *name, int code)
+{
+	ft_dprintf(STDERR_FILENO, "minishell: %s: %s\n", name, strerror(errno));
+	exit(code);
+}
 
 size_t	ft_arglen(char const **args)
 {
