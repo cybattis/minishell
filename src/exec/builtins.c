@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cybattis <cybattis@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 15:04:11 by cybattis          #+#    #+#             */
-/*   Updated: 2022/04/04 15:12:25 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/04/04 16:11:02 by njennes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,23 +41,29 @@ int	execute_builtin(t_command *command)
 
 int	bt_echo(t_command *cmd)
 {
-	size_t	size;
 	size_t	i;
+	size_t	j;
+	int		new_line;
 
 	i = 1;
-	size = ft_arglen((char const **)cmd->args);
-	if (cmd->args[i] && cmd->args[1][0] == '-'
-		&& ft_strichr(cmd->args[1], 'n') >= 0)
-		i = 2;
+	new_line = 1;
+	while (cmd->args[i] && cmd->args[i][0] == '-')
+	{
+		j = 1;
+		while (cmd->args[i][j] == 'n')
+			j++;
+		if (cmd->args[i][j])
+			break ;
+		i++;
+		new_line = 0;
+	}
 	while (cmd->args[i])
 	{
 		printf("%s", cmd->args[i]);
-		if (i < size - 1)
+		if (cmd->args[++i])
 			printf(" ");
-		i++;
 	}
-	if (!cmd->args[1]
-		|| (cmd->args[1][0] != '-' || ft_strichr(cmd->args[1], 'n') == -1))
+	if (new_line)
 		printf("\n");
 	return (0);
 }
