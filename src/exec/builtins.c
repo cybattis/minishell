@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: cybattis <cybattis@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 15:04:11 by cybattis          #+#    #+#             */
-/*   Updated: 2022/04/01 15:46:01 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/04/04 12:01:27 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	bt_echo(t_command *cmd)
 
 	i = 1;
 	size = ft_arglen((char const **)cmd->args);
-	if (!ft_strcmp(cmd->args[1], "-n"))
+	if (cmd->args[1][0] == '-' && ft_strichr(cmd->args[1], 'n') >= 0)
 		i = 2;
 	while (cmd->args[i])
 	{
@@ -55,7 +55,7 @@ int	bt_echo(t_command *cmd)
 			printf(" ");
 		i++;
 	}
-	if (ft_strcmp(cmd->args[1], "-n"))
+	if (cmd->args[1][0] != '-' || ft_strichr(cmd->args[1], 'n') == -1)
 		printf("\n");
 	return (0);
 }
@@ -100,9 +100,18 @@ int	bt_cd(char *path)
 
 	if (!path || path[0] == '~')
 		path = get_env("HOME");
-	if (path && chdir(path))
-		perror(strerror(errno));
-	set_env_var("OLDPWD", get_env("PWD"));
+	if (!path)
+	{
+		ft_dprintf(STDERR_FILENO, "minishell: cd: HOME not set\n");
+		return (1);
+	}
+	if (chdir(path))
+	{
+		ft_dprintf(STDERR_FILENO, "minishell: cd: %s: %s\n", path,
+			strerror(errno));
+		return (1);
+	}
+	set_env_var("OLDPWD", getenv("PWD"));
 	set_env_var("PWD", getcwd(buf, MAXPATHLEN));
 	return (0);
 }

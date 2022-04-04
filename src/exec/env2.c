@@ -18,10 +18,16 @@ int	env_var_index(const char *name);
 
 char	*get_env(char *name)
 {
-	int	index;
+	int		index;
+	char	*value;
 
 	index = env_var_index(name);
 	if (index == -1)
 		return (NULL);
-	return (g_minishell.env[index]);
+	value = g_minishell.env[index];
+	while (*value && *value != '=')
+		value++;
+	if (*value)
+		value++;
+	return (value);
 }

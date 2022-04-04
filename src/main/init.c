@@ -49,11 +49,8 @@ void	update_shell_level(void)
 void	update_shell_env_vars(char **envp)
 {
 	g_minishell.env = gc_strarray_from(get_gc(), envp, gc_strarray_size(envp));
-	ft_printf("lol\n");
 	update_shell_path();
-	ft_printf("hey\n");
 	update_shell_level();
-	ft_printf("hoy\n");
 }
 
 int	init_inputrc(void)
