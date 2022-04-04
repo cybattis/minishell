@@ -44,7 +44,6 @@ char		*get_git_prompt(char *path_to_git, char *current_path);
 int			is_git_repo(char *path);
 int			write_to_prompt();
 
-void		handle_minishell_arg(int argc, char **argv);
 void		init_minishell(int argc, char **argv, char **envp);
 int			init_signal(void);
 void		sig_handler(int signum);

@@ -18,7 +18,6 @@ int	main(int argc, char **argv, char **envp)
 	char			*line_read;
 	t_command_batch	command_batch;
 
-	handle_minishell_arg(argc, argv);
 	init_minishell(argc, argv, envp);
 	while (FT_TRUE)
 	{

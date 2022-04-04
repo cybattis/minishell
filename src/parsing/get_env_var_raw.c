@@ -6,7 +6,7 @@
 /*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 13:36:08 by njennes           #+#    #+#             */
-/*   Updated: 2022/03/27 13:36:09 by njennes          ###   ########.fr       */
+/*   Updated: 2022/04/04 15:42:32 by njennes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,12 @@ char	*get_env_var_raw(t_parser *parser, int in_quotes)
 	else if (ft_strcmp(var_name, "?") == 0)
 		var_value = gc_itoa(get_gc(), g_minishell.last_return);
 	else if (ft_isdigit(*var_name))
-		var_value = gc_strdup(get_gc(),
-				g_minishell.argv[(int)(*var_name - '0')]);
+	{
+		if (*var_name == '0')
+			var_value = gc_strdup(get_gc(), g_minishell.argv[0]);
+		else
+			var_value = gc_strdup(get_gc(), "");
+	}
 	else
 		var_value = gc_strdup(get_gc(), get_env(var_name));
 	gc_free(get_gc(), var_name);
