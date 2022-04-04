@@ -98,7 +98,7 @@ int	bt_cd(char *path)
 {
 	char	buf[MAXPATHLEN];
 
-	if (!path || path[0] == '~')
+	if (!path || strcmp(path, "~") == 0)
 		path = get_env("HOME");
 	if (!path)
 	{
