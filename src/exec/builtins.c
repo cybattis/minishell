@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: cybattis <cybattis@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 15:04:11 by cybattis          #+#    #+#             */
-/*   Updated: 2022/04/01 15:46:01 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/04/04 11:51:53 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,11 @@ int	bt_cd(char *path)
 	if (!path || path[0] == '~')
 		path = getenv("HOME");
 	if (path && chdir(path))
-		perror(strerror(errno));
+	{
+		ft_dprintf(STDERR_FILENO, "minishell: cd: %s: %s\n", path,
+			strerror(errno));
+		return (1);
+	}
 	set_env_var("OLDPWD", getenv("PWD"));
 	set_env_var("PWD", getcwd(buf, MAXPATHLEN));
 	return (0);

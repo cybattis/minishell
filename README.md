@@ -1,5 +1,5 @@
 TODO:   
-- fix return value of cd
+- ~~fix return value of cd~~
 - ~~fix propmt color~~
 - fix echo -nnnnnnnnnnnnn
 - fix export var without value (eg. TEST=)
