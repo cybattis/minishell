@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: cybattis <cybattis@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 17:10:07 by cybattis          #+#    #+#             */
-/*   Updated: 2022/04/01 15:28:11 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/04/04 14:48:16 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,22 +72,20 @@ void	execute_bin(t_command *command)
 
 	if (ft_strlen(command->name) == 0)
 		ft_error_command("");
-	path = get_path();
-	if (execve(command->name, command->args, g_minishell.env) < 0 && errno != ENOENT)
+	if (ft_strchr(command->name, '/'))
 	{
-		ft_dprintf(STDERR_FILENO, "minishell: %s\n", strerror(errno));
-		exit(126);
+		execve(command->name, command->args, g_minishell.env);
+		ft_errno_exit_msg(command->name, 126);
 	}
 	j = 0;
+	path = get_path();
 	while (path != NULL && path[j])
 	{
 		cmd_path = gc_strappend(get_gc(), path[j], '/');
 		cmd_path = gc_strjoin(get_gc(), cmd_path, command->name, FREE_FIRST);
-		if (execve(cmd_path, command->args, g_minishell.env) < 0 && errno != ENOENT)
-		{
-			ft_dprintf(STDERR_FILENO, "minishell: %s\n", strerror(errno));
-			exit(126);
-		}
+		if (execve(cmd_path, command->args, g_minishell.env) < 0
+			&& errno != ENOENT)
+			ft_errno_exit_msg(command->name, 126);
 		j++;
 	}
 	ft_error_command(command->name);

@@ -63,7 +63,7 @@ void		ft_errno_exit(void);
 size_t		ft_arglen(char const **args);
 int			gc_callback(void *ptr);
 int			ft_error_dup(int fd);
-int			write_to_prompt();
+void		ft_errno_exit_msg(char *name, int code);
 
 int			execute_builtin(t_command *command);
 int			bt_echo(t_command *cmd);
