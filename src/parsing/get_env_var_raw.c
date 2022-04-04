@@ -30,7 +30,7 @@ char	*get_env_var_raw(t_parser *parser, int in_quotes)
 		var_value = gc_strdup(get_gc(),
 				g_minishell.argv[(int)(*var_name - '0')]);
 	else
-		var_value = gc_strdup(get_gc(), getenv(var_name));
+		var_value = gc_strdup(get_gc(), get_env(var_name));
 	gc_free(get_gc(), var_name);
 	return (var_value);
 }

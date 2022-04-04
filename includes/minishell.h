@@ -29,8 +29,8 @@ typedef struct s_mini
 	int 			is_heredoc;
 	int				has_child;
 	int				argc;
-	char			**base_env;
 	char			**argv;
+	char			**env;
 }	t_mini;
 
 typedef struct s_pipe
@@ -63,7 +63,7 @@ void		ft_errno_exit(void);
 size_t		ft_arglen(char const **args);
 int			gc_callback(void *ptr);
 int			ft_error_dup(int fd);
-int			write_to_prompt(char *msg);
+int			write_to_prompt();
 
 int			execute_builtin(t_command *command);
 int			bt_echo(t_command *cmd);
@@ -77,8 +77,9 @@ int			bt_unset(char **args);
 
 void		set_env_var(char *name, char *value);
 void		unset_env_var(char *name);
-void		update_shell_env_vars(void);
+void		update_shell_env_vars(char **envp);
 int			get_empty_var_index(void);
+char		*get_env(char *name);
 
 void		get_child_return(int wstatus);
 int			clean_redirection(int *fds);

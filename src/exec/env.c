@@ -15,11 +15,9 @@
 #include "minishell.h"
 #include <unistd.h>
 
-extern char	**environ;
-
 static void	update_env_var(char *name, char *value);
 static void	create_env_var(char *name, char *value);
-static int	env_var_index(const char *name);
+int	env_var_index(const char *name);
 
 void	set_env_var(char *name, char *value)
 {
@@ -36,26 +34,26 @@ void	unset_env_var(char *name)
 	i = env_var_index(name);
 	if (i == -1)
 		return ;
-	environ[i][0] = 0;
+	g_minishell.env[i][0] = 0;
 }
 
-static int	env_var_index(const char *name)
+int	env_var_index(const char *name)
 {
 	size_t	i;
 	size_t	j;
 
 	i = 0;
-	while (environ[i])
+	while (g_minishell.env[i])
 	{
-		if (environ[i][0] == 0)
+		if (g_minishell.env[i][0] == 0)
 		{
 			i++;
 			continue ;
 		}
 		j = 0;
-		while (name[j] && name[j] == environ[i][j])
+		while (name[j] && name[j] == g_minishell.env[i][j])
 			j++;
-		if (!name[j] && environ[i][j] == '=')
+		if (!name[j] && g_minishell.env[i][j] == '=')
 			return ((int)i);
 		i++;
 	}
@@ -67,10 +65,10 @@ static void	update_env_var(char *name, char *value)
 	size_t	i;
 
 	i = env_var_index(name);
-	gc_free(get_gc(), environ[i]);
-	environ[i] = gc_strdup(get_gc(), name);
-	environ[i] = gc_strappend(get_gc(), environ[i], '=');
-	environ[i] = gc_strjoin(get_gc(), environ[i], value, FREE_FIRST);
+	gc_free(get_gc(), g_minishell.env[i]);
+	g_minishell.env[i] = gc_strdup(get_gc(), name);
+	g_minishell.env[i] = gc_strappend(get_gc(), g_minishell.env[i], '=');
+	g_minishell.env[i] = gc_strjoin(get_gc(), g_minishell.env[i], value, FREE_FIRST);
 }
 
 static void	create_env_var(char *name, char *value)
@@ -83,11 +81,11 @@ static void	create_env_var(char *name, char *value)
 	new_entry = gc_strjoin(get_gc(), new_entry, value, FREE_FIRST);
 	empty_index = get_empty_var_index();
 	if (empty_index == -1)
-		environ = gc_strarray_append(get_gc(), environ, new_entry);
+		g_minishell.env = gc_strarray_append(get_gc(), g_minishell.env, new_entry);
 	else
 	{
-		gc_free(get_gc(), environ[empty_index]);
-		environ[empty_index] = gc_strdup(get_gc(), new_entry);
+		gc_free(get_gc(), g_minishell.env[empty_index]);
+		g_minishell.env[empty_index] = gc_strdup(get_gc(), new_entry);
 	}
 	gc_free(get_gc(), new_entry);
 }

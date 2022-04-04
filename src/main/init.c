@@ -18,7 +18,6 @@
 #include <fcntl.h>
 
 t_mini		g_minishell;
-extern char	**environ;
 
 void	update_shell_path(void)
 {
@@ -37,21 +36,24 @@ void	update_shell_level(void)
 	char	*old_shlvl;
 	int		old_shell_level;
 
-	old_shlvl = getenv("SHLVL");
+	old_shlvl = get_env("SHLVL");
 	if (!old_shlvl)
-		environ = gc_strarray_append(get_gc(), environ, "SHLVL=0");
-	old_shlvl = getenv("SHLVL");
+		g_minishell.env = gc_strarray_append(get_gc(), g_minishell.env, "SHLVL=0");
+	old_shlvl = get_env("SHLVL");
 	old_shell_level = ft_atoi(old_shlvl);
 	new_shell_level = gc_itoa(get_gc(), old_shell_level + 1);
 	set_env_var("SHLVL", new_shell_level);
 	gc_free(get_gc(), new_shell_level);
 }
 
-void	update_shell_env_vars(void)
+void	update_shell_env_vars(char **envp)
 {
-	environ = gc_strarray_from(get_gc(), environ, gc_strarray_size(environ));
+	g_minishell.env = gc_strarray_from(get_gc(), envp, gc_strarray_size(envp));
+	ft_printf("lol\n");
 	update_shell_path();
+	ft_printf("hey\n");
 	update_shell_level();
+	ft_printf("hoy\n");
 }
 
 int	init_inputrc(void)
@@ -60,7 +62,7 @@ int	init_inputrc(void)
 	char	*inputrc;
 	int		fd;
 
-	path = gc_strjoin(get_gc(), getenv("HOME"), "/.inputrc", FREE_NONE);
+	path = gc_strjoin(get_gc(), get_env("HOME"), "/.inputrc", FREE_NONE);
 	if (!access(path, F_OK))
 		return (0);
 	fd = open(path, O_WRONLY | O_CREAT | O_TRUNC, 0666);
@@ -82,9 +84,8 @@ void	init_minishell(int argc, char **argv, char **envp)
 	g_minishell.last_return = 0;
 	g_minishell.is_executing = 0;
 	g_minishell.has_child = 0;
-	g_minishell.base_env = envp;
 	g_minishell.argv = argv;
 	g_minishell.argc = argc;
+	update_shell_env_vars(envp);
 	init_inputrc();
-	update_shell_env_vars();
 }

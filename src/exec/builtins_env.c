@@ -12,19 +12,18 @@
 
 #include "minishell.h"
 #include "parsing.h"
+#include "core.h"
 #include <stdio.h>
-
-extern char	**environ;
 
 int	bt_env(void)
 {
 	size_t	i;
 
 	i = 0;
-	while (environ[i])
+	while (g_minishell.env[i])
 	{
-		if (environ[i][0] != 0)
-			printf("%s\n", environ[i]);
+		if (g_minishell.env[i][0] != 0)
+			printf("%s\n", g_minishell.env[i]);
 		i++;
 	}
 	return (0);

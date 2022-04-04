@@ -1,29 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_utils.c                                        :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 21:46:20 by njennes           #+#    #+#             */
-/*   Updated: 2022/03/27 14:23:21 by njennes          ###   ########.fr       */
+/*   Updated: 2022/04/01 15:10:46 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include "libft.h"
 #include "core.h"
 #include "minishell.h"
 
-int	get_empty_var_index(void)
-{
-	size_t	i;
+int	env_var_index(const char *name);
 
-	i = 0;
-	while (g_minishell.env[i])
-	{
-		if (g_minishell.env[i][0] == 0)
-			return ((int)i);
-		i++;
-	}
-	return (-1);
+char	*get_env(char *name)
+{
+	int	index;
+
+	index = env_var_index(name);
+	if (index == -1)
+		return (NULL);
+	return (g_minishell.env[index]);
 }

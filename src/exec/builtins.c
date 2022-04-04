@@ -64,7 +64,7 @@ int	bt_exit(char **args)
 {
 	int	ret_value;
 
-	printf("exit\n");
+	ft_dprintf(STDERR_FILENO, "exit\n");
 	if (args[1] && !ft_strisdigit(args[1]))
 	{
 		ft_dprintf(STDERR_FILENO,
@@ -99,10 +99,10 @@ int	bt_cd(char *path)
 	char	buf[MAXPATHLEN];
 
 	if (!path || path[0] == '~')
-		path = getenv("HOME");
+		path = get_env("HOME");
 	if (path && chdir(path))
 		perror(strerror(errno));
-	set_env_var("OLDPWD", getenv("PWD"));
+	set_env_var("OLDPWD", get_env("PWD"));
 	set_env_var("PWD", getcwd(buf, MAXPATHLEN));
 	return (0);
 }

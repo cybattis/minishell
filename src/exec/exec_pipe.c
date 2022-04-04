@@ -16,8 +16,6 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-extern char	**environ;
-
 static int	pipe_redirection(size_t i, t_command_batch *batch, t_pipe *pipes);
 static void	close_pipe(size_t max, t_pipe *pipes);
 static int	fork_pipe(t_command_batch *batch, t_pipe *pipes);

@@ -16,8 +16,6 @@
 #include <sys/wait.h>
 #include <string.h>
 
-extern char	**environ;
-
 static int	execute(t_command *command);
 int			wait_for_child(pid_t pid);
 
@@ -75,7 +73,7 @@ void	execute_bin(t_command *command)
 	if (ft_strlen(command->name) == 0)
 		ft_error_command("");
 	path = get_path();
-	if (execve(command->name, command->args, environ) < 0 && errno != ENOENT)
+	if (execve(command->name, command->args, g_minishell.env) < 0 && errno != ENOENT)
 	{
 		ft_dprintf(STDERR_FILENO, "minishell: %s\n", strerror(errno));
 		exit(126);
@@ -85,7 +83,7 @@ void	execute_bin(t_command *command)
 	{
 		cmd_path = gc_strappend(get_gc(), path[j], '/');
 		cmd_path = gc_strjoin(get_gc(), cmd_path, command->name, FREE_FIRST);
-		if (execve(cmd_path, command->args, environ) < 0 && errno != ENOENT)
+		if (execve(cmd_path, command->args, g_minishell.env) < 0 && errno != ENOENT)
 		{
 			ft_dprintf(STDERR_FILENO, "minishell: %s\n", strerror(errno));
 			exit(126);
@@ -110,7 +108,7 @@ char	**get_path(void)
 {
 	char	*path;
 
-	path = getenv("PATH");
+	path = get_env("PATH");
 	if (!path)
 		return (NULL);
 	return (gc_split(get_gc(), path, ':'));

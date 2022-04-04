@@ -15,8 +15,6 @@
 #include "minishell.h"
 #include "core.h"
 
-extern char	**environ;
-
 static void	check_env(char **best_env, char *last_best, size_t i, size_t j);
 
 static int	check_var(char *var)
@@ -57,17 +55,17 @@ int	noarg_export(void)
 	size_t	j;
 
 	j = 0;
-	best_env = environ[j];
-	while (environ[j])
+	best_env = g_minishell.env[j];
+	while (g_minishell.env[j])
 	{
 		i = 0;
-		if (!ft_strlen(environ[j]))
+		if (!ft_strlen(g_minishell.env[j]))
 		{
 			j++;
 			continue ;
 		}
 		last_best = best_env;
-		while (environ[i])
+		while (g_minishell.env[i])
 		{
 			check_env(&best_env, last_best, i, j);
 			i++;
@@ -80,11 +78,11 @@ int	noarg_export(void)
 
 static void	check_env(char **best_env, char *last_best, size_t i, size_t j)
 {
-	if (ft_strcmp(environ[i], *best_env) < 0
-		&& (j == 0 || ft_strcmp(environ[i], last_best) > 0))
-		*best_env = environ[i];
+	if (ft_strcmp(g_minishell.env[i], *best_env) < 0
+		&& (j == 0 || ft_strcmp(g_minishell.env[i], last_best) > 0))
+		*best_env = g_minishell.env[i];
 	else if (j > 0 && ft_strcmp(*best_env, last_best) <= 0)
-		*best_env = environ[i];
+		*best_env = g_minishell.env[i];
 }
 
 int	bt_export(char **arg)

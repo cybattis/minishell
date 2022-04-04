@@ -27,7 +27,7 @@ char	*ft_get_line(void)
 	prompt = get_prompt();
 	line_read = readline(prompt);
 	if (!line_read)
-		write_to_prompt("exit\n");
+		write_to_prompt();
 	if (!ft_strlen(line_read))
 		g_minishell.last_return = 0;
 	if (line_read && *line_read && !contains_unfinished_quotes(line_read))
@@ -35,17 +35,9 @@ char	*ft_get_line(void)
 	return (gc_strdup(get_gc(), line_read));
 }
 
-int	write_to_prompt(char *msg)
+int	write_to_prompt()
 {
-	int		fd;
-	char	*tty_name;
-
-	tty_name = ttyname(STDIN_FILENO);
-	fd = open(tty_name, O_WRONLY);
-	if (fd == -1)
-		return (ft_print_errno());
-	write(fd, msg, ft_strlen(msg));
+	ft_dprintf(STDERR_FILENO, "exit\n");
 	gc_clean(get_gc());
-	close(fd);
 	exit(EXIT_SUCCESS);
 }
