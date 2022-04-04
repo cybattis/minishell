@@ -6,11 +6,10 @@
 /*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 12:36:16 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/27 14:23:13 by njennes          ###   ########.fr       */
+/*   Updated: 2022/04/04 15:24:03 by njennes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <fcntl.h>
 #include "readline.h"
 #include "minishell.h"
 #include "core.h"

@@ -20,20 +20,20 @@ else
 	INC_PATH		+=		-I ~/.brew/opt/readline/include/readline
 endif
 
-LIBS			:=		$(LIB_PATH) -lft $(READLINE)
+LIBS			:=		$(LIB_PATH) -lftd $(READLINE)
 
 BIN_CC			:=		gcc
 
 BIN_CFLAGS		:=
 BIN_CFLAGS		+=		-MD
 BIN_CFLAGS		+=		-Wall -Wextra -Werror
-BIN_CFLAGS		+=		#-g3 -fsanitize=address
+BIN_CFLAGS		+=		-g3 -fsanitize=address
 BIN_CFLAGS		+=		$(INC_PATH)
 
 BIN_LDFLAGS		:=
-BIN_LDFLAGS		+=		#-fsanitize=address
+BIN_LDFLAGS		+=		-fsanitize=address
 
-LIBFT_LIB		:=		$(LIB_DIR)/libft.a
+LIBFT_LIB		:=		$(LIB_DIR)/libftd.a
 
 export MAKE_DIR
 export OBJS_DIR
