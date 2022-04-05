@@ -6,7 +6,7 @@
 /*   By: cybattis <cybattis@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 21:46:20 by cybattis          #+#    #+#             */
-/*   Updated: 2022/04/05 11:24:42 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/04/05 20:55:52 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,12 @@
 # include "parsing.h"
 # include "libft.h"
 
-# define BOTH 0
-# define OUT 1
-# define IN 2
-# define NONE 3
+# define SIGINT_HD -2
+# define ERROR -1
+# define BOTH_FD_SET 0
+# define ONLY_OUT 1
+# define ONLY_IN 2
+# define NO_FD_SET 3
 
 typedef struct s_mini
 {

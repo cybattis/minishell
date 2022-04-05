@@ -6,7 +6,7 @@
 /*   By: cybattis <cybattis@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 11:35:17 by cybattis          #+#    #+#             */
-/*   Updated: 2022/04/05 11:21:13 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/04/05 20:55:52 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "core.h"
 
 static int	generate_temp_file(char *str_out);
+static int	is_heredoc_open(void);
 
 int	redir_heredoc(t_redir redirections)
 {
@@ -25,8 +26,8 @@ int	redir_heredoc(t_redir redirections)
 	g_minishell.is_heredoc = 1;
 	str_out = gc_strdup(get_gc(), "");
 	buff = readline("> ");
-	if (g_minishell.is_heredoc == -1)
-		return (-1);
+	if (!is_heredoc_open())
+		return (SIGINT_HD);
 	while (buff)
 	{
 		if (ft_strlen(buff) == ft_strlen(redirections.file)
@@ -37,15 +38,22 @@ int	redir_heredoc(t_redir redirections)
 		free(buff);
 		buff = readline("> ");
 	}
-	if (g_minishell.is_heredoc == -1)
-	{
-		g_minishell.is_heredoc = 0;
-		return (-1);
-	}
+	if (!is_heredoc_open())
+		return (SIGINT_HD);
 	g_minishell.is_heredoc = 0;
 	if (buff)
 		free(buff);
 	return (generate_temp_file(str_out));
+}
+
+static int	is_heredoc_open(void)
+{
+	if (g_minishell.is_heredoc == -1)
+	{
+		g_minishell.is_heredoc = 0;
+		return (0);
+	}
+	return (1);
 }
 
 static char	*generate_file_name(void)
@@ -54,11 +62,11 @@ static char	*generate_file_name(void)
 	char	*temp_file;
 
 	id = 0;
-	temp_file = gc_strdup(get_gc(), "/tmp/sh-thc-420-blaze");
+	temp_file = gc_strdup(get_gc(), "/tmp/sh-thd-0");
 	while (!access(temp_file, F_OK))
 	{
 		free(temp_file);
-		temp_file = gc_strdup(get_gc(), "/tmp/sh-thc-");
+		temp_file = gc_strdup(get_gc(), "/tmp/sh-thd-");
 		temp_file = gc_strjoin(get_gc(), temp_file,
 				gc_itoa(get_gc(), id), FREE_SECOND);
 		id++;

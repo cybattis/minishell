@@ -6,7 +6,7 @@
 /*   By: cybattis <cybattis@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 12:55:27 by cybattis          #+#    #+#             */
-/*   Updated: 2022/04/05 11:15:07 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/04/05 20:32:33 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	sig_handler(int signum)
 		printf("\n");
 		if (g_minishell.is_heredoc)
 		{
-			g_minishell.is_heredoc = -1;
+			g_minishell.is_heredoc = 0;
 			close(STDIN_FILENO);
 			g_minishell.last_return = 130;
 			return ;
