@@ -6,7 +6,7 @@
 /*   By: cybattis <cybattis@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 17:10:07 by cybattis          #+#    #+#             */
-/*   Updated: 2022/04/04 14:48:16 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/04/05 11:29:14 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,11 @@ int			wait_for_child(pid_t pid);
 int	execute_command(t_command_batch batch)
 {
 	t_pipe	*pipes;
-	int		save_fd[2];
+	int		std_fds[2];
 
 	if (batch.count == 0)
 		return (0);
-	save_fd[0] = dup(STDIN_FILENO);
-	save_fd[1] = dup(STDOUT_FILENO);
+	dup_stdfds(std_fds);
 	if (batch.commands[0].is_piping == 1)
 	{
 		pipes = init_pipe(batch.count);
@@ -36,7 +35,7 @@ int	execute_command(t_command_batch batch)
 	}
 	else
 		execute(&batch.commands[0]);
-	clean_fds(save_fd);
+	restore_stdfds(std_fds);
 	return (0);
 }
 
@@ -89,17 +88,6 @@ void	execute_bin(t_command *command)
 		j++;
 	}
 	ft_error_command(command->name);
-}
-
-int	clean_fds(int save_fd[2])
-{
-	if (dup2(save_fd[1], STDOUT_FILENO) < 0)
-		ft_print_errno();
-	if (dup2(save_fd[0], STDIN_FILENO) < 0)
-		ft_print_errno();
-	close(save_fd[0]);
-	close(save_fd[1]);
-	return (1);
 }
 
 char	**get_path(void)
