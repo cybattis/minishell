@@ -14,7 +14,7 @@ EXEC		=	execute.c exec_pipe.c builtins.c builtins_env.c export.c execute_child.c
 
 MAIN_DIR	=	main
 MAIN		=	main.c get_line.c get_git_prompt.c get_prompt.c init.c	\
-				signal.c utils.c utils2.c
+				signal.c utils_error.c utils.c utils2.c
 
 SRC_PARSING	=	$(addprefix $(PARS_DIR)/, $(PARSING))
 SRC_EXEC	=	$(addprefix $(EXEC_DIR)/, $(EXEC))

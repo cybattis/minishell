@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: cybattis <cybattis@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 11:35:17 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/30 17:39:11 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/04/05 11:21:13 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ int	redir_heredoc(t_redir redirections)
 	g_minishell.is_heredoc = 1;
 	str_out = gc_strdup(get_gc(), "");
 	buff = readline("> ");
+	if (g_minishell.is_heredoc == -1)
+		return (-1);
 	while (buff)
 	{
 		if (ft_strlen(buff) == ft_strlen(redirections.file)
@@ -34,6 +36,11 @@ int	redir_heredoc(t_redir redirections)
 		str_out = gc_strappend(get_gc(), str_out, '\n');
 		free(buff);
 		buff = readline("> ");
+	}
+	if (g_minishell.is_heredoc == -1)
+	{
+		g_minishell.is_heredoc = 0;
+		return (-1);
 	}
 	g_minishell.is_heredoc = 0;
 	if (buff)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: cybattis <cybattis@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 21:46:20 by cybattis          #+#    #+#             */
-/*   Updated: 2022/04/04 15:53:35 by njennes          ###   ########.fr       */
+/*   Updated: 2022/04/05 11:24:42 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ void		sig_handler(int signum);
 
 int			execute_command(t_command_batch cmd_batch);
 void		execute_bin(t_command *commands);
-int			clean_fds(int save_fd[2]);
 char		**get_path(void);
 
 int			execute_pipe(t_command_batch *batch, t_pipe *pipes);
@@ -58,13 +57,18 @@ t_pipe		*init_pipe(size_t nbr);
 int			redirection(t_redir *redirections);
 int			redir_heredoc(t_redir redirections);
 
+void		ft_errno_exit(void);
 int			ft_print_errno(void);
 void		ft_error_command(char *command);
-void		ft_errno_exit(void);
-size_t		ft_arglen(char const **args);
-int			gc_callback(void *ptr);
-int			ft_error_dup(int fd);
 void		ft_errno_exit_msg(char *name, int code);
+int			gc_callback(void *ptr);
+
+int			ft_error_dup(int fd);
+size_t		ft_arglen(char const **args);
+int			clean_redirection(int *fds);
+
+int			restore_stdfds(int std_fd[2]);
+int			dup_stdfds(int std_fds[2]);
 
 int			execute_builtin(t_command *command);
 int			bt_echo(t_command *cmd);
@@ -83,6 +87,5 @@ int			get_empty_var_index(void);
 char		*get_env(char *name);
 
 void		get_child_return(int wstatus);
-int			clean_redirection(int *fds);
 
 #endif

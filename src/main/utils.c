@@ -3,46 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: cybattis <cybattis@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 14:55:35 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/27 14:23:23 by njennes          ###   ########.fr       */
+/*   Updated: 2022/04/05 11:30:07 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "core.h"
-#include <stdlib.h>
-#include <string.h>
-#include <errno.h>
 
-t_gc	*get_gc(void)
+int	dup_stdfds(int std_fds[2])
 {
-	return (&g_minishell.gc);
+	std_fds[0] = dup(STDIN_FILENO);
+	std_fds[1] = dup(STDOUT_FILENO);
+	return (0);
 }
 
-void	ft_errno_exit(void)
+int	restore_stdfds(int std_fd[2])
 {
-	ft_dprintf(STDERR_FILENO, "minishell: %s\n", strerror(errno));
-	exit(EXIT_FAILURE);
-}
-
-int	ft_print_errno(void)
-{
-	ft_dprintf(STDERR_FILENO, "minishell: %s\n", strerror(errno));
-	return (1);
-}
-
-void	ft_error_command(char *command)
-{
-	ft_dprintf(STDERR_FILENO, "minishell: %s: command not found\n", command);
-	exit(127);
-}
-
-int	gc_callback(void *ptr)
-{
-	(void)ptr;
-	gc_clean(&g_minishell.gc);
-	ft_errno_exit();
-	return (1);
+	if (dup2(std_fd[1], STDOUT_FILENO) < 0)
+		ft_print_errno();
+	if (dup2(std_fd[0], STDIN_FILENO) < 0)
+		ft_print_errno();
+	close(std_fd[0]);
+	close(std_fd[1]);
+	return (0);
 }
