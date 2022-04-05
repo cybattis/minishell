@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_env.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: cybattis <cybattis@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 13:48:19 by cybattis          #+#    #+#             */
-/*   Updated: 2022/04/01 15:13:13 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/04/05 11:05:51 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ int	bt_env(void)
 	i = 0;
 	while (g_minishell.env[i])
 	{
-		if (g_minishell.env[i][0] != 0)
+		if (g_minishell.env[i][0] != 0
+			&& ft_strichr(g_minishell.env[i], '=') >= 0)
 			printf("%s\n", g_minishell.env[i]);
 		i++;
 	}

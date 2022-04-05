@@ -6,7 +6,7 @@
 /*   By: cybattis <cybattis@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 13:48:19 by cybattis          #+#    #+#             */
-/*   Updated: 2022/04/04 16:46:41 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/04/05 11:04:05 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,13 @@ static void	print_best_env(char *env)
 
 	env = gc_strdup(get_gc(), env);
 	equals = ft_strchr(env, '=');
-	ft_dprintf(STDERR_FILENO, "var: %s, equal: %p\n", env, equals);
 	if (!equals)
-		;//printf("declare -x %s\n", env);
+		printf("declare -x %s\n", env);
 	else
 	{
 		*equals = 0;
 		value = gc_strdup(get_gc(), equals + 1);
-		//printf("declare -x %s=\"%s\"\n", env, value);
+		printf("declare -x %s=\"%s\"\n", env, value);
 		gc_free(get_gc(), value);
 	}
 	gc_free(get_gc(), env);
