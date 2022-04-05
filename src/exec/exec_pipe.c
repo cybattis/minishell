@@ -6,7 +6,7 @@
 /*   By: cybattis <cybattis@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 17:10:07 by cybattis          #+#    #+#             */
-/*   Updated: 2022/04/05 11:52:12 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/04/05 11:55:51 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ static int	fork_pipe(t_command_batch *batch, t_pipe *pipes)
 		pid = fork();
 		if (!pid)
 		{
-			pipe_redirection(i, batch, pipes);
+			if (pipe_redirection(i, batch, pipes))
+				return (-1);
 			if (batch->commands[i].is_builtin == 1)
 				exit(execute_builtin(&batch->commands[i]));
 			execute_bin(&batch->commands[i]);
