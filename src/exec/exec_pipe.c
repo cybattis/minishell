@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cybattis <cybattis@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 17:10:07 by cybattis          #+#    #+#             */
-/*   Updated: 2022/04/05 21:44:04 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/04/06 14:12:06 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@ int	execute_pipe(t_command_batch *batch, t_pipe *pipes)
 	{
 		waitpid(-1, &wstatus, 0);
 		get_child_return(wstatus);
-		if (g_minishell.last_return == 130)
-			break ;
 		i++;
 	}
 	g_minishell.is_executing = 0;
@@ -92,7 +90,7 @@ static int	pipe_redirection(size_t i, t_command_batch *batch, t_pipe *pipes)
 		return (0);
 	}
 	close_pipe(batch->count - 1, pipes);
-	if (status == -2)
+	if (status == SIGINT_HD)
 		exit(130);
 	return (-1);
 }

@@ -48,7 +48,7 @@ int	redir_heredoc(t_redir redirections)
 
 static int	is_heredoc_open(void)
 {
-	if (g_minishell.is_heredoc == -1)
+	if (g_minishell.is_heredoc == SIGINT_HD)
 	{
 		g_minishell.is_heredoc = 0;
 		return (0);

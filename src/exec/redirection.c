@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cybattis <cybattis@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 14:54:11 by cybattis          #+#    #+#             */
-/*   Updated: 2022/04/05 20:55:52 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/04/06 13:12:37 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	redirection(t_redir *redirections)
 {
 	int	i;
 	int	fds[2];
+	int	status;
 
 	i = 0;
 	ft_memset(fds, 0, sizeof(int) * 2);
@@ -36,12 +37,11 @@ int	redirection(t_redir *redirections)
 			fds[1] = redir_out(fds[1], redirections[i]);
 		else if (redirections[i].type == TOKEN_REDIR_OUT_APPEND)
 			fds[1] = redir_out_append(fds[1], redirections[i]);
-		if (clean_redirection(fds))
-			return (ERROR);
+		status = clean_redirection(fds);
+		if (status)
+			return (status);
 		i++;
 	}
-	if (fds[0] == SIGINT_HD)
-		return (SIGINT_HD);
 	if (!fds[0] && !fds[1])
 		return (NO_FD_SET);
 	return (set_redirection(fds));

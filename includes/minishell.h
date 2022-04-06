@@ -30,6 +30,7 @@ typedef struct s_mini
 	int				is_executing;
 	int				is_heredoc;
 	int				has_child;
+	int				is_piping;
 	int				argc;
 	char			**argv;
 	char			**env;

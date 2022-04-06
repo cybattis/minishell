@@ -82,6 +82,7 @@ void	init_minishell(int argc, char **argv, char **envp)
 	g_minishell.last_return = 0;
 	g_minishell.is_executing = 0;
 	g_minishell.has_child = 0;
+	g_minishell.is_piping = 0;
 	g_minishell.argv = argv;
 	g_minishell.argc = argc;
 	update_shell_env_vars(envp);

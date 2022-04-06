@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cybattis <cybattis@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 12:55:27 by cybattis          #+#    #+#             */
-/*   Updated: 2022/04/05 20:32:33 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/04/06 14:26:59 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #include "readline.h"
 #include "core.h"
 #include <signal.h>
+
+static void	sigint_handler(void);
 
 int	init_signal(void)
 {
@@ -27,27 +29,32 @@ int	init_signal(void)
 void	sig_handler(int signum)
 {
 	if (signum == SIGINT)
-	{
-		printf("\n");
-		if (g_minishell.is_heredoc)
-		{
-			g_minishell.is_heredoc = 0;
-			close(STDIN_FILENO);
-			g_minishell.last_return = 130;
-			return ;
-		}
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		if (!g_minishell.is_executing)
-			rl_redisplay();
-		if (!g_minishell.has_child)
-			g_minishell.last_return = 1;
-	}
+		sigint_handler();
 	if (signum == SIGQUIT)
-		printf("Quit: 3\n");
+		ft_dprintf(STDERR_FILENO, "Quit: 3\n");
 	if (signum == SIGPIPE)
 	{
 		gc_clean(get_gc());
 		exit(141);
 	}
+}
+
+static void	sigint_handler(void)
+{
+	if (g_minishell.is_heredoc)
+	{
+		if (g_minishell.is_piping == 0)
+			ft_dprintf(STDERR_FILENO, "\n");
+		g_minishell.is_heredoc = SIGINT_HD;
+		close(STDIN_FILENO);
+		g_minishell.last_return = 130;
+		return ;
+	}
+	ft_dprintf(STDERR_FILENO, "\n");
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	if (!g_minishell.is_executing)
+		rl_redisplay();
+	if (!g_minishell.has_child)
+		g_minishell.last_return = 1;
 }

@@ -30,10 +30,12 @@ int	ft_error_dup(int fd)
 
 int	clean_redirection(int *fds)
 {
-	if (fds[0] == -1 || fds[1] == -1)
+	if (fds[0] <= -1 || fds[1] == -1)
 	{
 		close(fds[0]);
 		close(fds[1]);
+		if (fds[0] == SIGINT_HD)
+			return (SIGINT_HD);
 		return (-1);
 	}
 	return (0);
