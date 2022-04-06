@@ -23,7 +23,7 @@ int	ft_format_valid_a(char *format, char *str)
 		len = ft_atoi(&format[i]);
 	if (ft_strlen(str) > len)
 		return (FT_FALSE);
-	return (FT_TRUE);
+	return (TRUE);
 }
 
 int	ft_format_valid_s(char *format, char *str)
@@ -42,7 +42,7 @@ int	ft_format_valid_s(char *format, char *str)
 	}
 	if (str[i] != 0 || i == 0)
 		return (FT_FALSE);
-	return (FT_TRUE);
+	return (TRUE);
 }
 
 int	ft_format_valid_d(char *format, char *str)
@@ -68,7 +68,7 @@ int	ft_format_valid_d(char *format, char *str)
 	}
 	if (str[i] != 0 || i == 0)
 		return (FT_FALSE);
-	return (FT_TRUE);
+	return (TRUE);
 }
 
 //int	ft_format_valid_f(char *format, char *str)
@@ -104,12 +104,12 @@ int	ft_format_valid_d(char *format, char *str)
 //	}
 //	if (str[i] != 0 || i == 0)
 //		return (FT_FALSE);
-//	return (FT_TRUE);
+//	return (TRUE);
 //}
 
 int	ft_format_valid_c(char *str)
 {
 	if (ft_strlen(str) != 1)
 		return (FT_FALSE);
-	return (FT_TRUE);
+	return (TRUE);
 }

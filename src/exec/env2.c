@@ -31,3 +31,19 @@ char	*get_env(char *name)
 		value++;
 	return (value);
 }
+
+int	parse_var(char *var)
+{
+	size_t	i;
+
+	i = 0;
+	if (var[0] == '=' || ft_isdigit(var[0]))
+		return (0);
+	while (var[i] && var[i] != '=')
+	{
+		if (!is_envchar(var[i]) && var[i] != '=')
+			return (0);
+		i++;
+	}
+	return (1);
+}

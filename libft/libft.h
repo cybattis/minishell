@@ -21,7 +21,7 @@
 # include <limits.h>
 
 # define FT_FALSE 0
-# define FT_TRUE 1
+# define TRUE 1
 
 # ifdef __linux__
 #  include <stdint.h>

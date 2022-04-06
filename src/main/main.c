@@ -18,7 +18,7 @@ int	main(int argc, char **argv, char **envp)
 	t_command_batch	command_batch;
 
 	init_minishell(argc, argv, envp);
-	while (FT_TRUE)
+	while (TRUE)
 	{
 		init_signal();
 		line_read = ft_get_line();
@@ -26,5 +26,4 @@ int	main(int argc, char **argv, char **envp)
 		execute_command(command_batch);
 		destroy_command_batch(command_batch);
 	}
-	return (0);
 }

@@ -51,5 +51,5 @@ int	ft_valid_args(size_t argc, char **argv, char *format)
 			i++;
 		arg++;
 	}
-	return (FT_TRUE);
+	return (TRUE);
 }
