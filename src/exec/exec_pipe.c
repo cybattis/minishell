@@ -6,7 +6,7 @@
 /*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 17:10:07 by cybattis          #+#    #+#             */
-/*   Updated: 2022/04/06 14:12:06 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/04/06 16:18:07 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ static int	pipe_redirection(size_t i, t_command_batch *batch, t_pipe *pipes)
 	}
 	close_pipe(batch->count - 1, pipes);
 	if (status == SIGINT_HD)
-		exit(130);
+		exit(1);
 	return (-1);
 }
 

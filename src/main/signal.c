@@ -47,7 +47,7 @@ static void	sigint_handler(void)
 			ft_dprintf(STDERR_FILENO, "\n");
 		g_minishell.is_heredoc = SIGINT_HD;
 		close(STDIN_FILENO);
-		g_minishell.last_return = 130;
+		g_minishell.last_return = 1;
 		return ;
 	}
 	ft_dprintf(STDERR_FILENO, "\n");
