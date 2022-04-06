@@ -1,11 +1,6 @@
-#include <stdio.h>
-#include <unistd.h>
+#include "libft/libft.h"
 
 int main()
 {
-	while (1)
-	{
-		sleep(1);
-		printf("echo hey");
-	}
+	ft_dprintf(STDERR_FILENO, "hello %s hello2 %s\n", "hi", "hi!");
 }

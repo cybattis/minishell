@@ -6,7 +6,7 @@
 /*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 21:46:20 by njennes           #+#    #+#             */
-/*   Updated: 2022/04/06 14:54:28 by njennes          ###   ########.fr       */
+/*   Updated: 2022/04/06 14:56:30 by njennes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,9 @@ int			env_var_index(const char *name);
 void	set_env_var(char *name, char *value)
 {
 	if (env_var_index(name) != -1)
-	{
-		ft_dprintf(STDERR_FILENO, "updating\n");
 		update_env_var(name, value);
-	}
 	else
-	{
-		ft_dprintf(STDERR_FILENO, "creating\n");
 		create_env_var(name, value);
-	}
 }
 
 void	unset_env_var(char *name)

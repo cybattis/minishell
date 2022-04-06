@@ -1,0 +1,213 @@
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ MAKE_DIR:=
+.DS_Store[0m[K      Makefile[0m[K       [01;34mlibft[0m[K/         [01;34mobj[0m[K/           [01;34msrc[0m[K/
+[01;34m.git[0m[K/          README.md[0m[K      main.c[0m[K         out[0m[K            [01;34mtest[0m[K/
+[01;32m.gitignore[0m[K     [01;32ma.out[0m[K          [01;32mminishell[0m[K      out][0m[K           
+[01;34m.idea[0m[K/         [01;34mincludes[0m[K/      minishell.pdf[0m[K  outfile[0m[K        
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ MAKE_DIR:=$(PWD)
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ 
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ MASTER_MAKE:=
+.DS_Store[0m[K      Makefile[0m[K       [01;34mlibft[0m[K/         [01;34mobj[0m[K/           [01;34msrc[0m[K/
+[01;34m.git[0m[K/          README.md[0m[K      main.c[0m[K         out[0m[K            [01;34mtest[0m[K/
+[01;32m.gitignore[0m[K     [01;32ma.out[0m[K          [01;32mminishell[0m[K      out][0m[K           
+[01;34m.idea[0m[K/         [01;34mincludes[0m[K/      minishell.pdf[0m[K  outfile[0m[K        
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ MASTER_MAKE:=$(MAKE_DIR)/Makefile
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ 
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ SRCS_DIR:=
+.DS_Store[0m[K      Makefile[0m[K       [01;34mlibft[0m[K/         [01;34mobj[0m[K/           [01;34msrc[0m[K/
+[01;34m.git[0m[K/          README.md[0m[K      main.c[0m[K         out[0m[K            [01;34mtest[0m[K/
+[01;32m.gitignore[0m[K     [01;32ma.out[0m[K          [01;32mminishell[0m[K      out][0m[K           
+[01;34m.idea[0m[K/         [01;34mincludes[0m[K/      minishell.pdf[0m[K  outfile[0m[K        
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ SRCS_DIR:=$(MAKE_DIR)/src
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ OBJS_DIR:=
+.DS_Store[0m[K      Makefile[0m[K       [01;34mlibft[0m[K/         [01;34mobj[0m[K/           [01;34msrc[0m[K/
+[01;34m.git[0m[K/          README.md[0m[K      main.c[0m[K         out[0m[K            [01;34mtest[0m[K/
+[01;32m.gitignore[0m[K     [01;32ma.out[0m[K          [01;32mminishell[0m[K      out][0m[K           
+[01;34m.idea[0m[K/         [01;34mincludes[0m[K/      minishell.pdf[0m[K  outfile[0m[K        
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ OBJS_DIR:=$(MAKE_DIR)/obj
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ 
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ LIB_DIR:=
+.DS_Store[0m[K      Makefile[0m[K       [01;34mlibft[0m[K/         [01;34mobj[0m[K/           [01;34msrc[0m[K/
+[01;34m.git[0m[K/          README.md[0m[K      main.c[0m[K         out[0m[K            [01;34mtest[0m[K/
+[01;32m.gitignore[0m[K     [01;32ma.out[0m[K          [01;32mminishell[0m[K      out][0m[K           
+[01;34m.idea[0m[K/         [01;34mincludes[0m[K/      minishell.pdf[0m[K  outfile[0m[K        
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ LIB_DIR:=$(MAKE_DIR)/libft
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ 
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ INC_PATH:=
+.DS_Store[0m[K      Makefile[0m[K       [01;34mlibft[0m[K/         [01;34mobj[0m[K/           [01;34msrc[0m[K/
+[01;34m.git[0m[K/          README.md[0m[K      main.c[0m[K         out[0m[K            [01;34mtest[0m[K/
+[01;32m.gitignore[0m[K     [01;32ma.out[0m[K          [01;32mminishell[0m[K      out][0m[K           
+[01;34m.idea[0m[K/         [01;34mincludes[0m[K/      minishell.pdf[0m[K  outfile[0m[K        
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ INC_PATH:=-I$(LIB_DIR) -I$(MAKE_DIR)/includes [A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Ks
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ 
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ LIB_PATH:=
+.DS_Store[0m[K      Makefile[0m[K       [01;34mlibft[0m[K/         [01;34mobj[0m[K/           [01;34msrc[0m[K/
+[01;34m.git[0m[K/          README.md[0m[K      main.c[0m[K         out[0m[K            [01;34mtest[0m[K/
+[01;32m.gitignore[0m[K     [01;32ma.out[0m[K          [01;32mminishell[0m[K      out][0m[K           
+[01;34m.idea[0m[K/         [01;34mincludes[0m[K/      minishell.pdf[0m[K  outfile[0m[K        
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ LIB_PATH:=-L$(LIB_DIR)
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ 
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ OS=$(shell uname -s)
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ ifeq ($(OS), Linux)
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ READLINE:=
+.DS_Store[0m[K      Makefile[0m[K       [01;34mlibft[0m[K/         [01;34mobj[0m[K/           [01;34msrc[0m[K/
+[01;34m.git[0m[K/          README.md[0m[K      main.c[0m[K         out[0m[K            [01;34mtest[0m[K/
+[01;32m.gitignore[0m[K     [01;32ma.out[0m[K          [01;32mminishell[0m[K      out][0m[K           
+[01;34m.idea[0m[K/         [01;34mincludes[0m[K/      minishell.pdf[0m[K  outfile[0m[K        
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ READLINE:=-L/usr/lib/x86_64-linux-gnu/ -lreadline -lhistory
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ INC_PATH+=
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ else
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ READLINE:=
+.DS_Store[0m[K      Makefile[0m[K       [01;34mlibft[0m[K/         [01;34mobj[0m[K/           [01;34msrc[0m[K/
+[01;34m.git[0m[K/          README.md[0m[K      main.c[0m[K         out[0m[K            [01;34mtest[0m[K/
+[01;32m.gitignore[0m[K     [01;32ma.out[0m[K          [01;32mminishell[0m[K      out][0m[K           
+[01;34m.idea[0m[K/         [01;34mincludes[0m[K/      minishell.pdf[0m[K  outfile[0m[K        
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ READLINE:=-L ~/.brew/opt/readline/lib -lreadline -lhistory
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ INC_PATH+=
+.DS_Store[0m[K      Makefile[0m[K       [01;34mlibft[0m[K/         [01;34mobj[0m[K/           [01;34msrc[0m[K/
+[01;34m.git[0m[K/          README.md[0m[K      main.c[0m[K         out[0m[K            [01;34mtest[0m[K/
+[01;32m.gitignore[0m[K     [01;32ma.out[0m[K          [01;32mminishell[0m[K      out][0m[K           
+[01;34m.idea[0m[K/         [01;34mincludes[0m[K/      minishell.pdf[0m[K  outfile[0m[K        
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ INC_PATH+=-I ~/.brew/opt/readline/include/readline
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ endif
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ 
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ LIBS:=
+.DS_Store[0m[K      Makefile[0m[K       [01;34mlibft[0m[K/         [01;34mobj[0m[K/           [01;34msrc[0m[K/
+[01;34m.git[0m[K/          README.md[0m[K      main.c[0m[K         out[0m[K            [01;34mtest[0m[K/
+[01;32m.gitignore[0m[K     [01;32ma.out[0m[K          [01;32mminishell[0m[K      out][0m[K           
+[01;34m.idea[0m[K/         [01;34mincludes[0m[K/      minishell.pdf[0m[K  outfile[0m[K        
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ LIBS:=$(LIB_PATH) -lft $(READLINE)
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ 
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ BIN_CC:=
+.DS_Store[0m[K      Makefile[0m[K       [01;34mlibft[0m[K/         [01;34mobj[0m[K/           [01;34msrc[0m[K/
+[01;34m.git[0m[K/          README.md[0m[K      main.c[0m[K         out[0m[K            [01;34mtest[0m[K/
+[01;32m.gitignore[0m[K     [01;32ma.out[0m[K          [01;32mminishell[0m[K      out][0m[K           
+[01;34m.idea[0m[K/         [01;34mincludes[0m[K/      minishell.pdf[0m[K  outfile[0m[K        
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ BIN_CC:=gcc
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ 
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ BIN_CFLAGS:=
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ BIN_CFLAGS+=
+.DS_Store[0m[K      Makefile[0m[K       [01;34mlibft[0m[K/         [01;34mobj[0m[K/           [01;34msrc[0m[K/
+[01;34m.git[0m[K/          README.md[0m[K      main.c[0m[K         out[0m[K            [01;34mtest[0m[K/
+[01;32m.gitignore[0m[K     [01;32ma.out[0m[K          [01;32mminishell[0m[K      out][0m[K           
+[01;34m.idea[0m[K/         [01;34mincludes[0m[K/      minishell.pdf[0m[K  outfile[0m[K        
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ BIN_CFLAGS+=-MD
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ BIN_CFLAGS+=
+.DS_Store[0m[K      Makefile[0m[K       [01;34mlibft[0m[K/         [01;34mobj[0m[K/           [01;34msrc[0m[K/
+[01;34m.git[0m[K/          README.md[0m[K      main.c[0m[K         out[0m[K            [01;34mtest[0m[K/
+[01;32m.gitignore[0m[K     [01;32ma.out[0m[K          [01;32mminishell[0m[K      out][0m[K           
+[01;34m.idea[0m[K/         [01;34mincludes[0m[K/      minishell.pdf[0m[K  outfile[0m[K        
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ BIN_CFLAGS+=-Wall -Wextra -Werror
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ BIN_CFLAGS+=
+.DS_Store[0m[K      Makefile[0m[K       [01;34mlibft[0m[K/         [01;34mobj[0m[K/           [01;34msrc[0m[K/
+[01;34m.git[0m[K/          README.md[0m[K      main.c[0m[K         out[0m[K            [01;34mtest[0m[K/
+[01;32m.gitignore[0m[K     [01;32ma.out[0m[K          [01;32mminishell[0m[K      out][0m[K           
+[01;34m.idea[0m[K/         [01;34mincludes[0m[K/      minishell.pdf[0m[K  outfile[0m[K        
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ BIN_CFLAGS+=#-g3 -fsanitize=address
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ BIN_CFLAGS+=
+.DS_Store[0m[K      Makefile[0m[K       [01;34mlibft[0m[K/         [01;34mobj[0m[K/           [01;34msrc[0m[K/
+[01;34m.git[0m[K/          README.md[0m[K      main.c[0m[K         out[0m[K            [01;34mtest[0m[K/
+[01;32m.gitignore[0m[K     [01;32ma.out[0m[K          [01;32mminishell[0m[K      out][0m[K           
+[01;34m.idea[0m[K/         [01;34mincludes[0m[K/      minishell.pdf[0m[K  outfile[0m[K        
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ BIN_CFLAGS+=$(INC_PATH)
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ 
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ BIN_LDFLAGS:=
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ BIN_LDFLAGS+=
+.DS_Store[0m[K      Makefile[0m[K       [01;34mlibft[0m[K/         [01;34mobj[0m[K/           [01;34msrc[0m[K/
+[01;34m.git[0m[K/          README.md[0m[K      main.c[0m[K         out[0m[K            [01;34mtest[0m[K/
+[01;32m.gitignore[0m[K     [01;32ma.out[0m[K          [01;32mminishell[0m[K      out][0m[K           
+[01;34m.idea[0m[K/         [01;34mincludes[0m[K/      minishell.pdf[0m[K  outfile[0m[K        
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ BIN_LDFLAGS+=#-fsanitize=address
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ 
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ LIBFT_LIB:=
+.DS_Store[0m[K      Makefile[0m[K       [01;34mlibft[0m[K/         [01;34mobj[0m[K/           [01;34msrc[0m[K/
+[01;34m.git[0m[K/          README.md[0m[K      main.c[0m[K         out[0m[K            [01;34mtest[0m[K/
+[01;32m.gitignore[0m[K     [01;32ma.out[0m[K          [01;32mminishell[0m[K      out][0m[K           
+[01;34m.idea[0m[K/         [01;34mincludes[0m[K/      minishell.pdf[0m[K  outfile[0m[K        
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ LIBFT_LIB:=$(LIB_DIR)/libft.a
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ 
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ export MAKE_DIR
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ export OBJS_DIR
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ export MASTER_MAKE
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ export SRCS_DIR
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ export OBJS_DIR
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ export INC_PATH
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ export LIB_PATH
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ export LIBS
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ export BIN_CC
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ export BIN_CFLAGS
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ export BIN_LDFLAGS
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ export LIBFT_LIB
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ export LIB_PATH
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ export READLINE
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ 
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ .PHONY: all
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ all: header
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ @$(MAKE) -j4 -C $(LIB_DIR)
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ @$(MAKE) -j4 -C $(SRCS_DIR) -r -R --warn-undefined-variables
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ 
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ debug: header
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ @$(MAKE) -j4 -C $(LIB_DIR) debug
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ @$(MAKE) -j4 -C $(SRCS_DIR) -r -R --warn-undefined-variables
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ 
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ .PHONY: bonus
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ bonus: all
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ 
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ .PHONY: clean
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ clean: header
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ @$(MAKE) -C $(LIB_DIR) clean
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ @$(MAKE) -C $(SRCS_DIR) clean
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ 
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ .PHONY: fclean
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ fclean:
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ @$(MAKE) -C $(LIB_DIR) fclean
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ @$(MAKE) -C $(SRCS_DIR) fclean
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ 
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ .PHONY: tests
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ tests:
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ @$(MAKE) -C $(LIB_DIR) debug
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ 
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ .PHONY: re
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ re: fclean all
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ 
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ .PHONY: header
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ header:
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ @printf "\n"
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ @printf "$(_YELLOW)\t░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░$(_END)\n"
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ @printf "$(_YELLOW)\t░   ░░░░░░░   ░   ░    ░░░░░   ░   ░░░      ░░░   ░░░░   ░         ░   ░░░░░░░   ░░░░░░░$(_END)\n"
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ @printf "$(_YELLOW)\t▒  ▒   ▒▒▒    ▒   ▒  ▒   ▒▒▒   ▒   ▒   ▒▒▒▒   ▒   ▒▒▒▒   ▒   ▒▒▒▒▒▒▒   ▒▒▒▒▒▒▒   ▒▒▒▒▒▒▒$(_END)\n"
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ @printf "$(_YELLOW)\t▒   ▒   ▒ ▒   ▒   ▒   ▒   ▒▒   ▒   ▒▒   ▒▒▒▒▒▒▒   ▒▒▒▒   ▒   ▒▒▒▒▒▒▒   ▒▒▒▒▒▒▒   ▒▒▒▒▒▒▒$(_END)\n"
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ @printf "$(_YELLOW)\t▓   ▓▓   ▓▓   ▓   ▓   ▓▓   ▓   ▓   ▓▓▓▓   ▓▓▓▓▓          ▓       ▓▓▓   ▓▓▓▓▓▓▓   ▓▓▓▓▓▓▓$(_END)\n"
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ @printf "$(_YELLOW)\t▓   ▓▓▓  ▓▓   ▓   ▓   ▓▓▓  ▓   ▓   ▓▓▓▓▓▓▓   ▓▓   ▓▓▓▓   ▓   ▓▓▓▓▓▓▓   ▓▓▓▓▓▓▓   ▓▓▓▓▓▓▓$(_END)\n"
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ @printf "$(_YELLOW)\t▓   ▓▓▓▓▓▓▓   ▓   ▓   ▓▓▓▓  ▓  ▓   ▓   ▓▓▓▓   ▓   ▓▓▓▓   ▓   ▓▓▓▓▓▓▓   ▓▓▓▓▓▓▓   ▓▓▓▓▓▓▓$(_END)\n"
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ @printf "$(_YELLOW)\t█   ███████   █   █   ██████   █   ███      ███   ████   █         █         █         █$(_END)\n"
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ @printf "$(_YELLOW)\t████████████████████████████████████████████████████████████████████████████████████████$(_END)\n"
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ @printf "\n"
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ 
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ # Colors
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ # ****************************************************************************
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ 
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ _GREY= \033[30m
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ _RED= \033[31m
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ _ORANGE= \033[38;5;209m
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ _GREEN= \033[32m
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ _YELLOW= \033[33m
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ _BLUE= \033[34m
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ _PURPLE= \033[35m
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ _CYAN= \033[36m
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ _WHITE= \033[37m
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ _END= \033[0m
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ 
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ export _GREY
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ export _RED
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ export _ORANGE
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ export _GREEN
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ export _YELLOW
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ export _BLUE
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ export _PURPLE
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ export _CYAN
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ export _WHITE
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ export _END
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ 
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ 
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ # ****************************************************************************
+[1;93mMinishell[0m: [1;94mminishell [1;92mgit:([1;91mmaster[1;92m)[0;m$ 
