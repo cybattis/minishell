@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cybattis <cybattis@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 21:46:20 by njennes           #+#    #+#             */
-/*   Updated: 2022/04/05 11:03:27 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/04/06 14:54:28 by njennes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,15 @@ int			env_var_index(const char *name);
 void	set_env_var(char *name, char *value)
 {
 	if (env_var_index(name) != -1)
+	{
+		ft_dprintf(STDERR_FILENO, "updating\n");
 		update_env_var(name, value);
+	}
 	else
+	{
+		ft_dprintf(STDERR_FILENO, "creating\n");
 		create_env_var(name, value);
+	}
 }
 
 void	unset_env_var(char *name)
@@ -55,6 +61,8 @@ int	env_var_index(const char *name)
 			j++;
 		if (!name[j] && g_minishell.env[i][j] == '=')
 			return ((int)i);
+		if (!name[j] && !g_minishell.env[i][j])
+			return ((int)i);
 		i++;
 	}
 	return (-1);
@@ -67,9 +75,12 @@ static void	update_env_var(char *name, char *value)
 	i = env_var_index(name);
 	gc_free(get_gc(), g_minishell.env[i]);
 	g_minishell.env[i] = gc_strdup(get_gc(), name);
-	g_minishell.env[i] = gc_strappend(get_gc(), g_minishell.env[i], '=');
-	g_minishell.env[i] = gc_strjoin(get_gc(),
-			g_minishell.env[i], value, FREE_FIRST);
+	if (value)
+	{
+		g_minishell.env[i] = gc_strappend(get_gc(), g_minishell.env[i], '=');
+		g_minishell.env[i] = gc_strjoin(get_gc(),
+				g_minishell.env[i], value, FREE_FIRST);
+	}
 }
 
 static void	create_env_var(char *name, char *value)
