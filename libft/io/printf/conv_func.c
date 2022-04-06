@@ -34,7 +34,7 @@ int	ft_int(t_printf *p, va_list args)
 	if (nb < 0)
 		ft_uputnbr(p, -nb);
 	else
-		ft_putnbr(nb);
+		ft_putnbr_fd(nb, p->fd);
 	ft_print_negfield(p);
 	return (0);
 }
@@ -66,12 +66,12 @@ int	ft_str(t_printf *p, va_list args)
 		p->len += len;
 		ft_print_str_field(p, len);
 		if (!ft_print_str_precision(p, s, len))
-			ft_putstr(s);
+			ft_putstr_fd(s, p->fd);
 		ft_print_negfield(p);
 		return (0);
 	}
 	p->len += 6;
-	ft_putstr("(null)");
+	ft_putstr_fd("(null)", p->fd);
 	return (-1);
 }
 
