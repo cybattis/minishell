@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cybattis <cybattis@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 17:10:07 by cybattis          #+#    #+#             */
-/*   Updated: 2022/04/05 11:55:51 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/04/06 14:12:06 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,7 @@ int	execute_pipe(t_command_batch *batch, t_pipe *pipes)
 	while (i < batch->count - 1)
 		pipe(pipes[i++].fd);
 	i = 0;
-	if (fork_pipe(batch, pipes))
-		return (1);
-	wstatus = 0;
+	wstatus = fork_pipe(batch, pipes);
 	close_pipe(batch->count - 1, pipes);
 	while (i < batch->count)
 	{
@@ -56,8 +54,7 @@ static int	fork_pipe(t_command_batch *batch, t_pipe *pipes)
 		pid = fork();
 		if (!pid)
 		{
-			if (pipe_redirection(i, batch, pipes))
-				return (-1);
+			pipe_redirection(i, batch, pipes);
 			if (batch->commands[i].is_builtin == 1)
 				exit(execute_builtin(&batch->commands[i]));
 			execute_bin(&batch->commands[i]);
@@ -79,12 +76,12 @@ static int	pipe_redirection(size_t i, t_command_batch *batch, t_pipe *pipes)
 	status = redirection(batch->commands[i].redirections);
 	if (status > 0)
 	{
-		if (i > 0 && (status == OUT || status == NONE))
+		if (i > 0 && (status == ONLY_OUT || status == NO_FD_SET))
 		{
 			if (dup2(pipes[i - 1].fd[0], STDIN_FILENO) == -1)
 				ft_print_errno();
 		}
-		if (i < batch->count - 1 && (status == IN || status == NONE))
+		if (i < batch->count - 1 && (status == ONLY_IN || status == NO_FD_SET))
 		{
 			if (dup2(pipes[i].fd[1], STDOUT_FILENO) == -1)
 				ft_print_errno();
@@ -93,6 +90,8 @@ static int	pipe_redirection(size_t i, t_command_batch *batch, t_pipe *pipes)
 		return (0);
 	}
 	close_pipe(batch->count - 1, pipes);
+	if (status == SIGINT_HD)
+		exit(130);
 	return (-1);
 }
 

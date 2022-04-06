@@ -14,6 +14,8 @@
 #include "minishell.h"
 #include "core.h"
 
+static int	exit_minishell(void);
+
 char	*ft_get_line(void)
 {
 	static char	*line_read = NULL;
@@ -26,7 +28,7 @@ char	*ft_get_line(void)
 	prompt = get_prompt();
 	line_read = readline(prompt);
 	if (!line_read)
-		write_to_prompt();
+		exit_minishell();
 	if (!ft_strlen(line_read))
 		g_minishell.last_return = 0;
 	if (line_read && *line_read && !contains_unfinished_quotes(line_read))
@@ -34,7 +36,7 @@ char	*ft_get_line(void)
 	return (gc_strdup(get_gc(), line_read));
 }
 
-int	write_to_prompt(void)
+static int	exit_minishell(void)
 {
 	ft_dprintf(STDERR_FILENO, "exit\n");
 	gc_clean(get_gc());

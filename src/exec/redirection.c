@@ -6,7 +6,7 @@
 /*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 14:54:11 by cybattis          #+#    #+#             */
-/*   Updated: 2022/03/30 17:51:03 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/04/06 13:12:37 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	redirection(t_redir *redirections)
 {
 	int	i;
 	int	fds[2];
+	int	status;
 
 	i = 0;
 	ft_memset(fds, 0, sizeof(int) * 2);
@@ -36,12 +37,13 @@ int	redirection(t_redir *redirections)
 			fds[1] = redir_out(fds[1], redirections[i]);
 		else if (redirections[i].type == TOKEN_REDIR_OUT_APPEND)
 			fds[1] = redir_out_append(fds[1], redirections[i]);
-		if (clean_redirection(fds))
-			return (-1);
+		status = clean_redirection(fds);
+		if (status)
+			return (status);
 		i++;
 	}
 	if (!fds[0] && !fds[1])
-		return (NONE);
+		return (NO_FD_SET);
 	return (set_redirection(fds));
 }
 
@@ -65,11 +67,11 @@ static int	set_redirection(int fds[2])
 		close(fds[1]);
 	}
 	if (status[1] && status[0])
-		return (BOTH);
+		return (BOTH_FD_SET);
 	if (status[1] && !status[0])
-		return (OUT);
+		return (ONLY_OUT);
 	if (!status[1] && status[0])
-		return (IN);
+		return (ONLY_IN);
 	return (-1);
 }
 

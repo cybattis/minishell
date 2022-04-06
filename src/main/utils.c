@@ -10,7 +10,36 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "core.h"
 #include "minishell.h"
+
+t_gc	*get_gc(void)
+{
+	return (&g_minishell.gc);
+}
+
+int	ft_error_dup(int fd)
+{
+	if (fd == -1)
+	{
+		ft_print_errno();
+		close(fd);
+	}
+	return (-1);
+}
+
+int	clean_redirection(int *fds)
+{
+	if (fds[0] <= -1 || fds[1] == -1)
+	{
+		close(fds[0]);
+		close(fds[1]);
+		if (fds[0] == SIGINT_HD)
+			return (SIGINT_HD);
+		return (-1);
+	}
+	return (0);
+}
 
 int	dup_stdfds(int std_fds[2])
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cybattis <cybattis@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 13:48:19 by cybattis          #+#    #+#             */
-/*   Updated: 2022/04/05 11:04:05 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/04/06 11:11:37 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,44 +15,39 @@
 #include "minishell.h"
 #include "core.h"
 
-static void	check_env(char **best_env, char *last_best, size_t i, size_t j);
+int				parse_var(char *var);
+static void		set_var(size_t i, char **arg);
+static void		check_env(char **best_env, char *last_best, size_t i, size_t j);
+static void		print_best_env(char *env);
+static int		noarg_export(void);
 
-static int	check_var(char *var)
+int	bt_export(char **arg)
 {
+	int		got_error;
 	size_t	i;
 
 	i = 0;
-	if (var[0] == '=' || ft_isdigit(var[0]))
-		return (0);
-	while (var[i] && var[i] != '=')
+	got_error = 0;
+	if (!arg[0])
+		return (noarg_export());
+	while (arg[i])
 	{
-		if (!is_envchar(var[i]) && var[i] != '=')
-			return (0);
+		if (!parse_var(arg[i]))
+		{
+			ft_dprintf(STDERR_FILENO, "minishell: export: `%s':"
+				" not a valid identifier\n", arg[i++]);
+			got_error = 1;
+			continue ;
+		}
+		set_var(i, arg);
 		i++;
 	}
-	return (1);
+	if (got_error == 1)
+		return (1);
+	return (0);
 }
 
-static void	print_best_env(char *env)
-{
-	char	*value;
-	char	*equals;
-
-	env = gc_strdup(get_gc(), env);
-	equals = ft_strchr(env, '=');
-	if (!equals)
-		printf("declare -x %s\n", env);
-	else
-	{
-		*equals = 0;
-		value = gc_strdup(get_gc(), equals + 1);
-		printf("declare -x %s=\"%s\"\n", env, value);
-		gc_free(get_gc(), value);
-	}
-	gc_free(get_gc(), env);
-}
-
-int	noarg_export(void)
+static int	noarg_export(void)
 {
 	char	*last_best;
 	char	*best_env;
@@ -81,6 +76,22 @@ int	noarg_export(void)
 	return (0);
 }
 
+static void	set_var(size_t i, char **arg)
+{
+	size_t	value_offset;
+
+	value_offset = 0;
+	while (arg[i][value_offset] && arg[i][value_offset] != '=')
+		value_offset++;
+	if (arg[i][value_offset] == '=')
+	{
+		arg[i][value_offset++] = 0;
+		set_env_var(arg[i], &arg[i][value_offset]);
+	}
+	else
+		set_env_var(arg[i], NULL);
+}
+
 static void	check_env(char **best_env, char *last_best, size_t i, size_t j)
 {
 	if (ft_strcmp(g_minishell.env[i], *best_env) < 0
@@ -90,33 +101,21 @@ static void	check_env(char **best_env, char *last_best, size_t i, size_t j)
 		*best_env = g_minishell.env[i];
 }
 
-int	bt_export(char **arg)
+static void	print_best_env(char *env)
 {
-	size_t	value_offset;
-	size_t	i;
+	char	*value;
+	char	*equals;
 
-	i = 0;
-	if (!arg[0])
-		return (noarg_export());
-	while (arg[i])
+	env = gc_strdup(get_gc(), env);
+	equals = ft_strchr(env, '=');
+	if (!equals)
+		printf("declare -x %s\n", env);
+	else
 	{
-		if (!check_var(arg[i]))
-		{
-			ft_dprintf(STDERR_FILENO, "minishell: export: `%s':"
-				" not a valid identifier\n", arg[i++]);
-			continue ;
-		}
-		value_offset = 0;
-		while (arg[i][value_offset] && arg[i][value_offset] != '=')
-			value_offset++;
-		if (arg[i][value_offset] == '=')
-		{
-			arg[i][value_offset++] = 0;
-			set_env_var(arg[i], &arg[i][value_offset]);
-		}
-		else
-			set_env_var(arg[i], NULL);
-		i++;
+		*equals = 0;
+		value = gc_strdup(get_gc(), equals + 1);
+		printf("declare -x %s=\"%s\"\n", env, value);
+		gc_free(get_gc(), value);
 	}
-	return (0);
+	gc_free(get_gc(), env);
 }

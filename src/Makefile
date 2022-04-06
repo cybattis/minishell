@@ -13,8 +13,7 @@ EXEC		=	execute.c exec_pipe.c builtins.c builtins_env.c export.c execute_child.c
 				redirection.c env2.c
 
 MAIN_DIR	=	main
-MAIN		=	main.c get_line.c get_git_prompt.c get_prompt.c init.c	\
-				signal.c utils_error.c utils.c utils2.c
+MAIN		=	main.c get_line.c get_git_prompt.c get_prompt.c init.c signal.c utils_error.c utils.c
 
 SRC_PARSING	=	$(addprefix $(PARS_DIR)/, $(PARSING))
 SRC_EXEC	=	$(addprefix $(EXEC_DIR)/, $(EXEC))
@@ -32,15 +31,15 @@ DEPENDS		=	$(addprefix $(OBJS_DIR)/, $(OBJS:.o=.d))
 .PHONY: all
 all:	../$(NAME)
 
-$(OBJS_DIR)/%.o:	$(SRCS_DIR)/exec/%.c | $(OBJS_DIR)
+$(OBJS_DIR)/%.o:	$(SRCS_DIR)/$(PARS_DIR)/%.c | $(OBJS_DIR)
 	@$(BIN_CC) $(BIN_CFLAGS) -c $< -o $@
 	@printf "$(_YELLOW)█$(_END)"
 
-$(OBJS_DIR)/%.o:	$(SRCS_DIR)/main/%.c | $(OBJS_DIR)
+$(OBJS_DIR)/%.o:	$(SRCS_DIR)/$(EXEC_DIR)/%.c | $(OBJS_DIR)
 	@$(BIN_CC) $(BIN_CFLAGS) -c $< -o $@
 	@printf "$(_YELLOW)█$(_END)"
 
-$(OBJS_DIR)/%.o:	$(SRCS_DIR)/parsing/%.c | $(OBJS_DIR)
+$(OBJS_DIR)/%.o:	$(SRCS_DIR)/$(MAIN_DIR)/%.c | $(OBJS_DIR)
 	@$(BIN_CC) $(BIN_CFLAGS) -c $< -o $@
 	@printf "$(_YELLOW)█$(_END)"
 
@@ -55,7 +54,7 @@ bonus: all
 .PHONY: clean
 clean:
 	@printf "$(_YELLOW)Removing object files ...$(_END)\n"
-	@rm -f $(OBJS) $(DEPENDS)
+	@rm -rf $(OBJS_DIR)
 
 .PHONY: fclean
 fclean: clean

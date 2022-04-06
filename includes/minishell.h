@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cybattis <cybattis@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 21:46:20 by cybattis          #+#    #+#             */
-/*   Updated: 2022/04/05 11:24:42 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/04/06 10:51:50 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,12 @@
 # include "parsing.h"
 # include "libft.h"
 
-# define BOTH 0
-# define OUT 1
-# define IN 2
-# define NONE 3
+# define SIGINT_HD -2
+# define ERROR -1
+# define BOTH_FD_SET 0
+# define ONLY_OUT 1
+# define ONLY_IN 2
+# define NO_FD_SET 3
 
 typedef struct s_mini
 {
@@ -28,6 +30,7 @@ typedef struct s_mini
 	int				is_executing;
 	int				is_heredoc;
 	int				has_child;
+	int				is_piping;
 	int				argc;
 	char			**argv;
 	char			**env;
@@ -42,15 +45,16 @@ char		*ft_get_line(void);
 char		*get_prompt(void);
 char		*get_git_prompt(char *path_to_git, char *current_path);
 int			is_git_repo(char *path);
-int			write_to_prompt(void);
 
 void		init_minishell(int argc, char **argv, char **envp);
 int			init_signal(void);
 void		sig_handler(int signum);
 
 int			execute_command(t_command_batch cmd_batch);
+int			execute_builtin(t_command *command);
 void		execute_bin(t_command *commands);
 char		**get_path(void);
+void		get_child_return(int wstatus);
 
 int			execute_pipe(t_command_batch *batch, t_pipe *pipes);
 t_pipe		*init_pipe(size_t nbr);
@@ -64,13 +68,10 @@ void		ft_errno_exit_msg(char *name, int code);
 int			gc_callback(void *ptr);
 
 int			ft_error_dup(int fd);
-size_t		ft_arglen(char const **args);
 int			clean_redirection(int *fds);
-
 int			restore_stdfds(int std_fd[2]);
 int			dup_stdfds(int std_fds[2]);
 
-int			execute_builtin(t_command *command);
 int			bt_echo(t_command *cmd);
 int			bt_exit(char **args);
 int			bt_pwd(void);
@@ -85,7 +86,5 @@ void		unset_env_var(char *name);
 void		update_shell_env_vars(char **envp);
 int			get_empty_var_index(void);
 char		*get_env(char *name);
-
-void		get_child_return(int wstatus);
 
 #endif
