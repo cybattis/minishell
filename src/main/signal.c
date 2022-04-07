@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 12:55:27 by cybattis          #+#    #+#             */
-/*   Updated: 2022/04/07 15:41:39 by njennes          ###   ########.fr       */
+/*   Updated: 2022/04/07 16:55:27 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	sig_handler(int signum)
 
 static void	sigint_handler(void)
 {
-	if (g_minishell.is_heredoc != -1)
+	if (!g_minishell.is_executing && g_minishell.is_heredoc != -1)
 		ft_dprintf(STDERR_FILENO, "\n");
 	if (g_minishell.is_heredoc == 1)
 	{

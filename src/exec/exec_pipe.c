@@ -6,7 +6,7 @@
 /*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 17:10:07 by cybattis          #+#    #+#             */
-/*   Updated: 2022/04/07 11:20:50 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/04/07 15:58:19 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,11 @@ int	execute_pipe(t_command_batch *batch, t_pipe *pipes)
 	while (i < batch->count - 1)
 		pipe(pipes[i++].fd);
 	i = 0;
+	if (launch_heredoc(batch) == SIGINT_HEREDOC)
+		return (SIGINT_HEREDOC);
 	wstatus = fork_pipe(batch, pipes);
 	close_pipe(batch->count - 1, pipes);
-	if (wstatus == SIGINT_HEREDOC)
+	if (wstatus < 0)
 	{
 		g_minishell.is_executing = 0;
 		return (1);
@@ -51,8 +53,6 @@ static int	fork_pipe(t_command_batch *batch, t_pipe *pipes)
 	size_t	i;
 	pid_t	pid;
 
-	if (launch_heredoc(batch) == SIGINT_HEREDOC)
-		return (SIGINT_HEREDOC);
 	i = 0;
 	while (i < batch->count)
 	{
@@ -96,7 +96,7 @@ static int	pipe_redirection(size_t i, t_command_batch *batch, t_pipe *pipes)
 		return (0);
 	}
 	close_pipe(batch->count - 1, pipes);
-	if (status == SIGINT_HEREDOC)
+	if (status == -1)
 		exit(1);
 	return (-1);
 }
