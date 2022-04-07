@@ -10,7 +10,7 @@ PARSING		=	parsing.c command_split.c minishell_error.c get_redirections.c get_re
 
 EXEC_DIR	=	exec
 EXEC		=	execute.c exec_pipe.c builtins.c builtins_env.c export.c execute_child.c env.c env_utils.c heredoc.c	\
-				redirection.c env2.c
+				redirection.c env2.c heredoc_utils.c
 
 MAIN_DIR	=	main
 MAIN		=	main.c get_line.c get_git_prompt.c get_prompt.c init.c signal.c utils_error.c utils.c

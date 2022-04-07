@@ -97,35 +97,6 @@ static int	generate_temp_file(char *str_out)
 	return (fd_temp);
 }
 
-int	launch_heredoc(t_command_batch *batch)
-{
-	int		heredoc_fd;
-	size_t	i;
-	size_t	j;
-
-	i = 0;
-	heredoc_fd = 0;
-	while (i < batch->count)
-	{
-		j = 0;
-		while (batch->commands[i].redirections[j].type)
-		{
-			if (j > 0 && batch->commands[i].redirections[j - 1].heredoc_fd)
-			{
-				close(batch->commands[i].redirections[j - 1].heredoc_fd);
-				batch->commands[i].redirections[j - 1].heredoc_fd = 0;
-			}
-			if (batch->commands[i].redirections[j].type == TOKEN_REDIR_HEREDOC)
-				heredoc_fd = redir_heredoc(batch->commands[i].redirections[j]);
-			if (heredoc_fd == SIGINT_HEREDOC)
-				return (SIGINT_HEREDOC);
-			batch->commands[i].redirections[j++].heredoc_fd = heredoc_fd;
-		}
-		i++;
-	}
-	return (0);
-}
-
 int	close_heredoc(t_command_batch *batch)
 {
 	size_t	i;
