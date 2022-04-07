@@ -6,7 +6,7 @@
 /*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 13:36:22 by njennes           #+#    #+#             */
-/*   Updated: 2022/04/07 18:21:54 by njennes          ###   ########.fr       */
+/*   Updated: 2022/04/07 18:22:57 by njennes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "parsing.h"
 #include "core.h"
 
-static void	destroy_parsers(t_parser *parsers, size_t count);
+static void				destroy_parsers(t_parser *parsers, size_t count);
 static t_command_batch	free_return(t_command_batch batch, char *input);
 
 t_command_batch	parse_input(char *input)

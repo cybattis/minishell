@@ -16,7 +16,6 @@
 #include "core.h"
 
 static int	generate_temp_file(char *str_out);
-static int	is_heredoc_open(void);
 
 int	redir_heredoc(t_redir redirections)
 {
@@ -26,7 +25,7 @@ int	redir_heredoc(t_redir redirections)
 	g_minishell.is_heredoc = 1;
 	str_out = gc_strdup(get_gc(), "");
 	buff = readline("> ");
-	if (!is_heredoc_open())
+	if (g_minishell.is_heredoc == SIGINT_HEREDOC)
 		return (SIGINT_HEREDOC);
 	while (buff)
 	{
@@ -40,20 +39,10 @@ int	redir_heredoc(t_redir redirections)
 	}
 	if (buff)
 		free(buff);
-	if (!is_heredoc_open())
+	if (g_minishell.is_heredoc == SIGINT_HEREDOC)
 		return (SIGINT_HEREDOC);
 	g_minishell.is_heredoc = 0;
 	return (generate_temp_file(str_out));
-}
-
-static int	is_heredoc_open(void)
-{
-	if (g_minishell.is_heredoc == SIGINT_HEREDOC)
-	{
-		g_minishell.is_heredoc = -1;
-		return (0);
-	}
-	return (1);
 }
 
 static char	*generate_file_name(void)
