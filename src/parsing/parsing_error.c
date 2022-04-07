@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_error.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cybattis <cybattis@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 13:36:20 by njennes           #+#    #+#             */
-/*   Updated: 2022/03/29 22:37:30 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/04/07 18:33:16 by njennes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,17 +31,21 @@ char	*error_ambiguous_redirection(char *str, char *file)
 	return (NULL);
 }
 
-char	*parsing_error(char *str, char *file)
+char	*parsing_error(char *str, char *file, void *ptr)
 {
 	ft_dprintf(STDERR_FILENO, "%s\n", str);
 	gc_free(get_gc(), file);
+	gc_free(get_gc(), str);
+	gc_free(get_gc(), ptr);
 	return (NULL);
 }
 
-char	*file_error(char *str, char *file)
+char	*file_error(char *str, char *file, void *ptr)
 {
 	ft_dprintf(STDERR_FILENO, "minishell: %s: %s\n", file, str);
 	gc_free(get_gc(), file);
+	gc_free(get_gc(), str);
+	gc_free(get_gc(), ptr);
 	return (NULL);
 }
 

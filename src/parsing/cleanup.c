@@ -52,6 +52,7 @@ static void	destroy_redirs(t_redir *redirs)
 	while (redirs[i].type)
 	{
 		gc_free(get_gc(), redirs[i].file);
+		gc_free(get_gc(), redirs[i].arg);
 		i++;
 	}
 	gc_free(get_gc(), redirs);

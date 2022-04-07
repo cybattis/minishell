@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 21:48:09 by cybattis          #+#    #+#             */
-/*   Updated: 2022/04/07 14:27:43 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/04/07 18:12:57 by njennes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "core.h"
 
 int	main(int argc, char **argv, char **envp)
 {

@@ -6,7 +6,7 @@
 /*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 13:36:22 by njennes           #+#    #+#             */
-/*   Updated: 2022/03/27 13:36:23 by njennes          ###   ########.fr       */
+/*   Updated: 2022/04/07 18:21:54 by njennes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "core.h"
 
 static void	destroy_parsers(t_parser *parsers, size_t count);
+static t_command_batch	free_return(t_command_batch batch, char *input);
 
 t_command_batch	parse_input(char *input)
 {
@@ -26,11 +27,11 @@ t_command_batch	parse_input(char *input)
 	if (contains_unfinished_quotes(input))
 		input = ask_for_quote(input);
 	if (!split_input_into_commands(input, &command_batch))
-		return (command_batch);
+		return (free_return(command_batch, input));
 	if (command_batch.count == 0)
-		return (command_batch);
+		return (free_return(command_batch, input));
 	if (!get_redirections(input, &command_batch))
-		return (command_batch);
+		return (free_return(command_batch, input));
 	parsers = strip_out_operators(input, &command_batch);
 	gc_free(get_gc(), input);
 	tokenize_all(&lexers, parsers, command_batch.count);
@@ -50,4 +51,10 @@ static void	destroy_parsers(t_parser *parsers, size_t count)
 		i++;
 	}
 	gc_free(get_gc(), parsers);
+}
+
+static t_command_batch	free_return(t_command_batch batch, char *input)
+{
+	gc_free(get_gc(), input);
+	return (batch);
 }

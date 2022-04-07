@@ -35,6 +35,7 @@ typedef struct s_redir
 	int			heredoc_fd;
 	int			type;
 	char		*file;
+	char		*arg;
 }				t_redir;
 
 typedef struct s_command
@@ -121,8 +122,8 @@ char				*get_env_var_raw(t_parser *parser, int in_quotes);
 char				*get_env_var_name(t_parser *parser, int in_quotes);
 
 char				*error_ambiguous_redirection(char *str, char *file);
-char				*parsing_error(char *str, char *file);
-char				*file_error(char *str, char *file);
+char				*parsing_error(char *str, char *file, void *ptr);
+char				*file_error(char *str, char *file, void *ptr);
 int					syntax_error(t_err error);
 
 int					is_valid_path(char *str);
