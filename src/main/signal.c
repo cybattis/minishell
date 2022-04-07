@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 12:55:27 by cybattis          #+#    #+#             */
-/*   Updated: 2022/04/07 14:33:27 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/04/07 15:41:39 by njennes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #include "readline.h"
 #include "core.h"
 #include <signal.h>
+
+extern int	rl_pending_input;
 
 static void	sigint_handler(void);
 
@@ -41,8 +43,9 @@ void	sig_handler(int signum)
 
 static void	sigint_handler(void)
 {
-	ft_dprintf(STDERR_FILENO, "\n");
-	if (g_minishell.is_heredoc)
+	if (g_minishell.is_heredoc != -1)
+		ft_dprintf(STDERR_FILENO, "\n");
+	if (g_minishell.is_heredoc == 1)
 	{
 		g_minishell.is_heredoc = SIGINT_HEREDOC;
 		close(STDIN_FILENO);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 11:35:17 by cybattis          #+#    #+#             */
-/*   Updated: 2022/04/07 14:12:28 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/04/07 15:21:48 by njennes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static int	is_heredoc_open(void)
 {
 	if (g_minishell.is_heredoc == SIGINT_HEREDOC)
 	{
-		g_minishell.is_heredoc = 0;
+		g_minishell.is_heredoc = -1;
 		return (0);
 	}
 	return (1);
