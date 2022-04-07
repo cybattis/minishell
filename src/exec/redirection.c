@@ -32,7 +32,7 @@ int	redirection(t_redir *redirections)
 		if (redirections[i].type == TOKEN_REDIR_IN)
 			fds[0] = redir_in(fds[0], redirections[i]);
 		else if (redirections[i].type == TOKEN_REDIR_HEREDOC)
-			fds[0] = redir_heredoc(redirections[i]);
+			fds[0] = redirections[i].heredoc_fd;
 		else if (redirections[i].type == TOKEN_REDIR_OUT)
 			fds[1] = redir_out(fds[1], redirections[i]);
 		else if (redirections[i].type == TOKEN_REDIR_OUT_APPEND)

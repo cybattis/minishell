@@ -6,7 +6,7 @@
 /*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 21:46:20 by cybattis          #+#    #+#             */
-/*   Updated: 2022/04/06 10:51:50 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/04/07 13:17:54 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "parsing.h"
 # include "libft.h"
 
-# define SIGINT_HD -2
+# define SIGINT_HEREDOC -2
 # define ERROR -1
 # define BOTH_FD_SET 0
 # define ONLY_OUT 1
@@ -30,7 +30,6 @@ typedef struct s_mini
 	int				is_executing;
 	int				is_heredoc;
 	int				has_child;
-	int				is_piping;
 	int				argc;
 	char			**argv;
 	char			**env;
@@ -60,6 +59,8 @@ int			execute_pipe(t_command_batch *batch, t_pipe *pipes);
 t_pipe		*init_pipe(size_t nbr);
 int			redirection(t_redir *redirections);
 int			redir_heredoc(t_redir redirections);
+int			launch_heredoc(t_command_batch *batch);
+int			close_heredoc(t_command_batch *batch);
 
 void		ft_errno_exit(void);
 int			ft_print_errno(void);

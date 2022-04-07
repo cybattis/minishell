@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cybattis <cybattis@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 11:35:17 by cybattis          #+#    #+#             */
-/*   Updated: 2022/04/05 20:55:52 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/04/07 14:12:28 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	redir_heredoc(t_redir redirections)
 	str_out = gc_strdup(get_gc(), "");
 	buff = readline("> ");
 	if (!is_heredoc_open())
-		return (SIGINT_HD);
+		return (SIGINT_HEREDOC);
 	while (buff)
 	{
 		if (ft_strlen(buff) == ft_strlen(redirections.file)
@@ -38,17 +38,17 @@ int	redir_heredoc(t_redir redirections)
 		free(buff);
 		buff = readline("> ");
 	}
-	if (!is_heredoc_open())
-		return (SIGINT_HD);
-	g_minishell.is_heredoc = 0;
 	if (buff)
 		free(buff);
+	if (!is_heredoc_open())
+		return (SIGINT_HEREDOC);
+	g_minishell.is_heredoc = 0;
 	return (generate_temp_file(str_out));
 }
 
 static int	is_heredoc_open(void)
 {
-	if (g_minishell.is_heredoc == SIGINT_HD)
+	if (g_minishell.is_heredoc == SIGINT_HEREDOC)
 	{
 		g_minishell.is_heredoc = 0;
 		return (0);
@@ -89,10 +89,59 @@ static int	generate_temp_file(char *str_out)
 	}
 	write(fd_temp, str_out, ft_strlen(str_out));
 	close(fd_temp);
-	gc_free(get_gc(), str_out);
 	fd_temp = open(temp_file, O_RDONLY);
+	gc_free(get_gc(), str_out);
 	unlink(temp_file);
 	gc_free(get_gc(), temp_file);
 	g_minishell.is_executing = 0;
 	return (fd_temp);
+}
+
+int	launch_heredoc(t_command_batch *batch)
+{
+	int		heredoc_fd;
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	heredoc_fd = 0;
+	while (i < batch->count)
+	{
+		j = 0;
+		while (batch->commands[i].redirections[j].type)
+		{
+			if (j > 0 && batch->commands[i].redirections[j - 1].heredoc_fd)
+			{
+				close(batch->commands[i].redirections[j - 1].heredoc_fd);
+				batch->commands[i].redirections[j - 1].heredoc_fd = 0;
+			}
+			if (batch->commands[i].redirections[j].type == TOKEN_REDIR_HEREDOC)
+				heredoc_fd = redir_heredoc(batch->commands[i].redirections[j]);
+			if (heredoc_fd == SIGINT_HEREDOC)
+				return (SIGINT_HEREDOC);
+			batch->commands[i].redirections[j++].heredoc_fd = heredoc_fd;
+		}
+		i++;
+	}
+	return (0);
+}
+
+int	close_heredoc(t_command_batch *batch)
+{
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	while (i < batch->count)
+	{
+		j = 0;
+		while (batch->commands[i].redirections[j].type)
+		{
+			if (batch->commands[i].redirections[j].heredoc_fd > 0)
+				close(batch->commands[i].redirections[j].heredoc_fd);
+			j++;
+		}
+		i++;
+	}
+	return (0);
 }

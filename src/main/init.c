@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 21:46:20 by njennes           #+#    #+#             */
-/*   Updated: 2022/04/04 15:50:20 by njennes          ###   ########.fr       */
+/*   Updated: 2022/04/07 12:58:11 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	init_minishell(int argc, char **argv, char **envp)
 	g_minishell.last_return = 0;
 	g_minishell.is_executing = 0;
 	g_minishell.has_child = 0;
-	g_minishell.is_piping = 0;
+	g_minishell.is_heredoc = 0;
 	g_minishell.argv = argv;
 	g_minishell.argc = argc;
 	update_shell_env_vars(envp);

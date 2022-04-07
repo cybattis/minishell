@@ -34,8 +34,8 @@ int	clean_redirection(int *fds)
 	{
 		close(fds[0]);
 		close(fds[1]);
-		if (fds[0] == SIGINT_HD)
-			return (SIGINT_HD);
+		if (fds[0] == SIGINT_HEREDOC)
+			return (SIGINT_HEREDOC);
 		return (-1);
 	}
 	return (0);
