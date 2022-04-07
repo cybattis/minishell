@@ -6,7 +6,7 @@
 /*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 13:36:16 by njennes           #+#    #+#             */
-/*   Updated: 2022/04/07 18:37:07 by njennes          ###   ########.fr       */
+/*   Updated: 2022/04/07 18:39:35 by njennes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,8 @@ static int	populate_redir(t_redir *redir, char *str)
 		redir->file = get_heredoc_delimiter(strcpy);
 	else
 		redir->file = get_redir_file(strcpy, gc_strdup(get_gc(), redir->arg),
-				(redir->type == TOKEN_REDIR_OUT) | (redir->type == TOKEN_REDIR_OUT_APPEND));
+				(redir->type == TOKEN_REDIR_OUT)
+				| (redir->type == TOKEN_REDIR_OUT_APPEND));
 	if (!redir->file)
 		return (0);
 	return (1);
