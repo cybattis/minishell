@@ -6,7 +6,7 @@
 /*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 12:55:27 by cybattis          #+#    #+#             */
-/*   Updated: 2022/04/07 16:55:27 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/04/07 17:04:00 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 #include "readline.h"
 #include "core.h"
 #include <signal.h>
-
-extern int	rl_pending_input;
 
 static void	sigint_handler(void);
 
