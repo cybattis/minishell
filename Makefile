@@ -72,10 +72,6 @@ fclean:
 	@$(MAKE) -C $(LIB_DIR) fclean
 	@$(MAKE) -C $(SRCS_DIR) fclean
 
-.PHONY: tests
-tests:
-	@$(MAKE) -C $(LIB_DIR) debug
-
 .PHONY: re
 re: fclean all
 
