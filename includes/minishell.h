@@ -17,7 +17,6 @@
 # include "libft.h"
 
 # define SIGINT_HEREDOC -2
-# define ERROR -1
 # define BOTH_FD_SET 0
 # define ONLY_OUT 1
 # define ONLY_IN 2

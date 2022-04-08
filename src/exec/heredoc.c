@@ -20,8 +20,6 @@ static int	heredoc_finished(char *buff, char **str_out, const char *file);
 
 void		flush_readline(void);
 
-extern int	rl_pending_input;
-
 int	redir_heredoc(t_redir redirections)
 {
 	char	*str_out;
