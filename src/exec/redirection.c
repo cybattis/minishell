@@ -6,13 +6,15 @@
 /*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 14:54:11 by cybattis          #+#    #+#             */
-/*   Updated: 2022/04/06 13:12:37 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/04/08 17:14:43 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <fcntl.h>
 #include <unistd.h>
+#include <string.h>
+#include <errno.h>
 
 static int	redir_in(int fd, t_redir redirections);
 static int	redir_out(int fd, t_redir redirections);
@@ -81,7 +83,7 @@ static int	redir_in(int fd, t_redir redirections)
 		close(fd);
 	fd = open(redirections.file, O_RDONLY, 0666);
 	if (fd == -1)
-		ft_print_errno();
+		file_error(strerror(errno), redirections.arg, NULL);
 	return (fd);
 }
 
@@ -91,7 +93,7 @@ static int	redir_out(int fd, t_redir redirections)
 		close(fd);
 	fd = open(redirections.file, O_WRONLY | O_CREAT | O_TRUNC, 0666);
 	if (fd == -1)
-		ft_print_errno();
+		file_error(strerror(errno), redirections.arg, NULL);
 	return (fd);
 }
 
@@ -101,6 +103,6 @@ static int	redir_out_append(int fd, t_redir redirections)
 		close(fd);
 	fd = open(redirections.file, O_WRONLY | O_CREAT | O_APPEND, 0666);
 	if (fd == -1)
-		return (ft_print_errno());
+		file_error(strerror(errno), redirections.arg, NULL);
 	return (fd);
 }

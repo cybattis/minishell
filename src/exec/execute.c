@@ -47,7 +47,10 @@ static int	execute(t_command *command)
 	pid_t	pid;
 
 	if (command->is_redirecting && redirection(command->redirections) == -1)
+	{
+		g_minishell.last_return = 1;
 		return (-1);
+	}
 	if (!command[0].name)
 		return (0);
 	if (command->is_builtin == 1)
