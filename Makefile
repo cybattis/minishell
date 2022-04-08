@@ -17,7 +17,7 @@ ifeq ($(OS), Linux)
 	INC_PATH		+=
 else
 	READLINE		:=		-L ~/.brew/opt/readline/lib -lreadline -lhistory
-	INC_PATH		+=		-I ~/.brew/opt/readline/include/readline
+	INC_PATH		+=		-I ~/.brew/opt/readline/include
 endif
 
 LIBS			:=		$(LIB_PATH) -lft $(READLINE)

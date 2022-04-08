@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 17:44:46 by cybattis          #+#    #+#             */
-/*   Updated: 2022/04/07 17:45:17 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/04/08 15:09:05 by njennes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
 #include "minishell.h"
+#include "readline.h"
 
 int	launch_heredoc(t_command_batch *batch)
 {
