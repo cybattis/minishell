@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 11:35:17 by cybattis          #+#    #+#             */
-/*   Updated: 2022/04/08 15:09:07 by njennes          ###   ########.fr       */
+/*   Updated: 2022/04/08 16:25:27 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,6 @@ int	redir_heredoc(t_redir redirections)
 		if (!buff)
 			flush_readline();
 	}
-	if (buff)
-		free(buff);
 	if (g_minishell.is_heredoc == SIGINT_HEREDOC)
 		return (SIGINT_HEREDOC);
 	g_minishell.is_heredoc = 0;

@@ -6,7 +6,7 @@
 /*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 17:10:07 by cybattis          #+#    #+#             */
-/*   Updated: 2022/04/07 15:58:19 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/04/08 16:35:37 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,7 @@ static int	fork_pipe(t_command_batch *batch, t_pipe *pipes)
 			execute_bin(&batch->commands[i]);
 		}
 		else if (pid < 0)
-		{
-			g_minishell.is_executing = 0;
 			return (ft_print_errno());
-		}
 		i++;
 	}
 	return (0);
