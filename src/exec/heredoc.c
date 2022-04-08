@@ -6,7 +6,7 @@
 /*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 11:35:17 by cybattis          #+#    #+#             */
-/*   Updated: 2022/04/07 15:21:48 by njennes          ###   ########.fr       */
+/*   Updated: 2022/04/08 15:09:07 by njennes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,11 @@
 #include "core.h"
 
 static int	generate_temp_file(char *str_out);
+static int	heredoc_finished(char *buff, char **str_out, const char *file);
+
+void		flush_readline(void);
+
+extern int	rl_pending_input;
 
 int	redir_heredoc(t_redir redirections)
 {
@@ -27,15 +32,15 @@ int	redir_heredoc(t_redir redirections)
 	buff = readline("> ");
 	if (g_minishell.is_heredoc == SIGINT_HEREDOC)
 		return (SIGINT_HEREDOC);
+	if (!buff)
+		flush_readline();
 	while (buff)
 	{
-		if (ft_strlen(buff) == ft_strlen(redirections.file)
-			&& !ft_strncmp(redirections.file, buff, ft_strlen(buff) - 1))
+		if (heredoc_finished(buff, &str_out, redirections.file))
 			break ;
-		str_out = gc_strjoin(get_gc(), str_out, buff, FREE_BOTH);
-		str_out = gc_strappend(get_gc(), str_out, '\n');
-		free(buff);
 		buff = readline("> ");
+		if (!buff)
+			flush_readline();
 	}
 	if (buff)
 		free(buff);
@@ -103,5 +108,19 @@ int	close_heredoc(t_command_batch *batch)
 		}
 		i++;
 	}
+	return (0);
+}
+
+static int	heredoc_finished(char *buff, char **str_out, const char *file)
+{
+	if (ft_strlen(buff) == ft_strlen(file)
+		&& !ft_strncmp(file, buff, ft_strlen(buff) - 1))
+	{
+		free(buff);
+		return (1);
+	}
+	(*str_out) = gc_strjoin(get_gc(), (*str_out), buff, FREE_FIRST);
+	(*str_out) = gc_strappend(get_gc(), (*str_out), '\n');
+	free(buff);
 	return (0);
 }

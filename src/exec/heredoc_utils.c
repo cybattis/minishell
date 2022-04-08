@@ -41,3 +41,9 @@ int	launch_heredoc(t_command_batch *batch)
 	}
 	return (0);
 }
+
+void	flush_readline(void)
+{
+	rl_pending_input = '\n';
+	readline("");
+}

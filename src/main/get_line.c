@@ -30,8 +30,6 @@ char	*ft_get_line(void)
 	g_minishell.is_heredoc = 0;
 	if (!line_read)
 		exit_minishell();
-	if (!ft_strlen(line_read))
-		g_minishell.last_return = 0;
 	if (line_read && *line_read && !contains_unfinished_quotes(line_read))
 		add_history(line_read);
 	return (gc_strdup(get_gc(), line_read));
