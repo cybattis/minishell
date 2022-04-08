@@ -6,7 +6,7 @@
 /*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 12:55:27 by cybattis          #+#    #+#             */
-/*   Updated: 2022/04/08 13:38:41 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/04/08 14:21:26 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ void	sig_handler(int signum)
 
 static void	sigint_handler(void)
 {
-	ft_dprintf(STDERR_FILENO, "\n");
+	if (g_minishell.is_heredoc != SIGINT_HEREDOC)
+		ft_dprintf(STDERR_FILENO, "\n");
 	if (g_minishell.is_heredoc == 1)
 	{
 		g_minishell.is_heredoc = SIGINT_HEREDOC;

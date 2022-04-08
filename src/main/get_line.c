@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_line.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: cybattis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 12:36:16 by cybattis          #+#    #+#             */
-/*   Updated: 2022/04/04 15:24:06 by njennes          ###   ########.fr       */
+/*   Updated: 2022/04/08 14:21:12 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ char	*ft_get_line(void)
 		gc_free(get_gc(), prompt);
 	prompt = get_prompt();
 	line_read = readline(prompt);
+	g_minishell.is_heredoc = 0;
 	if (!line_read)
 		exit_minishell();
 	if (!ft_strlen(line_read))
