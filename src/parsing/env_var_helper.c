@@ -6,7 +6,7 @@
 /*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 13:35:58 by njennes           #+#    #+#             */
-/*   Updated: 2022/04/06 15:05:43 by njennes          ###   ########.fr       */
+/*   Updated: 2022/04/08 17:44:13 by njennes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,11 @@ static char	*handle_special_var(t_parser *parser, int in_quotes)
 		name = gc_strdup(get_gc(), "?");
 		parser->i++;
 	}
-	else if (ft_isspace(parser->str[parser->i]) || !parser->str[parser->i]
-		|| (in_quotes && parser->str[parser->i] == '"'))
-		name = gc_strdup(get_gc(), "$");
-	else
+	else if (!in_quotes && (parser->str[parser->i] == '"'
+			|| parser->str[parser->i] == '\''))
 		name = gc_strdup(get_gc(), "");
+	else
+		name = gc_strdup(get_gc(), "$");
 	return (name);
 }
 

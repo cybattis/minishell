@@ -35,6 +35,8 @@ char	*get_env_var_raw(t_parser *parser, int in_quotes)
 	}
 	else
 		var_value = gc_strdup(get_gc(), get_env(var_name));
+	if (!var_value)
+		var_value = gc_strdup(get_gc(), "");
 	gc_free(get_gc(), var_name);
 	return (var_value);
 }
