@@ -19,17 +19,6 @@
 
 t_mini		g_minishell;
 
-void	update_shell_path(void)
-{
-	char	*path_to_minishell;
-	char	buf[MAXPATHLEN];
-
-	getcwd(buf, MAXPATHLEN);
-	path_to_minishell = gc_strjoin(get_gc(), buf, "/minishell", 0);
-	set_env_var("SHELL", path_to_minishell);
-	gc_free(get_gc(), path_to_minishell);
-}
-
 void	update_shell_level(void)
 {
 	char	*new_shell_level;
@@ -50,7 +39,6 @@ void	update_shell_level(void)
 void	update_shell_env_vars(char **envp)
 {
 	g_minishell.env = gc_strarray_from(get_gc(), envp, gc_strarray_size(envp));
-	update_shell_path();
 	update_shell_level();
 }
 
