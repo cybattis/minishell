@@ -44,7 +44,6 @@ $(OBJS_DIR)/%.o:	$(SRCS_DIR)/$(MAIN_DIR)/%.c | $(OBJS_DIR)
 	@printf "$(_YELLOW)█$(_END)"
 
 ../$(NAME):	$(OBJS) $(MASTER_MAKE) $(LIBFT_LIB)
-	@echo $(DEPENDS)
 	@printf "$(_BLUE)\nCompiled source files\n$(_END)"
 	@$(BIN_CC) $(BIN_LDFLAGS) $(OBJS) -o ../$(NAME) $(LIBS)
 	@printf "$(_YELLOW)Finish compiling $(NAME)!$(_END)\n"
